@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 UITableViewController | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.UITableView本质上是ScrollView+二维数组的控件。 2.UITableView通过DataSource来提供数据。相关的数据源方法:123456789101112131415161718192021222324252627282930313233/// section相关/// 有多少分组- (NSInteger)numberOfSectionsInTableView:(UI">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 UITableViewController">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 UITableViewController/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.UITableView本质上是ScrollView+二维数组的控件。 2.UITableView通过DataSource来提供数据。相关的数据源方法:123456789101112131415161718192021222324252627282930313233/// section相关/// 有多少分组- (NSInteger)numberOfSectionsInTableView:(UI">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:54:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 UITableViewController">
+<meta name="twitter:description" content="1.UITableView本质上是ScrollView+二维数组的控件。 2.UITableView通过DataSource来提供数据。相关的数据源方法:123456789101112131415161718192021222324252627282930313233/// section相关/// 有多少分组- (NSInteger)numberOfSectionsInTableView:(UI">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 UITableViewController" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 UITableViewController</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 UITableViewController/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.UITableView本质上是ScrollView+二维数组的控件。</p>
+<p>2.UITableView通过DataSource来提供数据。相关的数据源方法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">/// section相关</div><div class="line">/// 有多少分组</div><div class="line">- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView &#123;</div><div class="line">return 1;</div><div class="line">&#125;</div><div class="line">/// 分组的头部title</div><div class="line">- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section &#123;</div><div class="line">return @&quot;头部&quot;;</div><div class="line">&#125;</div><div class="line">/// 分组的尾部title</div><div class="line">- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section &#123;</div><div class="line">return @&quot;尾部&quot;;</div><div class="line">&#125;</div><div class="line">/// sectionIndexTitlesForTableView表格右侧索引---下面方法是错误实例，索引数组要在方法外面创建。不然滑动会一直创建</div><div class="line">- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView &#123;</div><div class="line">NSArray *indexArray = [NSMutableArray arrayWithObjects:</div><div class="line">@&quot;A&quot;, @&quot;B&quot;, @&quot;C&quot;, @&quot;D&quot;, @&quot;E&quot;, @&quot;F&quot;,</div><div class="line">@&quot;G&quot;, @&quot;H&quot;, @&quot;I&quot;, @&quot;J&quot;, @&quot;K&quot;, @&quot;L&quot;,</div><div class="line">@&quot;M&quot;, @&quot;N&quot;, @&quot;O&quot;, @&quot;P&quot;, @&quot;Q&quot;, @&quot;R&quot;,</div><div class="line">@&quot;S&quot;, @&quot;T&quot;, @&quot;U&quot;, @&quot;V&quot;, @&quot;W&quot;, @&quot;X&quot;,</div><div class="line">@&quot;Y&quot;, @&quot;Z&quot;, @&quot;#&quot;, nil</div><div class="line">];</div><div class="line">return indexArray ;</div><div class="line">&#125;</div><div class="line">/// row相关</div><div class="line">/// 每一个分组中的行数</div><div class="line">- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section &#123;</div><div class="line">return 20;</div><div class="line">&#125;</div><div class="line">/// tableview的cell内容</div><div class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">return [[UITableViewCell alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.tableView界面相关设置则通过delegate来设置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/// tableview通过delegate提供view的相关设置</div><div class="line">/// 高度相关</div><div class="line">/// cell的高度</div><div class="line">- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">return 44.f;</div><div class="line">&#125;</div><div class="line">/// headerView的高度</div><div class="line">- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section &#123;</div><div class="line">return 20.f;</div><div class="line">&#125;</div><div class="line">/// gooterView的高度</div><div class="line">- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section &#123;</div><div class="line">return 20.f;</div><div class="line">&#125;</div><div class="line">/// sectionView相关</div><div class="line">/// headerView</div><div class="line">- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section &#123;</div><div class="line">return [[UIView alloc] init];</div><div class="line">&#125;</div><div class="line">/// footerView</div><div class="line">- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section &#123;</div><div class="line">return [[UIView alloc] init];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.tableView选中的代理<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/// 选中相关--所有状态执行的情况，执行顺序是:didHighlightRowAtIndexPath-&gt;didDeselectRowAtIndexPath-&gt;didSelectRowAtIndexPath</div><div class="line">/// 选中一个cell</div><div class="line">- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">/// 多选模式下，会直接调用didSelectRowAtIndexPath而不调用didDeselectRowAtIndexPath</div><div class="line">/// 单选模式下，会先调用didDeselectRowAtIndexPath再调用didSelectRowAtIndexPath</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line">&#125;</div><div class="line">/// 取消选中</div><div class="line">- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">/// 单选模式下才会调用</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line">&#125;</div><div class="line">/// 当前选中的row是否高亮--当是NO的时候，高亮、取消选中、选中的方法都不会执行</div><div class="line">- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">/// 当cell高亮的时候执行</div><div class="line">- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.tableView有多选和单选2种模式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/// 设置tableView可不可以选中</div><div class="line">tableView.allowsSelection = NO;</div><div class="line">/// 允许tableview多选</div><div class="line">tableView.allowsMultipleSelection = YES;</div><div class="line">/// 编辑模式下是否可以选中</div><div class="line">tableView.allowsSelectionDuringEditing = NO;</div><div class="line">/// 编辑模式下是否可以多选</div><div class="line">tableView.allowsMultipleSelectionDuringEditing = YES;</div></pre></td></tr></table></figure></p>
+<p>6.为什么要把自定义的View加在contentView上？</p>
+<p>因为当cell为可编辑状态的时候，系统添加的deleleConfirmView是和contentView的布局是并列，如果自定义view在contentView外面，那么可编辑状态时，cell的布局就会变乱掉。</p>
+<p>7.如何设置分隔线的左侧间距？</p>
+<p>可以设置分割线的saparatorInset属性来进行设置</p>
+<p>8.在Grouped样式下Section Header/Footer，怎么设置高度为0？</p>
+<p>可以使用tableview的代理方法hegihtForFooterInSection以及heightForHeaderInSection属性进行设置</p>
+<p>9.tableview自定义左滑编辑按钮。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">// 右滑添加【收藏】【删除】操作</div><div class="line">- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">UITableViewRowAction *action0 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@&quot;移入\n收藏&quot; handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) &#123;</div><div class="line">// 收回左滑出现的按钮(退出编辑模式)</div><div class="line">tableView.editing = NO;</div><div class="line">if ([Common getLoginStatus]) &#123;</div><div class="line">/// 收藏服务器信息</div><div class="line">[self cartDealWithIndexPath:indexPath isCollect:YES];</div><div class="line">&#125;else &#123;</div><div class="line">__weak typeof(self) weakSelf = self;</div><div class="line">/// 先登录</div><div class="line">[WBLoginManager loginWithCurrentViewController:self success:^&#123;</div><div class="line">/// 成功了再移入收藏</div><div class="line">[weakSelf cartDealWithIndexPath:indexPath isCollect:YES];</div><div class="line">&#125; failure:nil];</div><div class="line">&#125;</div><div class="line">&#125;];</div><div class="line"></div><div class="line">UITableViewRowAction *action1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@&quot;删除&quot; handler:^(UITableViewRowAction *action, NSIndexPath *indexPath) &#123;</div><div class="line">if ([Common getLoginStatus]) &#123;</div><div class="line">/// 收藏服务器信息</div><div class="line">[self cartDealWithIndexPath:indexPath isCollect:NO];</div><div class="line">&#125;else &#123;</div><div class="line">__weak typeof(self) weakSelf = self;</div><div class="line">/// 先登录</div><div class="line">[WBLoginManager loginWithCurrentViewController:self success:^&#123;</div><div class="line">/// 成功了再移入收藏</div><div class="line">[weakSelf cartDealWithIndexPath:indexPath isCollect:NO];</div><div class="line">&#125; failure:nil];</div><div class="line">&#125;</div><div class="line">&#125;];</div><div class="line">return @[action1, action0];</div><div class="line">&#125;</div><div class="line">//指定行是否可编辑</div><div class="line">-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">if (!self.shoppingCartShowEdit) &#123;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">return NO;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/// --------只有一个删除选项的话。可以用系统的</div><div class="line">/// 返回编辑类型</div><div class="line">- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">return UITableViewCellEditingStyleDelete;</div><div class="line">&#125;</div><div class="line">/// 编辑按钮点击事件</div><div class="line">- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">if (editingStyle == UITableViewCellEditingStyleDelete) &#123;</div><div class="line">NSLog(@&quot;删除&quot;);</div><div class="line">&#125;else if (editingStyle == UITableViewCellEditingStyleInsert) &#123;</div><div class="line">NSLog(@&quot;添加&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>10.添加右边索引：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/// 代理中实现这个。即可出现索引，这里注意不要每次都创建数组。下面只是演示</div><div class="line">-(NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView</div><div class="line">&#123;</div><div class="line">return [NSArray arrayWithObjects:UITableViewIndexSearch,@&quot;+&quot;,@&quot;A&quot;,@&quot;B&quot;,@&quot;C&quot;,@&quot;D&quot;,@&quot;E&quot;,@&quot;F&quot;,@&quot;G&quot;,@&quot;H&quot;,@&quot;I&quot;,@&quot;J&quot;,@&quot;K&quot;,@&quot;L&quot;,@&quot;M&quot;,@&quot;N&quot;,@&quot;O&quot;,@&quot;P&quot;,@&quot;Q&quot;,@&quot;R&quot;,@&quot;S&quot;,@&quot;T&quot;,@&quot;U&quot;,@&quot;V&quot;,@&quot;W&quot;,@&quot;X&quot;,@&quot;Y&quot;,@&quot;Z&quot;,@&quot;#&quot;, nil];</div><div class="line">&#125;</div><div class="line">/// 设置索引颜色</div><div class="line">tableView.sectionIndexColor = [UIColor cyanColor];</div><div class="line">/// 设置索引背景色</div><div class="line">tableView.sectionIndexBackgroundColor = [UIColor yellowColor];</div><div class="line">/// 设置索引最少展示行数</div><div class="line">tableView.sectionIndexMinimumDisplayRowCount = 10;</div></pre></td></tr></table></figure></p>
+<p>11.headerView和footerView有整个tableView的也有每个分组的。我们添加的刷新控件实际上就是添加了tableView的headerView和footerView。分组的headerView和footerView通过代理来设置。</p>
+<p>12.当cell的高度计算比较复杂，在我们滑动的时候会有卡顿效果，这时候我们想的是计算的值能保存在模型就不用重复计算，但是在第一次滑动仍会卡顿，我们可以使用预估一个值给他，然后内部计算好会自动更新最佳的展示效果。只要实现下面的代理:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/// 预估cell的高度值</div><div class="line">- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line">return 44;</div><div class="line">&#125;</div><div class="line">/// 预估headerView的高度值</div><div class="line">- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForFooterInSection:(NSInteger)section &#123;</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line">return 12;</div><div class="line">&#125;</div><div class="line">/// 预估footerView的高度值</div><div class="line">- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section &#123;</div><div class="line">NSLog(@&quot;%s&quot;,__func__);</div><div class="line">return 12;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>13.在iOS8之后提出了Self-sizing Cells。即让cell自己去计算高度适应。支持Autolayout和Frame layout方式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/// 这样就不用再自己计算高度</div><div class="line">/// 设置cell预估高度</div><div class="line">tableView.estimatedRowHeight = 80.f;</div><div class="line">/// 设置cell自动适应高度。</div><div class="line">tableView.rowHeight = UITableViewAutomaticDimension;</div></pre></td></tr></table></figure></p>
+<p>14.tableView界面刷新操作:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/// 整个tableview更新---多个动作(新增、删除)时要整体刷新</div><div class="line">[tableView reloadData];</div><div class="line">/// 刷新数组行数的内容</div><div class="line">[tableView reloadRowsAtIndexPaths:@[] withRowAnimation:UITableViewRowAnimationFade];</div><div class="line">/// 插入数组行数的内容</div><div class="line">[tableView insertRowsAtIndexPaths:@[] withRowAnimation:UITableViewRowAnimationFade];</div><div class="line">/// 删除数组行数的内容</div><div class="line">[tableView deleteRowsAtIndexPaths:@[] withRowAnimation:UITableViewRowAnimationFade];</div><div class="line">/// 移动数组行数的内容</div><div class="line">[tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] toIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];</div></pre></td></tr></table></figure></p>
+<p>15.cell的选中状态:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/// 通过cell的这个属性设置选中状态。</div><div class="line">cell.selectionStyle = UITableViewCellSelectionStyleNone;</div><div class="line">/// 也能通过重写cell的setHightlighted和serSelected方法也自定义.</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 UIScrollView/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 NSString/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 UITableViewController/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

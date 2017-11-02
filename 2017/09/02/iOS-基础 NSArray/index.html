@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 NSArray | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.NSArray只能放OC对象，所以不能直接放数值如93、NSInteger、int、NSRange等，@93这样可以存放，是因为将93转成了NSNumber对象，这是OC对象。 2.想放一个空对象，则放[NSNull null]。 3.查找对象的坐标12345NSArray *array = @[@12,@32,@33];NSInteger index = [array indexOfObje">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 NSArray">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 NSArray/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.NSArray只能放OC对象，所以不能直接放数值如93、NSInteger、int、NSRange等，@93这样可以存放，是因为将93转成了NSNumber对象，这是OC对象。 2.想放一个空对象，则放[NSNull null]。 3.查找对象的坐标12345NSArray *array = @[@12,@32,@33];NSInteger index = [array indexOfObje">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:53:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 NSArray">
+<meta name="twitter:description" content="1.NSArray只能放OC对象，所以不能直接放数值如93、NSInteger、int、NSRange等，@93这样可以存放，是因为将93转成了NSNumber对象，这是OC对象。 2.想放一个空对象，则放[NSNull null]。 3.查找对象的坐标12345NSArray *array = @[@12,@32,@33];NSInteger index = [array indexOfObje">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 NSArray" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 NSArray</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 NSArray/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.NSArray只能放OC对象，所以不能直接放数值如93、NSInteger、int、NSRange等，@93这样可以存放，是因为将93转成了NSNumber对象，这是OC对象。</p>
+<p>2.想放一个空对象，则放[NSNull null]。</p>
+<p>3.查找对象的坐标<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">NSArray *array = @[@12,@32,@33];</div><div class="line">NSInteger index = [array indexOfObject:@12];</div><div class="line">if (index == NSNotFound) &#123;</div><div class="line">///</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.取第一个元素和最后一个元素尽量用一下方法，可以防止越界时的crash。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSArray *array = @[@12,@32,@33];</div><div class="line">NSInteger first = array.firstObject;</div><div class="line">NSInteger last = array.lastObject;</div></pre></td></tr></table></figure></p>
+<p>5.NSSet 是集合，会去重。用法和数组一样。多了去重的功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSSet *set = [NSSet setWithObjects:@12,@11,@41, nil];</div><div class="line">/// 不能是NSSet *set = @[@12,@23];---这是区别</div></pre></td></tr></table></figure></p>
+<p>6.数组转字符串<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSString *names = @&quot;张三,李四,王五&quot;;</div><div class="line">NSArray *nameArray = [names componentsSeparatedByString:@&quot;,&quot;];</div><div class="line">NSString *names2 = [nameArray componentsJoinedByString:@&quot;,&quot;];</div></pre></td></tr></table></figure></p>
+<p>7.数组转NSSet集合<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSArray *array = @[@&quot;苹果&quot;,@&quot;橘子&quot;,@&quot;苹果&quot;,@&quot;草莓&quot;];</div><div class="line">NSSet *set = [[NSSet alloc] initWithArray:array];</div></pre></td></tr></table></figure></p>
+<p>8.NSSet转数组，是通过遍历后添加，这里要注意是NSArray-&gt;NSSet-&gt;NSArray。前后2个数组经过转换后，可能数量不同，顺序也可能不同，因为NSSet是无序的。</p>
+<p>9.有5种遍历方式，最普通的for循环在少量数据时比较快，for in数据量多的时候，比for循环快，而且方便使用，多数可使用。枚举遍历是性能较好的。最后一种比较不常用，但是在大量数据的时候性能最好，是用多线程来遍历。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">for (NSInteger i=0; i&lt;count; i++) &#123;</div><div class="line">NSLog(@&quot;%@----%@&quot;,array[i],[NSThread currentThread]);</div><div class="line">&#125;</div><div class="line">for (NSString *string in array) &#123;</div><div class="line">NSLog(@&quot;%@----%@&quot;,string,[NSThread currentThread]);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/顺序遍历</div><div class="line">[array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</div><div class="line">NSLog(@&quot;%@----%@&quot;,array[idx],[NSThread currentThread]);</div><div class="line">&#125;];</div><div class="line">//倒序遍历</div><div class="line">[array enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</div><div class="line">NSLog(@&quot;%@----%@&quot;,array[idx],[NSThread currentThread]);</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//将block中的任务，逐个放到queue中，然后进行dispatch_sync执行</div><div class="line">//多线程同步循环</div><div class="line"></div><div class="line">dispatch_queue_t queue =dispatch_queue_create(&quot;apply并行队列&quot;, DISPATCH_QUEUE_CONCURRENT);</div><div class="line">dispatch_apply(count, queue, ^(size_t index) &#123;</div><div class="line">NSLog(@&quot;%@----%@&quot;,array[index],[NSThread currentThread]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 NSDictionary/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 UINavigationController/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 NSArray/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

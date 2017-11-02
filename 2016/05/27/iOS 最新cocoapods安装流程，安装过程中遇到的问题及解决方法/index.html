@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS," />
+  
+
+  <meta name="description" content="最近重新安装了一次cocoapods，参考的安装流程：http://blog.csdn.net/showhilllee/article/details/38398119/我的博客园博客：http://www.cnblogs.com/guanshenbao/但是现在的cocoapods与之前比较。有很多不一样的地方。挣扎了2天，终于搞定。现在纪录一下。 1.首先查看ruby是否是最新版的。ruby是">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法">
+<meta property="og:url" content="http://angie520.cn/2016/05/27/iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="最近重新安装了一次cocoapods，参考的安装流程：http://blog.csdn.net/showhilllee/article/details/38398119/我的博客园博客：http://www.cnblogs.com/guanshenbao/但是现在的cocoapods与之前比较。有很多不一样的地方。挣扎了2天，终于搞定。现在纪录一下。 1.首先查看ruby是否是最新版的。ruby是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://angie520.cn/img/iOS/cocopods/1.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/cocopods/2.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/cocopods/3.png">
+<meta property="og:updated_time" content="2017-11-02T07:07:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法">
+<meta name="twitter:description" content="最近重新安装了一次cocoapods，参考的安装流程：http://blog.csdn.net/showhilllee/article/details/38398119/我的博客园博客：http://www.cnblogs.com/guanshenbao/但是现在的cocoapods与之前比较。有很多不一样的地方。挣扎了2天，终于搞定。现在纪录一下。 1.首先查看ruby是否是最新版的。ruby是">
+<meta name="twitter:image" content="http://angie520.cn/img/iOS/cocopods/1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#最近重新安装了一次cocoapods，参考的安装流程：http-blog-csdn-net-showhilllee-article-details-38398119"><span class="toc-text">最近重新安装了一次cocoapods，参考的安装流程：http://blog.csdn.net/showhilllee/article/details/38398119/</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#我的博客园博客：http-www-cnblogs-com-guanshenbao"><span class="toc-text">我的博客园博客：http://www.cnblogs.com/guanshenbao/</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-首先查看ruby是否是最新版的。ruby是通过rvm安装的所以需要先安装rvm后查看ruby是否是最新的（通过查看ruby版本列表来判断），在终端需要中输入以下命令："><span class="toc-text">1.首先查看ruby是否是最新版的。ruby是通过rvm安装的所以需要先安装rvm后查看ruby是否是最新的（通过查看ruby版本列表来判断），在终端需要中输入以下命令：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-更换Ruby镜像－－淘宝的那个镜像-https-ruby-taobao-org-已经不可用了。官方的需要FQ。所以我们现在用最新支持的ruby镜像-https-gems-ruby-china-org"><span class="toc-text">2.更换Ruby镜像－－淘宝的那个镜像(https://ruby.taobao.org/ )已经不可用了。官方的需要FQ。所以我们现在用最新支持的ruby镜像(https://gems.ruby-china.org/)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-下载安装CocoaPods"><span class="toc-text">3.下载安装CocoaPods</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.05.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2016/05/27/iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="最近重新安装了一次cocoapods，参考的安装流程：http-blog-csdn-net-showhilllee-article-details-38398119"><a href="#最近重新安装了一次cocoapods，参考的安装流程：http-blog-csdn-net-showhilllee-article-details-38398119" class="headerlink" title="最近重新安装了一次cocoapods，参考的安装流程：http://blog.csdn.net/showhilllee/article/details/38398119/"></a>最近重新安装了一次cocoapods，参考的安装流程：<a href="http://blog.csdn.net/showhilllee/article/details/38398119/" target="_blank" rel="external">http://blog.csdn.net/showhilllee/article/details/38398119/</a></h2><h2 id="我的博客园博客：http-www-cnblogs-com-guanshenbao"><a href="#我的博客园博客：http-www-cnblogs-com-guanshenbao" class="headerlink" title="我的博客园博客：http://www.cnblogs.com/guanshenbao/"></a>我的博客园博客：<a href="http://www.cnblogs.com/guanshenbao/" target="_blank" rel="external">http://www.cnblogs.com/guanshenbao/</a></h2><p>但是现在的cocoapods与之前比较。有很多不一样的地方。挣扎了2天，终于搞定。现在纪录一下。</p>
+<h3 id="1-首先查看ruby是否是最新版的。ruby是通过rvm安装的所以需要先安装rvm后查看ruby是否是最新的（通过查看ruby版本列表来判断），在终端需要中输入以下命令："><a href="#1-首先查看ruby是否是最新版的。ruby是通过rvm安装的所以需要先安装rvm后查看ruby是否是最新的（通过查看ruby版本列表来判断），在终端需要中输入以下命令：" class="headerlink" title="1.首先查看ruby是否是最新版的。ruby是通过rvm安装的所以需要先安装rvm后查看ruby是否是最新的（通过查看ruby版本列表来判断），在终端需要中输入以下命令："></a>1.首先查看ruby是否是最新版的。ruby是通过rvm安装的所以需要先安装rvm后查看ruby是否是最新的（通过查看ruby版本列表来判断），在终端需要中输入以下命令：</h3><p>(1)安装RVM.RVM:Ruby Version Manager,Ruby版本管理器，包括Ruby的版本管理和Gem库管理(gemset)</p>
+<p>$ curl -L get.rvm.io | bash -s stable</p>
+<p>等待一段时间后就可以成功安装好 RVM</p>
+<p>$ source ~/.bashrc<br>$ source ~/.bash_profile </p>
+<p>测试是否安装正常</p>
+<p>$ rvm -v</p>
+<p>(2)用RVM升级Ruby</p>
+<p>查看当前ruby版本<br>$ ruby -v<br>ruby 2.0.0<br>列出已知的ruby版本 –找到最新的版本安装<br>$ rvm list known<br>安装ruby 2.6.4<br>$ rvm install 2.6.4</p>
+<h3 id="2-更换Ruby镜像－－淘宝的那个镜像-https-ruby-taobao-org-已经不可用了。官方的需要FQ。所以我们现在用最新支持的ruby镜像-https-gems-ruby-china-org"><a href="#2-更换Ruby镜像－－淘宝的那个镜像-https-ruby-taobao-org-已经不可用了。官方的需要FQ。所以我们现在用最新支持的ruby镜像-https-gems-ruby-china-org" class="headerlink" title="2.更换Ruby镜像－－淘宝的那个镜像(https://ruby.taobao.org/ )已经不可用了。官方的需要FQ。所以我们现在用最新支持的ruby镜像(https://gems.ruby-china.org/)"></a>2.更换Ruby镜像－－淘宝的那个镜像(<a href="https://ruby.taobao.org/" target="_blank" rel="external">https://ruby.taobao.org/</a> )已经不可用了。官方的需要FQ。所以我们现在用最新支持的ruby镜像(<a href="https://gems.ruby-china.org/" target="_blank" rel="external">https://gems.ruby-china.org/</a>)</h3><p>需要的命令行：</p>
+<p>$ gem sources –remove <a href="https://rubygems.org/" target="_blank" rel="external">https://rubygems.org/</a><br>$ gem sources -a <a href="https://gems.ruby-china.org/" target="_blank" rel="external">https://gems.ruby-china.org/</a><br>$ gem sources -l  （用来检查使用替换镜像位置成功）</p>
+<h3 id="3-下载安装CocoaPods"><a href="#3-下载安装CocoaPods" class="headerlink" title="3.下载安装CocoaPods"></a>3.下载安装CocoaPods</h3><p>在命令行中输入：</p>
+<p>安装：sudo gem install cocoapods<br>更新：sudo gem update cocoapods </p>
+<p>在这里会很快就好了。。。网上教程说这样就已经完成安装了。。但我试了一下，直接搜索一下。在终端中输入:pod search  AFNetworking。会出现“Setting up CocoaPods master repo“提示，而且很久一直不动，网上说因为没FQ的原因。但是我们已经将bury镜像已经改了，为什么还会这样呢？。还有一个原因是因为在后台下载，还没下载完成，所以会这样。</p>
+<p>在这里我等了好久。通过新开一个终端窗口，输入”cd ~/.cocoapods/“命令行跳到cocoapods文件夹内，执行”du -sh *”查看文件夹的大小。发现一直是0。快崩溃了。下班回去休息。</p>
+<p>—————————————分割线—————————————</p>
+<p>第二天。我重头再来。首先将ruby更新到最新(上边方法)、将gem更新到最新、将cocoapods更新到最新。在将cocoapods更新到最新时，查到需要执行”pod setup”，但是执行这个时会出现一直是“Setting up CocoaPods master repo“，但是查看大小还是0。此外还会出现下面这个新的错误(这个发现让我欣喜若狂，起码不是那么单调了，或许会成为突破口)：</p>
+<p>[!] An error occurred while performing <code>git pull</code> on repo <code>master</code>.</p>
+<p>[!] /usr/bin/git pull –ff-only</p>
+<p>这个错误应该是说这个节点有问题。就又找资料，然后试试把cocoapods的节点删除，重新添加一个节点，或许就行，说干就干：</p>
+<p>原因： Cocoapods的分支不支持当前最新的Xcode版本</p>
+<p>解决办法: 删除master分支 重新建立新的分支</p>
+<p>sudo rm -fr ~/.cocoapods/repos/master</p>
+<p>然后再: pod setup</p>
+<p>——————————分割线—————————————————–</p>
+<p>在pod setup的过程中又是这个提示”Setting up CocoaPods master repo”，当时的感觉就快要砸电脑了，最后不死心去查看了一下cocoapods文件夹的大小。结果：<br>(图不见了。。)<br>。。没错，没有看错，大小居然一直在增加。心怀激动的慢慢等待。</p>
+<p>过了大概十几二十分钟左右，pod setup这个操作成功了。</p>
+<p>这样，整个cocoapods安装应该成功了吧。我迫不及待的 想要试试。输入”pod search AFNetworking” 居然有内容出来。然后按照之前的教程在终端中，cd到项目总目录</p>
+<p>$ cd /Users/md098/Desktop/PodTest</p>
+<p>建立Podfile（配置文件）</p>
+<p>接着上一步，终端输入 vim Podfile</p>
+<p><img src="/img/iOS/cocopods/1.png" alt=""></p>
+<p>键盘输入 i，进入编辑模式，输入</p>
+<p>platform :ios, ‘7.0’<br>pod ‘MBProgressHUD’, ‘~&gt; 0.8’</p>
+<p>然后按Esc，并且输入“ ：”号进入vim命令模式，然后在冒号后边输入wq</p>
+<p><img src="/img/iOS/cocopods/2.png" alt=""></p>
+<p>注意：键盘输入 ：后，才能输入wq。回车后发现PodTest项目总目录中多一个Podfile文件</p>
+<p><img src="/img/iOS/cocopods/3.png" alt=""></p>
+<p>激动人心的时刻到了：确定终端cd到项目总目录，然后输入 pod install。。。然后你会发现。。。</p>
+<p>提示这个错误：[!] The dependency <code>MBProgressHUD</code> is not used in any concrete target.</p>
+<p>原来新的cocoapods不能像之前那样安装第三方了。现在的格式是要加上项目的target。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">platform :ios, &apos;8.0&apos;</div><div class="line"></div><div class="line">use_frameworks!</div><div class="line"></div><div class="line">target &apos;MyApp&apos; do </div><div class="line"></div><div class="line">    pod &apos;AFNetworking&apos;, &apos;~&gt; 2.6&apos;</div><div class="line"></div><div class="line">    pod &apos;ORStackView&apos;, &apos;~&gt; 3.0&apos;</div><div class="line"></div><div class="line">    pod &apos;SwiftyJSON&apos;, &apos;~&gt; 2.3&apos;</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<p>里面的 MyApp 记得替换为自己攻城里面的target。这样就基本OK了，执行pod install / pod update 就都可以了。</p>
+<p>end：终于结束了。总结：安装过程出错，则删除并重新(更新)所有的需要的环境:(ruby、gem、cocoapods、其中包括cocoapods的节点)，替换新的ruby镜像即可。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/05/20/iOS 错误集合/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/05/27/iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2016/05/27/iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

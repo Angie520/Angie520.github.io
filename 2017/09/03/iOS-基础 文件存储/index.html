@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 文件存储 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不能访问该沙盒。 2.应用沙盒结构分析  应用程序包：(上图中的Layer)包含了所有的资源文件和可执行文件 Documents：保存应用运行时生成的需要持久化的数据，iTunes同步设备时会备份该目录。例如，游戏应用可将游戏存档保存在该目录 tmp：保存应用运行时所需的临时数据">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 文件存储">
+<meta property="og:url" content="http://angie520.cn/2017/09/03/iOS-基础 文件存储/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不能访问该沙盒。 2.应用沙盒结构分析  应用程序包：(上图中的Layer)包含了所有的资源文件和可执行文件 Documents：保存应用运行时生成的需要持久化的数据，iTunes同步设备时会备份该目录。例如，游戏应用可将游戏存档保存在该目录 tmp：保存应用运行时所需的临时数据">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:55:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 文件存储">
+<meta name="twitter:description" content="1.每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不能访问该沙盒。 2.应用沙盒结构分析  应用程序包：(上图中的Layer)包含了所有的资源文件和可执行文件 Documents：保存应用运行时生成的需要持久化的数据，iTunes同步设备时会备份该目录。例如，游戏应用可将游戏存档保存在该目录 tmp：保存应用运行时所需的临时数据">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 文件存储" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 文件存储</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/03/iOS-基础 文件存储/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.每个iOS应用都有自己的应用沙盒(应用沙盒就是文件系统目录)，与其他文件系统隔离。应用必须待在自己的沙盒里，其他应用不能访问该沙盒。</p>
+<p>2.应用沙盒结构分析</p>
+<ul>
+<li>应用程序包：(上图中的Layer)包含了所有的资源文件和可执行文件</li>
+<li>Documents：保存应用运行时生成的需要持久化的数据，iTunes同步设备时会备份该目录。例如，游戏应用可将游戏存档保存在该目录</li>
+<li>tmp：保存应用运行时所需的临时数据，使用完毕后再将相应的文件从该目录删除。应用没有运行时，系统也可能会清除该目录下的文件。iTunes同步设备时不会备份该目录</li>
+<li>Library/Caches：保存应用运行时生成的需要持久化的数据，iTunes同步设备时不会备份该目录。一般存储体积大、不需要备份的非重要数据</li>
+<li>Library/Preference：保存应用的所有偏好设置，iOS的Settings(设置)应用会在该目录中查找应用的设置信息。iTunes同步设备时会备份该目录</li>
+</ul>
+<p>3.应用沙盒目录路径的常用获取方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/// Documents目录方法1</div><div class="line">/// 取出根目录。然后拼接</div><div class="line">NSString *home = NSHomeDirectory();</div><div class="line">/// 不建议采用，因为新版本的操作系统可能会修改目录名</div><div class="line">NSString *documents = [home stringByAppendingPathComponent:@&quot;Documents&quot;];</div><div class="line"></div><div class="line">/// Documents目录方法2</div><div class="line">/// NSUserDomainMask 代表从用户文件夹下找</div><div class="line">/// YES 代表展开路径中的波浪字符“~”</div><div class="line">NSArray *array =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);</div><div class="line">/// 在iOS中，只有一个目录跟传入的参数匹配，所以这个集合里面只有一个元素</div><div class="line">NSString *documents = [array objectAtIndex:0];</div><div class="line"></div><div class="line">/// tmp目录获取方式</div><div class="line">NSString *tmp = NSTemporaryDirectory();</div><div class="line"></div><div class="line">/// Library/Caches目录路径获取方式</div><div class="line">/// 将函数的第1个参数改为：NSCachesDirectory即可</div><div class="line">NSArray *array =  NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);</div><div class="line">// 在iOS中，只有一个目录跟传入的参数匹配，所以这个集合里面只有一个元素</div><div class="line">NSString *Caches = [array objectAtIndex:0];</div></pre></td></tr></table></figure></p>
+<p>4.存储和读取对象信息的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">/// 如果要直接存储和读取对象信息。那么要重写对象的归档解档方法。</div><div class="line">- (void)encodeWithCoder:(NSCoder *)aCoder&#123;</div><div class="line">[aCoder encodeObject:_name forKey:@&quot;name&quot;];</div><div class="line">[aCoder encodeObject:_mobile forKey:@&quot;mobile&quot;];</div><div class="line">&#125;</div><div class="line">- (instancetype)initWithCoder:(NSCoder *)aDecoder&#123;</div><div class="line">if (self = [super init]) &#123;</div><div class="line">_name = [aDecoder decodeObjectForKey:@&quot;name&quot;];</div><div class="line">_mobile = [aDecoder decodeObjectForKey:@&quot;mobile&quot;];</div><div class="line">&#125;</div><div class="line">return self;</div><div class="line">&#125;</div><div class="line">/// 文件路径</div><div class="line">- (NSString *)filepath&#123;</div><div class="line">NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];</div><div class="line">return [documents stringByAppendingPathComponent:@&quot;new_contacts.archive&quot;];</div><div class="line">&#125;</div><div class="line">/// 写入文件方法</div><div class="line">- (void)save&#123;</div><div class="line">NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.contacts];</div><div class="line">[data writeToFile:[self filepath] atomically:YES];</div><div class="line">&#125;</div><div class="line">/// 读取文件方法</div><div class="line">- (void)read&#123;</div><div class="line">id object = [NSKeyedUnarchiver unarchiveObjectWithFile:[self filepath]];</div><div class="line">if ([object isKindOfClass:[NSArray class]])&#123;</div><div class="line">[self.contacts addObjectsFromArray:object];</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.plist实际上是一种xml文件，他的读取和写入都是整个文件操作的，就是说如果只是想读一个数据，也必须要将所有数据读取出来再找，如果更新一个值，也会将整个文件所有值都一起写入过。</p>
+<p>6.为了方便使用和性能考虑，我们会考虑将数据保存在数据库中，iOS中最长使用的是数据库是SQLite。SQLite，是一款轻型的数据库，是遵守ACID的关系型数据库管理系统，它包含在一个相对小的C库中。简单使用方法：</p>
+<ul>
+<li><p>在XCode工程中,打开targets,在Build Phases下导入Libsqlite3.tbd,在需要使用sqlite3的位置导入头文件即可.(#import <sqlite3.h>)</sqlite3.h></p>
+</li>
+<li><p>指定数据库存储路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (NSString *)filepath&#123;</div><div class="line">NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];</div><div class="line">return  [documents stringByAppendingPathComponent:@&quot;contacts.db&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建和打开数据库&amp;创建表的操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line">/// 创建和打开数据库</div><div class="line">- (void)openDatabase&#123;</div><div class="line">NSString *filepath = [self filepath];</div><div class="line">if (sqlite3_open([filepath UTF8String], &amp;_db) == SQLITE_OK)&#123;</div><div class="line">NSLog(@&quot;open database success&quot;);</div><div class="line">/// 打开成功，就能进行数据库的操作</div><div class="line">&#125;else&#123;</div><div class="line">NSLog(@&quot;open database failed&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">/// 创建和打开数据库并创建表</div><div class="line">- (void)openDatabase&#123;</div><div class="line">NSString *filepath = [self filepath];</div><div class="line">if (sqlite3_open([filepath UTF8String], &amp;_db) == SQLITE_OK)&#123;</div><div class="line">NSString *sql = @&quot;create table if not exists contacts(id integer primary key autoincrement,name text,mobile text)&quot;;</div><div class="line">if(sqlite3_exec(_db, [sql UTF8String], NULL, NULL, NULL) != SQLITE_OK)&#123;</div><div class="line">NSLog(@&quot;create table failed&quot;);</div><div class="line">&#125;</div><div class="line">&#125;else&#123;</div><div class="line">NSLog(@&quot;open database failed&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">/// 读取数据</div><div class="line">- (void)read&#123;</div><div class="line">sqlite3_stmt *stmt = NULL;</div><div class="line">/// 查询的SQL语句</div><div class="line">NSString *sql = @&quot;select * from contacts&quot;;</div><div class="line">/// db代表打开的数据库连接,sql代表的sql语句,byte代表SQL语句的最大长度,传出参数,指向预编译SQL语句产生的sqlite3_stmt,指向SQL语句中未使用的部分</div><div class="line">/// int sqlite3_prepare(sqlite3 *db, const char *sql,int byte,sqlite3_stmt **stmt,const char **tail)</div><div class="line">if(sqlite3_prepare(_db,[sql UTF8String],-1, &amp;stmt, NULL) == SQLITE_OK)&#123;</div><div class="line">while (sqlite3_step(stmt) == SQLITE_ROW)&#123;</div><div class="line">/// 查询到的数据。通过stmt的下标来取值</div><div class="line">int64_t serialId = sqlite3_column_int64(stmt, 0);</div><div class="line">const char *name = (const char *)sqlite3_column_text(stmt, 1);</div><div class="line">const char *mobile = (const char *)sqlite3_column_text(stmt, 2);</div><div class="line"></div><div class="line">if (name &amp;&amp; mobile)&#123;</div><div class="line">Contact *contact =[[Contact alloc] init];</div><div class="line">contact.serialId = serialId;</div><div class="line">contact.name = [NSString stringWithUTF8String:name];</div><div class="line">contact.mobile = [NSString stringWithUTF8String:mobile];</div><div class="line">[self.contacts addObject:contact];</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">sqlite3_finalize(stmt);</div><div class="line">/// 关闭数据库</div><div class="line">sqlite3_close(_db);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">/// 更新操作的方法1</div><div class="line">/// 添加数据---其他更新操作也是差不多</div><div class="line">- (void)onAddContact:(Contact *)contact&#123;</div><div class="line">sqlite3_stmt *stmt = NULL;</div><div class="line">NSString *sql = @&quot;insert into contacts (name,mobile) values (?,?)&quot;;</div><div class="line">if(sqlite3_prepare(_db,[sql UTF8String], -1, &amp;stmt, NULL) == SQLITE_OK)&#123;</div><div class="line">/// 释放字符串占用的内存</div><div class="line">sqlite3_bind_text(stmt, 1, [contact.name UTF8String], -1, NULL);</div><div class="line">sqlite3_bind_text(stmt, 2, [contact.mobile UTF8String], -1 , NULL);</div><div class="line">/// SQL操作的结果。</div><div class="line">int result = sqlite3_step(stmt);</div><div class="line">if (result == SQLITE_DONE)&#123;</div><div class="line">contact.serialId = sqlite3_last_insert_rowid(_db);</div><div class="line">&#125;</div><div class="line">/// 销毁stmt,回收资源</div><div class="line">sqlite3_finalize(stmt);</div><div class="line">/// 关闭数据库</div><div class="line">sqlite3_close(_db);</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">/// 添加的方法2</div><div class="line">- (void)onAddContact:(Contact *)contact&#123;</div><div class="line">sqlite3_stmt *stmt = NULL;</div><div class="line">NSString *sql = @&quot;insert into contacts (name,mobile) values (?,?)&quot;;</div><div class="line">int insertResult = sqlite3_prepare_v2(_db, [sql UTF8String], -1, &amp;stmt, nil);</div><div class="line">if (insertResult != SQLITE_OK) &#123;</div><div class="line">NSLog(@&quot;添加失败,%d&quot;,insertResult);</div><div class="line">&#125;else&#123;</div><div class="line">//执行sql语句</div><div class="line">sqlite3_step(stmt);</div><div class="line">&#125;</div><div class="line">/// 销毁stmt,回收资源</div><div class="line">sqlite3_finalize(stmt);</div><div class="line">/// 关闭数据库</div><div class="line">sqlite3_close(_db);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>7.这里对上方例子的sqlite3_bind_text解释一下。sqlite3<em>bind</em>*系列函数有好多，这里只对sqlite3_bind_text进行一下说明，sqlite3_bind_text的第二个参数为序号（从1开始），第三个参数为字符串值，第四个参数为字符串长度。sqlite3_bind_text的第五个参数为一个函数指针，SQLITE3执行完操作后回调此函数，通常用于释放字符串占用的内存。此参数有两个常数，SQLITE_STATIC告诉sqlite3_bind_text函数字符串为常量，可以放心使用；而SQLITE_TRANSIENT会使得sqlite3_bind_text函数对字符串做一份拷贝。一般使用这两个常量参数来调sqlite3_bind_text。statement准备好了以后，就是操作的执行了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">int sqlite3_bind_text(sqlite3_stmt*, int, const char*, int n,void(*)(void*));</div></pre></td></tr></table></figure></p>
+<p>8.在iOS中使用数据库的话，有个很优秀的数据库操作框架–FMDB。这里简单的介绍一下怎么使用FMDB：</p>
+<ul>
+<li>FMDatabase 是通过一个 SQLite 数据库文件路径创建的，此路径可以是以下三者之一：</li>
+</ul>
+<ol>
+<li>一个文件的系统路径。磁盘中可以不存在此文件，因为如果不存在会自动为你创建。</li>
+<li>一个空的字符串 @””。会在临时位置创建一个空的数据库，当 FMDatabase 连接关闭时，该数据库会被删除。</li>
+<li>NULL。会在内存中创建一个数据库，当 FMDatabase 连接关闭时，该数据库会被销毁。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 创建数据库示例</div><div class="line">FMDatabase *db = [FMDatabase databaseWithPath:@&quot;/tmp/tmp.db&quot;];</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><p>创建表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)openDatabase&#123;</div><div class="line">NSString *filepath = [self filepath];</div><div class="line">_database = [FMDatabase databaseWithPath:filepath];</div><div class="line">if ([_database open])&#123;</div><div class="line">if (![_database executeUpdate:@&quot;create table if not exists contacts(id integer primary key autoincrement,name text,mobile text)&quot;])&#123;</div><div class="line">NSLog(@&quot;open database failed&quot;);</div><div class="line">&#125;</div><div class="line">&#125;else&#123;</div><div class="line">NSLog(@&quot;open database failed&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>查询操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (void)read&#123;</div><div class="line">/// 执行查询的SQL操作</div><div class="line">FMResultSet *set = [_database executeQuery:@&quot;select * from contacts&quot;];</div><div class="line">/// FMResultSet是查询结果的集合。通过next来遍历去数据</div><div class="line">while ([set next])&#123;</div><div class="line">/// 通过[set longLongIntForColumn:@&quot;id&quot;]的key-value方式取对应的数据</div><div class="line">Contact *contact =[[Contact alloc] init];</div><div class="line">contact.serialId = [set longLongIntForColumn:@&quot;id&quot;];</div><div class="line">contact.name = [set stringForColumn:@&quot;name&quot;];</div><div class="line">contact.mobile = [set stringForColumn:@&quot;mobile&quot;];</div><div class="line">[self.contacts addObject:contact];</div><div class="line">&#125;</div><div class="line">/// 关闭结果集</div><div class="line">[set close];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>更新操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)onAddContact:(Contact *)contact&#123;</div><div class="line">if ([_database executeUpdate:@&quot;insert into contacts (name,mobile) values (?,?)&quot;,contact.name,contact.mobile])&#123;</div><div class="line">NSLog(@&quot;更新成功&quot;);</div><div class="line">&#125;else &#123;</div><div class="line">NSLog(@&quot;更新失败&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>FMDatabase 这个类是线程不安全的，在多线程中使用 FMDatabase 单例是极其错误的想法。不能在多线程的环境中对数据库 FMDatabase 进行读写，会出现奔溃或者异常，因为你不能保证你读数据的同时另外一条线程不在写数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">/// FMDatabaseQueue的简单使用示例：</div><div class="line">/// 1.创建队列</div><div class="line">FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:[self  filepath]]];</div><div class="line">/// 2.通过队列操作SQL操作</div><div class="line">// 示例</div><div class="line">[queue inDatabase:^(FMDatabase *db) &#123;</div><div class="line">[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];</div><div class="line">[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];</div><div class="line">[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];</div><div class="line"></div><div class="line">FMResultSet *rs = [db executeQuery:@&quot;select * from foo&quot;];</div><div class="line">while ([rs next]) &#123;</div><div class="line">...</div><div class="line">&#125;</div><div class="line">&#125;];</div><div class="line">/// 3.事务操作2种方式：</div><div class="line">/// block事务1</div><div class="line">[queue inTransaction:^(FMDatabase *db, BOOL *rollback) &#123;</div><div class="line">[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:1]];</div><div class="line">[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:2]];</div><div class="line">[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:3]];</div><div class="line"></div><div class="line">if (whoopsSomethingWrongHappened) &#123;</div><div class="line">*rollback = YES;</div><div class="line">return;</div><div class="line">&#125;</div><div class="line">// ...</div><div class="line">[db executeUpdate:@&quot;INSERT INTO myTable VALUES (?)&quot;, [NSNumber numberWithInt:4]];</div><div class="line">&#125;];</div><div class="line">/// 操作中开事务2</div><div class="line">[queue inDatabase:^(FMDatabase *db) &#123;</div><div class="line">// 开启事务</div><div class="line">[db beginTransaction];</div><div class="line">BOOL result = [db executeUpdate:@&quot;update t_student set age = 20 where id &gt;= 20; &quot;];</div><div class="line">if (result) &#123;</div><div class="line">NSLog(@&quot;修改成功&quot;);</div><div class="line">&#125;else&#123;</div><div class="line">NSLog(@&quot;修改失败&quot;);</div><div class="line">&#125;</div><div class="line">// 提交事务</div><div class="line">[db commit];</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+</li>
+<li><p>FMDB的优点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1.FMDB是iOS平台的SQLite数据库框架，以OC的方式封装了SQLite的C语言API</div><div class="line">，使用起来比单纯调用SQLite语句方便</div><div class="line"></div><div class="line">2.FMDB使用起来更加面向对象，省去了很多麻烦、冗余的C语言代码</div><div class="line"></div><div class="line">3.对比苹果自带的Core Data框架，更加轻量级和灵活</div><div class="line"></div><div class="line">4.提供了多线程安全的数据库操作方法，有效地防止数据混乱。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>9.NSUserDefaults。对于应用来说，每个用户都有自己的独特偏好设置，而好的应用会让用户根据喜好选择合适的使用方式，把这些偏好记录在应用包的plist文件中，通过NSUserDefaults类来访问，这是NSUserDefaults的常用姿势。保存一些相对简单的数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/// 取到NSUserDefaults的单例。所有操作基于这个单例执行。</div><div class="line">NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];</div><div class="line"></div><div class="line">/// 存储</div><div class="line">[defaults setObject:@”jack“ forKey:@&quot;firstName&quot;];</div><div class="line">[defaults setInteger:10 forKey:@&quot;Age&quot;];</div><div class="line">UIImage *image =[UIImage imageNamed:@&quot;somename&quot;];</div><div class="line">NSData *imageData = UIImageJPEGRepresentation(image, 100);//把image归档为NSData</div><div class="line">[defaults setObject:imageData forKey:@&quot;image&quot;];</div><div class="line">/// 立即同步保存</div><div class="line">[defaults synchronize];</div><div class="line"></div><div class="line">/// 读取</div><div class="line">NSString *firstName = [defaults objectForKey:@&quot;firstName&quot;]</div><div class="line">NSInteger age = [defaults integerForKey:@&quot;Age&quot;];</div><div class="line">NSData *imageData = [defaults dataForKey:@&quot;image&quot;];</div><div class="line">UIImage *image = [UIImage imageWithData:imageData];</div><div class="line"></div><div class="line">/// NSUserDefaults是通过key-value方式存储内容的。value的类型必须是plist可以存储的类型：NSData、NSString、NSNuber、NSData、NSArray、NSDictionary。</div></pre></td></tr></table></figure></p>
+<p>10.此外还有苹果官方推荐使用的CodeData做持久化存储的方式。</p>
+<ul>
+<li>Core Data 是数据持久化存储的最佳方式</li>
+<li>数据最终的存储类型可以是：SQLite数据库，XML，二进制，内存里，或自定义数据类型。在Mac OS X 10.5Leopard及以后的版本中，开发者也可以通过继承NSPersistentStore类以创建自定义的存储格式。</li>
+<li>能够合理管理内存，避免使用sql的麻烦，高效。</li>
+</ul>
+<p>但CodeData的缺点也明显，比如学习成本高、不具备线程安全等，所以在国内主流持久化还是使用SQLite的方式。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 viewcontroller生命周期顺序/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/03/iOS-基础 多线程/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/03/iOS-基础 文件存储/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

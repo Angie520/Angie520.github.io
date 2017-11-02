@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 动画 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.基础动画有2种方式实现，block是比较方便的形式123456789101112131415161718192021/// 以下2个方法是一样的效果- (void)startAnimating&amp;#123;[UIView beginAnimations:@&amp;quot;squareAnimation&amp;quot; context:(__bridge void *)(self)];[UIView se">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 动画">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 动画/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.基础动画有2种方式实现，block是比较方便的形式123456789101112131415161718192021/// 以下2个方法是一样的效果- (void)startAnimating&amp;#123;[UIView beginAnimations:@&amp;quot;squareAnimation&amp;quot; context:(__bridge void *)(self)];[UIView se">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:55:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 动画">
+<meta name="twitter:description" content="1.基础动画有2种方式实现，block是比较方便的形式123456789101112131415161718192021/// 以下2个方法是一样的效果- (void)startAnimating&amp;#123;[UIView beginAnimations:@&amp;quot;squareAnimation&amp;quot; context:(__bridge void *)(self)];[UIView se">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 动画" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 动画</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 动画/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.基础动画有2种方式实现，block是比较方便的形式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/// 以下2个方法是一样的效果</div><div class="line">- (void)startAnimating&#123;</div><div class="line">[UIView beginAnimations:@&quot;squareAnimation&quot; context:(__bridge void *)(self)];</div><div class="line">[UIView setAnimationDelegate:self];</div><div class="line">[UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];</div><div class="line">[UIView setAnimationDuration:0.4];</div><div class="line">[UIView setAnimationRepeatCount:2];</div><div class="line">[UIView setAnimationRepeatAutoreverses:YES];</div><div class="line">_square.center = CGPointMake(_square.center.x + 100, _square.center.y);</div><div class="line">[UIView commitAnimations];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)startBlockAnimating&#123;</div><div class="line">UIViewAnimationOptions options = UIViewAnimationOptionAutoreverse|UIViewAnimationOptionRepeat;</div><div class="line">[UIView animateWithDuration:0.4 delay:0 options:options animations:^&#123;</div><div class="line">[UIView setAnimationRepeatCount:2];</div><div class="line">_square.center = CGPointMake(_square.center.x + 100, _square.center.y);</div><div class="line">&#125; completion:^(BOOL finished) &#123;</div><div class="line">_square.center = CGPointMake(_square.center.x - 100, _square.center.y);</div><div class="line">&#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.动画属性设置（可以同时选择多个进行设置）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">1.常规动画属性设置（可以同时选择多个进行设置）</div><div class="line">UIViewAnimationOptionLayoutSubviews：动画过程中保证子视图跟随运动。**提交动画的时候布局子控件，表示子控件将和父控件一同动画。**</div><div class="line">UIViewAnimationOptionAllowUserInteraction：动画过程中允许用户交互。</div><div class="line">UIViewAnimationOptionBeginFromCurrentState：所有视图从当前状态开始运行。</div><div class="line">UIViewAnimationOptionRepeat：重复运行动画。</div><div class="line">UIViewAnimationOptionAutoreverse ：动画运行到结束点后仍然以动画方式回到初始点。**执行动画回路,前提是设置动画无限重复**</div><div class="line">UIViewAnimationOptionOverrideInheritedDuration：忽略嵌套动画时间设置。**忽略外层动画嵌套的时间变化曲线**</div><div class="line">UIViewAnimationOptionOverrideInheritedCurve：忽略嵌套动画速度设置。**通过改变属性和重绘实现动画效果，如果key没有提交动画将使用快照**</div><div class="line">UIViewAnimationOptionAllowAnimatedContent：动画过程中重绘视图（注意仅仅适用于转场动画）。</div><div class="line">UIViewAnimationOptionShowHideTransitionViews：视图切换时直接隐藏旧视图、显示新视图，而不是将旧视图从父视图移除（仅仅适用于转场动画）**用显隐的方式替代添加移除图层的动画效果**</div><div class="line">UIViewAnimationOptionOverrideInheritedOptions ：不继承父动画设置或动画类型。**忽略嵌套继承的选项**</div><div class="line">----------------------------------------------------------------------------</div><div class="line">2.动画速度控制（可从其中选择一个设置）时间函数曲线相关**时间曲线函数**</div><div class="line">UIViewAnimationOptionCurveEaseInOut：动画先缓慢，然后逐渐加速。</div><div class="line">UIViewAnimationOptionCurveEaseIn ：动画逐渐变慢。</div><div class="line">UIViewAnimationOptionCurveEaseOut：动画逐渐加速。</div><div class="line">UIViewAnimationOptionCurveLinear ：动画匀速执行，默认值。</div><div class="line">-----------------------------------------------------------------------------</div><div class="line">3.转场类型（仅适用于转场动画设置，可以从中选择一个进行设置，基本动画、关键帧动画不需要设置）**转场动画相关的**</div><div class="line">UIViewAnimationOptionTransitionNone：没有转场动画效果。</div><div class="line">UIViewAnimationOptionTransitionFlipFromLeft ：从左侧翻转效果。</div><div class="line">UIViewAnimationOptionTransitionFlipFromRight：从右侧翻转效果。</div><div class="line">UIViewAnimationOptionTransitionCurlUp：向后翻页的动画过渡效果。</div><div class="line">UIViewAnimationOptionTransitionCurlDown ：向前翻页的动画过渡效果。</div><div class="line">UIViewAnimationOptionTransitionCrossDissolve：旧视图溶解消失显示下一个新视图的效果。</div><div class="line">UIViewAnimationOptionTransitionFlipFromTop ：从上方翻转效果。</div><div class="line">UIViewAnimationOptionTransitionFlipFromBottom：从底部翻转效果。</div><div class="line">/// 摘自http://www.jianshu.com/p/ec73573e112a</div></pre></td></tr></table></figure></p>
+<p>3.使用系统的转场动画效果可用以下方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/// UIViewAnimationTransitionFlipFromLeft是旋转的转场动画</div><div class="line">/// 旋转动画后，切换_square1和_square2显示----基础动画写法</div><div class="line">- (void)startFliping&#123;</div><div class="line">[UIView beginAnimations:@&quot;squareAnimation&quot; context:(__bridge void *)(self)];</div><div class="line">[UIView setAnimationDuration:1];</div><div class="line">[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:_rootView cache:YES];</div><div class="line">_square1.hidden = !_square1.hidden;</div><div class="line">_square2.hidden = !_square2.hidden;</div><div class="line">[UIView commitAnimations];</div><div class="line">&#125;</div><div class="line">/// 旋转动画后，切换_square1和_square2显示--block写法</div><div class="line">- (void)startBlockFliping1&#123;</div><div class="line">UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft</div><div class="line">/* | UIViewAnimationOptionAllowAnimatedContent */;</div><div class="line">[UIView transitionWithView:_rootView duration:1 options:options animations:^&#123;</div><div class="line">_square1.hidden = !_square1.hidden;</div><div class="line">_square2.hidden = !_square2.hidden;</div><div class="line">&#125; completion:nil];</div><div class="line">&#125;</div><div class="line">/// 旋转动画后，切换_square1和_square2显示---block并定义视图切换时直接隐藏旧视图、显示新视图，而不是将旧视图从父视图移除</div><div class="line">- (void)startBlockFliping2&#123;</div><div class="line">UIView *fromView = _square1.hidden ? _square2 : _square1;</div><div class="line">UIView *toView = _square1.hidden ? _square1 : _square2;</div><div class="line">UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft</div><div class="line">| UIViewAnimationOptionShowHideTransitionViews</div><div class="line">/* | UIViewAnimationOptionAllowAnimatedContent */;</div><div class="line">[UIView transitionFromView:fromView toView:toView duration:1 options:options completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.弹簧动画效果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/// dampingRatio（阻尼系数）范围 0~1 当它设置为1时，动画是平滑的没有振动的达到静止状态，数值越小「弹簧」的振动效果越明显。</div><div class="line">/// velocity (弹性速率)就是形变的速度，则表示初始的速度，数值越大一开始移动越快。</div><div class="line">[UIView animateWithDuration:2 delay:index usingSpringWithDamping:(0.3 * index) initialSpringVelocity:0 options:0 animations:^&#123;</div><div class="line">CGRect rect = view.frame;</div><div class="line">rect.size.width = 100;</div><div class="line">view.frame = rect;</div><div class="line">&#125; completion:nil];</div></pre></td></tr></table></figure></p>
+<p>5.通过keyFrames方式实现光碟旋转的动画<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/// 开始光碟旋转动画</div><div class="line">- (void)startRotation&#123;</div><div class="line">[UIView animateKeyframesWithDuration:diskAnimationDuration delay:0 options:UIViewKeyframeAnimationOptionRepeat|UIViewAnimationOptionCurveLinear animations:^&#123;</div><div class="line">[UIView addKeyframeWithRelativeStartTime:0 relativeDuration:1 animations:^&#123;</div><div class="line">_diskImageView.transform = CGAffineTransformMakeRotation(M_PI_2);</div><div class="line">_coverimageView.transform = _diskImageView.transform;</div><div class="line">&#125;];</div><div class="line">[UIView addKeyframeWithRelativeStartTime:0.25 relativeDuration:0.25 animations:^&#123;</div><div class="line">_diskImageView.transform = CGAffineTransformMakeRotation(M_PI);</div><div class="line">_coverimageView.transform = _diskImageView.transform;</div><div class="line">&#125;];</div><div class="line">[UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.25 animations:^&#123;</div><div class="line">_diskImageView.transform = CGAffineTransformMakeRotation(M_PI_2 * 3);</div><div class="line">_coverimageView.transform = _diskImageView.transform;</div><div class="line">&#125;];</div><div class="line">[UIView addKeyframeWithRelativeStartTime:0.75 relativeDuration:0.25 animations:^&#123;</div><div class="line">_diskImageView.transform = CGAffineTransformMakeRotation(M_PI * 2);</div><div class="line">_coverimageView.transform = _diskImageView.transform;</div><div class="line">&#125;];</div><div class="line">&#125; completion:nil];</div><div class="line">&#125;</div><div class="line">/// 结束旋转动画</div><div class="line">- (void)stopRotation&#123;</div><div class="line">[UIView animateWithDuration:0 animations:^&#123;</div><div class="line">_diskImageView.transform = CGAffineTransformIdentity;</div><div class="line">_coverimageView.transform = _diskImageView.transform;</div><div class="line">&#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 Quartz 2D绘制/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 viewcontroller生命周期顺序/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 动画/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

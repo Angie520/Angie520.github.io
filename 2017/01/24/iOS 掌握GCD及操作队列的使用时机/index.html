@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 掌握GCD及操作队列的使用时机 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+  
+
+  <meta name="description" content="1.很少有其他技术能与GCD的同步机制相媲美。对于那些只需执行一次的代码来说，也是如此，使用GCD的dispatch_once最为方便。然而在执行后台任务的时候，GCD并不一定是最佳方式。还有一种技术叫做NSOperationQueue，它虽然与GCD不同，但是却与之相关，开发者可用把操作以NSPeration子类的形式放在队列中，而这些操作也能并发执行。 2.使用NSOperationQueue">
+<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 掌握GCD及操作队列的使用时机">
+<meta property="og:url" content="http://angie520.cn/2017/01/24/iOS 掌握GCD及操作队列的使用时机/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.很少有其他技术能与GCD的同步机制相媲美。对于那些只需执行一次的代码来说，也是如此，使用GCD的dispatch_once最为方便。然而在执行后台任务的时候，GCD并不一定是最佳方式。还有一种技术叫做NSOperationQueue，它虽然与GCD不同，但是却与之相关，开发者可用把操作以NSPeration子类的形式放在队列中，而这些操作也能并发执行。 2.使用NSOperationQueue">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:07:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 掌握GCD及操作队列的使用时机">
+<meta name="twitter:description" content="1.很少有其他技术能与GCD的同步机制相媲美。对于那些只需执行一次的代码来说，也是如此，使用GCD的dispatch_once最为方便。然而在执行后台任务的时候，GCD并不一定是最佳方式。还有一种技术叫做NSOperationQueue，它虽然与GCD不同，但是却与之相关，开发者可用把操作以NSPeration子类的形式放在队列中，而这些操作也能并发执行。 2.使用NSOperationQueue">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-很少有其他技术能与GCD的同步机制相媲美。"><span class="toc-text">1.很少有其他技术能与GCD的同步机制相媲美。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-使用NSOperationQueue的好处："><span class="toc-text">2.使用NSOperationQueue的好处：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-要解决多线程与任务管理问题时，派发队列GCD并非唯一方案。"><span class="toc-text">3.要解决多线程与任务管理问题时，派发队列GCD并非唯一方案。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-操作队列提供一套高层的OC-API，能实现纯GCD所具备的绝大部分功能，而且还能完成一些更为复杂的操作，那么操作若改用GCD来实现，则需另外编写代码。"><span class="toc-text">4.操作队列提供一套高层的OC API，能实现纯GCD所具备的绝大部分功能，而且还能完成一些更为复杂的操作，那么操作若改用GCD来实现，则需另外编写代码。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-总体来说，GCD更适合大体的多线程，如果要更细致的操作多线程则使用NSOperationQueue操作队列。"><span class="toc-text">5.总体来说，GCD更适合大体的多线程，如果要更细致的操作多线程则使用NSOperationQueue操作队列。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-操作队列是基于对象是OC。GCD派发队列是纯C。"><span class="toc-text">6.操作队列是基于对象是OC。GCD派发队列是纯C。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 掌握GCD及操作队列的使用时机" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 掌握GCD及操作队列的使用时机</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.24</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/01/24/iOS 掌握GCD及操作队列的使用时机/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="1-很少有其他技术能与GCD的同步机制相媲美。"><a href="#1-很少有其他技术能与GCD的同步机制相媲美。" class="headerlink" title="1.很少有其他技术能与GCD的同步机制相媲美。"></a>1.很少有其他技术能与GCD的同步机制相媲美。</h3><p>对于那些只需执行一次的代码来说，也是如此，使用GCD的dispatch_once最为方便。然而在执行后台任务的时候，GCD并不一定是最佳方式。还有一种技术叫做NSOperationQueue，它虽然与GCD不同，但是却与之相关，开发者可用把操作以NSPeration子类的形式放在队列中，而这些操作也能并发执行。</p>
+<h3 id="2-使用NSOperationQueue的好处："><a href="#2-使用NSOperationQueue的好处：" class="headerlink" title="2.使用NSOperationQueue的好处："></a>2.使用NSOperationQueue的好处：</h3><p><em>取消某个操作。使用操作队列时，想要取消操作是很容易的，运行任务之前，可以在NSOperation对象上调用cancel方法，该方法会设置对象内的标志位，用以表明此任务不需要执行，不过已经启动的任务无法取消。若是不使用操作队列，而是使用GCD，那就无法取消了。那套框架是“安排好任务之后就不管了”
+</em>指定操作间的依赖关系。一个操作可以依赖其他多个操作。开发者能够指定操作之间的依赖关系，使特定的操作必须在另外一个操作顺利执行完毕后方可执行。所依赖的多个操作可并发。<br><em>通过键值观测机制监控NSOperation对象的属性。NSOperation对象有许多属性都适合通过键值观测机制（KVO），比如可以通过isCancelled属性来判断任务是否已取消，又比如通过isFinished属性来判断任务是否已完成。如果想在某个任务变更其状态时得到通知，这就比用GCD更适合。
+</em>指定操作的优先级。GCD的优先级是针对整个队列而言的。而不是针对某个块。而让开发者在GCD上自己编写调度算法又不合适。因此在优先级上，操作队列所提供的功能比GCD更便利。NSOperation对象也有“线程优先级”，这决定了运行此操作的线程处在何种优先级上。用GCD也可以实现此功能，然而采用操作队列更简单，只需设置一个属性。<br>*重用NSOperation对象。</p>
+<h3 id="3-要解决多线程与任务管理问题时，派发队列GCD并非唯一方案。"><a href="#3-要解决多线程与任务管理问题时，派发队列GCD并非唯一方案。" class="headerlink" title="3.要解决多线程与任务管理问题时，派发队列GCD并非唯一方案。"></a>3.要解决多线程与任务管理问题时，派发队列GCD并非唯一方案。</h3><h3 id="4-操作队列提供一套高层的OC-API，能实现纯GCD所具备的绝大部分功能，而且还能完成一些更为复杂的操作，那么操作若改用GCD来实现，则需另外编写代码。"><a href="#4-操作队列提供一套高层的OC-API，能实现纯GCD所具备的绝大部分功能，而且还能完成一些更为复杂的操作，那么操作若改用GCD来实现，则需另外编写代码。" class="headerlink" title="4.操作队列提供一套高层的OC API，能实现纯GCD所具备的绝大部分功能，而且还能完成一些更为复杂的操作，那么操作若改用GCD来实现，则需另外编写代码。"></a>4.操作队列提供一套高层的OC API，能实现纯GCD所具备的绝大部分功能，而且还能完成一些更为复杂的操作，那么操作若改用GCD来实现，则需另外编写代码。</h3><h3 id="5-总体来说，GCD更适合大体的多线程，如果要更细致的操作多线程则使用NSOperationQueue操作队列。"><a href="#5-总体来说，GCD更适合大体的多线程，如果要更细致的操作多线程则使用NSOperationQueue操作队列。" class="headerlink" title="5.总体来说，GCD更适合大体的多线程，如果要更细致的操作多线程则使用NSOperationQueue操作队列。"></a>5.总体来说，GCD更适合大体的多线程，如果要更细致的操作多线程则使用NSOperationQueue操作队列。</h3><h3 id="6-操作队列是基于对象是OC。GCD派发队列是纯C。"><a href="#6-操作队列是基于对象是OC。GCD派发队列是纯C。" class="headerlink" title="6.操作队列是基于对象是OC。GCD派发队列是纯C。"></a>6.操作队列是基于对象是OC。GCD派发队列是纯C。</h3>
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/24/iOS 多用GCD，少用performSelector系列方法/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/01/24/iOS 通过Dispatch Group机制，根据系统资源状况来执行任务/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/01/24/iOS 掌握GCD及操作队列的使用时机/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

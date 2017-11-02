@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 精简initialize与load的实现代码 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+  
+
+  <meta name="description" content="1.类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize  2.对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会">
+<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 精简initialize与load的实现代码">
+<meta property="og:url" content="http://angie520.cn/2017/01/27/iOS 精简initialize与load的实现代码/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize  2.对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC43.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC44.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC45.png">
+<meta property="og:updated_time" content="2017-11-02T07:07:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 精简initialize与load的实现代码">
+<meta name="twitter:description" content="1.类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize  2.对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会">
+<meta name="twitter:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC43.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize"><span class="toc-text">1.类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会调用。因此，如果某个类一直没有被调用，那么initialize方法就不会执行。这与load不同，对于load来说，应用程序必须阻塞并等着所有类的load都执行完，才能继续。"><span class="toc-text">2.对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会调用。因此，如果某个类一直没有被调用，那么initialize方法就不会执行。这与load不同，对于load来说，应用程序必须阻塞并等着所有类的load都执行完，才能继续。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-此方法还有一个区别，就是运行期系统在执行该方法时，是处于正常状态的，因此，从运行期系统完整度来讲，此时可以安全使用并调用任意类中的任意方法。而且运行期系统也能保证initialize方法一定会在“线程安全环境”中执行。也就是说，只有执行initialize方法那个线程可以操作类和类实例。其他线程都要先阻塞，等着initialize方法执行完。"><span class="toc-text">3.此方法还有一个区别，就是运行期系统在执行该方法时，是处于正常状态的，因此，从运行期系统完整度来讲，此时可以安全使用并调用任意类中的任意方法。而且运行期系统也能保证initialize方法一定会在“线程安全环境”中执行。也就是说，只有执行initialize方法那个线程可以操作类和类实例。其他线程都要先阻塞，等着initialize方法执行完。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-最后initialize方法与其他消息一样，如果某个类未实现它，而其超类实现了。那么就会运行超类的实现代码。"><span class="toc-text">4.最后initialize方法与其他消息一样，如果某个类未实现它，而其超类实现了。那么就会运行超类的实现代码。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-所以在使用这2个方法的时候要尽可能精简。在里面设置一些状态，使本类能够正常运行就可以了，不要执行那种耗时太久或需要加锁的任务。"><span class="toc-text">5.所以在使用这2个方法的时候要尽可能精简。在里面设置一些状态，使本类能够正常运行就可以了，不要执行那种耗时太久或需要加锁的任务。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-无法在编译期设定的全局变量，可以放在initialize方法里初始化。"><span class="toc-text">6.无法在编译期设定的全局变量，可以放在initialize方法里初始化。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 精简initialize与load的实现代码" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 精简initialize与load的实现代码</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/01/27/iOS 精简initialize与load的实现代码/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="1-类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize"><a href="#1-类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize" class="headerlink" title="1.类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize"></a>1.类必须要先执行某些初始化操作，才能正常使用，在OC中绝大多数类都集成NSObject这个根类，这个类有2个初始化方法：load、initialize</h3><p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC43.png" alt=""></p>
+<p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC44.png" alt=""></p>
+<h3 id="2-对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会调用。因此，如果某个类一直没有被调用，那么initialize方法就不会执行。这与load不同，对于load来说，应用程序必须阻塞并等着所有类的load都执行完，才能继续。"><a href="#2-对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会调用。因此，如果某个类一直没有被调用，那么initialize方法就不会执行。这与load不同，对于load来说，应用程序必须阻塞并等着所有类的load都执行完，才能继续。" class="headerlink" title="2.对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会调用。因此，如果某个类一直没有被调用，那么initialize方法就不会执行。这与load不同，对于load来说，应用程序必须阻塞并等着所有类的load都执行完，才能继续。"></a>2.对于每个类来说，initialize方法在程序首次调用该类之前调用，且只调用一次。它是由运行期系统来调用，绝不用给通过代码直接调用。其虽和load类似，但有几个重要的区别。首先，他是“惰性调用的”，也就是说，只有当程序用到了相关的类时，才会调用。因此，如果某个类一直没有被调用，那么initialize方法就不会执行。这与load不同，对于load来说，应用程序必须阻塞并等着所有类的load都执行完，才能继续。</h3><h3 id="3-此方法还有一个区别，就是运行期系统在执行该方法时，是处于正常状态的，因此，从运行期系统完整度来讲，此时可以安全使用并调用任意类中的任意方法。而且运行期系统也能保证initialize方法一定会在“线程安全环境”中执行。也就是说，只有执行initialize方法那个线程可以操作类和类实例。其他线程都要先阻塞，等着initialize方法执行完。"><a href="#3-此方法还有一个区别，就是运行期系统在执行该方法时，是处于正常状态的，因此，从运行期系统完整度来讲，此时可以安全使用并调用任意类中的任意方法。而且运行期系统也能保证initialize方法一定会在“线程安全环境”中执行。也就是说，只有执行initialize方法那个线程可以操作类和类实例。其他线程都要先阻塞，等着initialize方法执行完。" class="headerlink" title="3.此方法还有一个区别，就是运行期系统在执行该方法时，是处于正常状态的，因此，从运行期系统完整度来讲，此时可以安全使用并调用任意类中的任意方法。而且运行期系统也能保证initialize方法一定会在“线程安全环境”中执行。也就是说，只有执行initialize方法那个线程可以操作类和类实例。其他线程都要先阻塞，等着initialize方法执行完。"></a>3.此方法还有一个区别，就是运行期系统在执行该方法时，是处于正常状态的，因此，从运行期系统完整度来讲，此时可以安全使用并调用任意类中的任意方法。而且运行期系统也能保证initialize方法一定会在“线程安全环境”中执行。也就是说，只有执行initialize方法那个线程可以操作类和类实例。其他线程都要先阻塞，等着initialize方法执行完。</h3><h3 id="4-最后initialize方法与其他消息一样，如果某个类未实现它，而其超类实现了。那么就会运行超类的实现代码。"><a href="#4-最后initialize方法与其他消息一样，如果某个类未实现它，而其超类实现了。那么就会运行超类的实现代码。" class="headerlink" title="4.最后initialize方法与其他消息一样，如果某个类未实现它，而其超类实现了。那么就会运行超类的实现代码。"></a>4.最后initialize方法与其他消息一样，如果某个类未实现它，而其超类实现了。那么就会运行超类的实现代码。</h3><h3 id="5-所以在使用这2个方法的时候要尽可能精简。在里面设置一些状态，使本类能够正常运行就可以了，不要执行那种耗时太久或需要加锁的任务。"><a href="#5-所以在使用这2个方法的时候要尽可能精简。在里面设置一些状态，使本类能够正常运行就可以了，不要执行那种耗时太久或需要加锁的任务。" class="headerlink" title="5.所以在使用这2个方法的时候要尽可能精简。在里面设置一些状态，使本类能够正常运行就可以了，不要执行那种耗时太久或需要加锁的任务。"></a>5.所以在使用这2个方法的时候要尽可能精简。在里面设置一些状态，使本类能够正常运行就可以了，不要执行那种耗时太久或需要加锁的任务。</h3><p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC45.png" alt=""></p>
+<h3 id="6-无法在编译期设定的全局变量，可以放在initialize方法里初始化。"><a href="#6-无法在编译期设定的全局变量，可以放在initialize方法里初始化。" class="headerlink" title="6.无法在编译期设定的全局变量，可以放在initialize方法里初始化。"></a>6.无法在编译期设定的全局变量，可以放在initialize方法里初始化。</h3>
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/27/iOS 构建缓存时选用NSCache而非NSDictionary/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/01/27/iOS 别忘了NSTimer会保留其目标对象/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/01/27/iOS 精简initialize与load的实现代码/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

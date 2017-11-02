@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Swift 使用自定义代理 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Swift," />
+  
+
+  <meta name="description" content="第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071import UIKit//声明一个代">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift 使用自定义代理">
+<meta property="og:url" content="http://angie520.cn/2016/04/19/Swift 使用自定义代理/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071import UIKit//声明一个代">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:06:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift 使用自定义代理">
+<meta name="twitter:description" content="第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071import UIKit//声明一个代">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。"><span class="toc-text">第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Swift 使用自定义代理" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Swift 使用自定义代理</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.04.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Swift/">Swift</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2016/04/19/Swift 使用自定义代理/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。"><a href="#第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。" class="headerlink" title="第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。"></a>第一个类。。view类。。定义的代理。。当按钮点击的时候会调用代理方法。控制器那边实现相关方法。</h3><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="comment">//声明一个代理协议,让其继承(我也不知道该不该叫继承, 然而在这里并不重要) NSObjectProtocol, 只有这样才能在设置代理的时候前面添加weak..防止循环引用造成的内存泄露</span></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">AreaDetailViewDelegate</span>:<span class="title">NSObjectProtocol</span></span>&#123;</div><div class="line"><span class="comment">//声明代理方法----按钮点击的方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">areaDetailView</span><span class="params">(areaDetailView:AreaDetailView , tag: Int)</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AreaDetailView</span>: <span class="title">UIView</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//注意这里: changeColor为协议名, delegate前面必须有weak修饰, 如果没有weak修饰就会造成内存泄露, 而可以加weak的前提是, 这个协议必须继承 NSObjectProtocol, 这是我试验出来的, 目前来看, 应该是这样的</span></div><div class="line"><span class="keyword">weak</span> <span class="keyword">var</span> delegate: <span class="type">AreaDetailViewDelegate</span>?</div><div class="line"></div><div class="line"><span class="comment">//懒加载图片按钮</span></div><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> imageBtn: <span class="type">UIButton</span> = &#123;</div><div class="line"></div><div class="line"><span class="keyword">let</span> imageBtn = <span class="type">UIButton</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: <span class="type">UIScreen</span>.mainScreen().bounds.width, height: <span class="type">UIScreen</span>.mainScreen().bounds.width * <span class="number">0.5</span>))</div><div class="line">imageBtn.tag = <span class="number">1</span>;</div><div class="line">imageBtn.addTarget(<span class="keyword">self</span>, action: <span class="string">"btnClick:"</span>, forControlEvents: <span class="type">UIControlEvents</span>.<span class="type">TouchUpInside</span>)</div><div class="line"><span class="keyword">return</span> imageBtn</div><div class="line">&#125;()</div><div class="line"></div><div class="line"><span class="comment">//定义一个字符串。用来保存图片信息。。并在赋值后调用下面加载按钮的方法</span></div><div class="line"><span class="keyword">var</span> imageStr:<span class="type">String</span>?&#123;</div><div class="line"><span class="keyword">didSet</span>&#123;</div><div class="line">imageBtn.setBackgroundImage(<span class="type">UIImage</span>(named: imageStr!), forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//定义一个数组。。并在赋值后调用下面加载按钮的方法</span></div><div class="line"><span class="keyword">var</span> titleArr: [<span class="type">String</span>]?&#123;</div><div class="line"><span class="comment">//赋值后调用---取代set方法</span></div><div class="line"><span class="keyword">didSet</span>&#123;</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span> ..&lt; <span class="type">Int</span>((titleArr?.<span class="built_in">count</span>)!)&#123;</div><div class="line"><span class="keyword">if</span> i == <span class="number">0</span>&#123;</div><div class="line"><span class="comment">//第一个按钮</span></div><div class="line"><span class="keyword">let</span> btn = <span class="type">UIButton</span>(frame: <span class="type">CGRect</span>(x: <span class="type">CGFloat</span>(<span class="number">40.0</span> * scale), y: <span class="type">UIScreen</span>.mainScreen().bounds.width * <span class="number">0.5</span>, width: <span class="number">40.0</span> * scale, height: <span class="number">44.0</span>))</div><div class="line">btn.setTitle(titleArr![i], forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</div><div class="line">btn.titleLabel?.font = <span class="type">UIFont</span>.systemFontOfSize(<span class="number">17.0</span>)</div><div class="line">btn.setTitleColor(<span class="type">UIColor</span> .blackColor(), forState:<span class="type">UIControlState</span>.<span class="type">Normal</span>)</div><div class="line">btn.tag = i + <span class="number">2</span>;</div><div class="line">btn.addTarget(<span class="keyword">self</span>, action: <span class="string">"btnClick:"</span>, forControlEvents: <span class="type">UIControlEvents</span>.<span class="type">TouchUpInside</span>)</div><div class="line"><span class="keyword">self</span>.addSubview(btn)</div><div class="line"></div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line"><span class="keyword">let</span> btn = <span class="type">UIButton</span>(frame: <span class="type">CGRect</span>(x: <span class="type">CGFloat</span>(<span class="number">80.0</span> * scale) + (<span class="type">CGFloat</span>(i - <span class="number">1</span>) * <span class="number">30</span> * scale), y: <span class="type">UIScreen</span>.mainScreen().bounds.width * <span class="number">0.5</span>, width: <span class="number">30</span> * scale, height: <span class="number">44.0</span>))</div><div class="line">btn.setTitle(titleArr![i], forState: <span class="type">UIControlState</span>.<span class="type">Normal</span>)</div><div class="line">btn.titleLabel?.font = <span class="type">UIFont</span>.systemFontOfSize(<span class="number">11.0</span>)</div><div class="line">btn.setTitleColor(<span class="type">UIColor</span> .blackColor(), forState:<span class="type">UIControlState</span>.<span class="type">Normal</span>)</div><div class="line">btn.tag = i + <span class="number">2</span>;</div><div class="line">btn.addTarget(<span class="keyword">self</span>, action: <span class="string">"btnClick:"</span>, forControlEvents: <span class="type">UIControlEvents</span>.<span class="type">TouchUpInside</span>)</div><div class="line"><span class="keyword">self</span>.addSubview(btn)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//初始化方法</span></div><div class="line"><span class="keyword">override</span> <span class="keyword">init</span>(frame: <span class="type">CGRect</span>) &#123;</div><div class="line"><span class="keyword">super</span>.<span class="keyword">init</span>(frame: frame)</div><div class="line"><span class="keyword">self</span>.addSubview(imageBtn)</div><div class="line">&#125;</div><div class="line"><span class="comment">//代码创建的view必须要写这个方法。表明不能通过xib创建</span></div><div class="line"><span class="keyword">required</span> <span class="keyword">init</span>?(coder aDecoder: <span class="type">NSCoder</span>) &#123;</div><div class="line"><span class="built_in">fatalError</span>(<span class="string">"init(coder:) has not been implemented"</span>)</div><div class="line">&#125;</div><div class="line"><span class="comment">//按钮点击方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">btnClick</span><span class="params">(btn: UIButton)</span></span>&#123;</div><div class="line"><span class="comment">//执行代理方法</span></div><div class="line"><span class="keyword">self</span>.delegate?.areaDetailView(<span class="keyword">self</span>, tag: btn.tag)</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>#第二个类。。实现代理方法。。<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShoppesController</span>: <span class="title">BaseController</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//懒加载一个scrollView作为控制器的view。。设置内容区域时。。可通过这个来设置</span></div><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> scrollView: <span class="type">UIScrollView</span> = &#123;</div><div class="line"><span class="keyword">let</span> scrollView = <span class="type">UIScrollView</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">64</span>, width: <span class="type">WBWidth</span>, height: <span class="type">WBHeight</span> - <span class="number">108</span>))</div><div class="line">scrollView.contentSize = <span class="type">CGSize</span>(width: <span class="type">WBWidth</span>, height: <span class="type">WBHeight</span> - <span class="number">108</span>)</div><div class="line"><span class="comment">//隐藏滚动条</span></div><div class="line">scrollView.showsVerticalScrollIndicator = <span class="literal">false</span></div><div class="line"><span class="comment">//取消果冻模式</span></div><div class="line"><span class="comment">//        scrollView.bounces = false</span></div><div class="line"><span class="keyword">return</span> scrollView</div><div class="line">&#125;()</div><div class="line"><span class="comment">//修改控制器的view</span></div><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">loadView</span><span class="params">()</span></span> &#123;</div><div class="line">view = scrollView</div><div class="line">&#125;</div><div class="line"><span class="comment">//懒加载第一个区域视图</span></div><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> firstAreaView: <span class="type">AreaDetailView</span> = &#123;</div><div class="line"><span class="keyword">let</span> firstAreaView = <span class="type">AreaDetailView</span>.<span class="keyword">init</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: <span class="type">UIScreen</span>.mainScreen().bounds.width, height: <span class="type">UIScreen</span>.mainScreen().bounds.width * <span class="number">0.5</span> + <span class="number">44</span>))</div><div class="line"><span class="comment">//设置按钮文字属性</span></div><div class="line">firstAreaView.titleArr = [<span class="string">"亚洲"</span>,<span class="string">"香港"</span>,<span class="string">"澳门"</span>,<span class="string">"东京"</span>,<span class="string">"曼谷"</span>,<span class="string">"首尔"</span>];</div><div class="line"><span class="comment">//设置图片属性</span></div><div class="line">firstAreaView.imageStr = <span class="string">"005.jpg"</span>;</div><div class="line"><span class="comment">//设置tag。用来在代理方法中判断是第一个还是第二个</span></div><div class="line">firstAreaView.tag = <span class="number">1</span>;</div><div class="line"><span class="comment">//设置代理</span></div><div class="line">firstAreaView.delegate = <span class="keyword">self</span>;</div><div class="line"><span class="keyword">return</span> firstAreaView</div><div class="line">&#125;()</div><div class="line"><span class="comment">//懒加载第二个区域视图</span></div><div class="line"><span class="built_in">lazy</span> <span class="keyword">var</span> secondAreaView: <span class="type">AreaDetailView</span> = &#123;</div><div class="line"><span class="keyword">let</span> secondAreaView = <span class="type">AreaDetailView</span>.<span class="keyword">init</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="type">UIScreen</span>.mainScreen().bounds.width * <span class="number">0.5</span> + <span class="number">44</span>, width: <span class="type">UIScreen</span>.mainScreen().bounds.width, height: <span class="type">UIScreen</span>.mainScreen().bounds.width * <span class="number">0.5</span> + <span class="number">44</span>))</div><div class="line"><span class="comment">//设置按钮文字属性</span></div><div class="line">secondAreaView.titleArr = [<span class="string">"欧洲"</span>,<span class="string">"伦敦"</span>,<span class="string">"巴黎"</span>,<span class="string">"东京"</span>,<span class="string">"曼谷"</span>,<span class="string">"首尔"</span>];</div><div class="line"><span class="comment">//设置图片属性</span></div><div class="line">secondAreaView.imageStr = <span class="string">"004.jpg"</span>;</div><div class="line"><span class="comment">//设置tag。用来在代理方法中判断是第一个还是第二个</span></div><div class="line">secondAreaView.tag = <span class="number">2</span>;</div><div class="line"><span class="comment">//设置代理</span></div><div class="line">secondAreaView.delegate = <span class="keyword">self</span>;</div><div class="line"><span class="keyword">return</span> secondAreaView</div><div class="line">&#125;()</div><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line"><span class="keyword">super</span>.viewDidLoad()</div><div class="line"><span class="comment">// Do any additional setup after loading the view.</span></div><div class="line"><span class="comment">//加载子视图</span></div><div class="line">addChildView()</div><div class="line">&#125;</div><div class="line"><span class="comment">//加载子视图</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">addChildView</span><span class="params">()</span></span>&#123;</div><div class="line">view.addSubview(firstAreaView)</div><div class="line">view.addSubview(secondAreaView)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//实现区域详情view的代理。。</span></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">ShoppesController</span> :<span class="title">AreaDetailViewDelegate</span></span>&#123;</div><div class="line"><span class="comment">//实现按钮点击的代理方法</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">areaDetailView</span><span class="params">(areaDetailView: AreaDetailView, tag: Int)</span></span> &#123;</div><div class="line"></div><div class="line"><span class="keyword">if</span> areaDetailView.tag == <span class="number">1</span>&#123;</div><div class="line"><span class="comment">//第一个区域</span></div><div class="line"><span class="built_in">print</span>(<span class="string">"点击了第1个区域的第\(tag)个按钮"</span>)</div><div class="line">&#125;<span class="keyword">else</span>&#123;</div><div class="line"><span class="comment">//第二个区域</span></div><div class="line"><span class="built_in">print</span>(<span class="string">"点击了第2个区域的第\(tag)个按钮"</span>)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/04/19/Swift 隐藏滚动条/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/04/19/Swift 定义全局变量/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2016/04/19/Swift 使用自定义代理/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

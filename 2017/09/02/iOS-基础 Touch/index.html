@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 Touch | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.事件主要分Touch(各种手势)、Motion(传感器)、Remote(线控)。 2.当界面发生Touch事件时，会找到是哪个view执行事件，寻找的顺序是从最底层的父view，一直找到最终的子view就是执行事件的view。所以当其中有个view不接收事件的话，也会中断(即有时候我们的事件不响应或者响应不正常的原因)。 3.响应事件是从Touch事件的寻找view到的最外层的子view开始响">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 Touch">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 Touch/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.事件主要分Touch(各种手势)、Motion(传感器)、Remote(线控)。 2.当界面发生Touch事件时，会找到是哪个view执行事件，寻找的顺序是从最底层的父view，一直找到最终的子view就是执行事件的view。所以当其中有个view不接收事件的话，也会中断(即有时候我们的事件不响应或者响应不正常的原因)。 3.响应事件是从Touch事件的寻找view到的最外层的子view开始响">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:54:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 Touch">
+<meta name="twitter:description" content="1.事件主要分Touch(各种手势)、Motion(传感器)、Remote(线控)。 2.当界面发生Touch事件时，会找到是哪个view执行事件，寻找的顺序是从最底层的父view，一直找到最终的子view就是执行事件的view。所以当其中有个view不接收事件的话，也会中断(即有时候我们的事件不响应或者响应不正常的原因)。 3.响应事件是从Touch事件的寻找view到的最外层的子view开始响">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 Touch" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 Touch</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 Touch/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.事件主要分Touch(各种手势)、Motion(传感器)、Remote(线控)。</p>
+<p>2.当界面发生Touch事件时，会找到是哪个view执行事件，寻找的顺序是从最底层的父view，一直找到最终的子view就是执行事件的view。所以当其中有个view不接收事件的话，也会中断(即有时候我们的事件不响应或者响应不正常的原因)。</p>
+<p>3.响应事件是从Touch事件的寻找view到的最外层的子view开始响应，如果可以响应这个事件则处理，如果不能则丢给上一层view处理。这就是响应者链条。与寻找子view不一样的是响应是从子view-&gt;父view.</p>
+<p>4.基础的touch方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/// 开始事件</div><div class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">/// 移动</div><div class="line">- (void)touchesMoved:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">/// 取消</div><div class="line">- (void)touchesCancelled:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div><div class="line">/// 事件结束</div><div class="line">- (void)touchesEnded:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</div></pre></td></tr></table></figure></p>
+<p>5.[super touchesBegan:touches withEvent:event] 对比 [[self nextResponder] touchesBegan:touches withEvent:event];<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/// 如果想事件继续传递下去，可以调用</div><div class="line">[super touchesBegan:touches withEvent:event];</div><div class="line">/// 不建议直接调</div><div class="line">[self.nextResponder touchesBegan:touches withEvent:event]。</div></pre></td></tr></table></figure></p>
+<p>6.扩大view的事件区域还能重写父类的hitTest: withEvent:方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event&#123;</div><div class="line">/// 需要设置的点击区域</div><div class="line">CGRect targetRect = CGRectMake(CGRectGetMinX(_button.frame) - buttonExtraPadding, CGRectGetMinY(_button.frame) - buttonExtraPadding, CGRectGetWidth(_button.frame) + buttonExtraPadding * 2, CGRectGetHeight(_button.frame) + buttonExtraPadding * 2);</div><div class="line">/// 也可以这样定义</div><div class="line">/// CGRect targetRect = CGRectInset(_button.frame, - buttonExtraPadding, - buttonExtraPadding);</div><div class="line"></div><div class="line">/// 检测点击的点是在这个区域内，则返回执行事件的子view</div><div class="line">if (CGRectContainsPoint(targetRect, point))&#123;</div><div class="line">return _button;</div><div class="line">&#125;</div><div class="line">/// 如果不在区域，则传递到上一层</div><div class="line">return [super hitTest:point withEvent:event];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>7.扩大点击区域，也能重写自己(接收事件)的pointInside: withEvent: 方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event&#123;</div><div class="line">/// 扩大的范围</div><div class="line">CGFloat buttonExtraPadding = 20;</div><div class="line">//way1</div><div class="line">//    CGRect targetRect = CGRectInset(self.bounds, - buttonExtraPadding, - buttonExtraPadding);</div><div class="line">//    if (CGRectContainsPoint(targetRect, point))&#123;</div><div class="line">//        return YES;</div><div class="line">//    &#125;</div><div class="line"></div><div class="line">//way2</div><div class="line">CGPoint convertPoint = [self convertPoint:point toView:self.superview];</div><div class="line">CGRect targetRect = CGRectInset(self.frame, - buttonExtraPadding, - buttonExtraPadding);</div><div class="line">if (CGRectContainsPoint(targetRect, convertPoint))&#123;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">return [super pointInside:point withEvent:event];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>8.子view超过夫view时，超出部分不会接收事件。如果需要的花。重写一些父view的pointInside: withEvent: 方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event&#123;</div><div class="line">if ([_button pointInside:[self convertPoint:point toView:_button] withEvent:event])&#123;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">return [super pointInside:point withEvent:event];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>9.UIApplication的sendAction:to:from:forEvent:和UIControl的sendAction:to:forEvent:方法之间的关联。</p>
+<p>对于一个给定的事件，UIControl会调用sendAction:to:forEvent:来将行为消息转发到UIApplication对象，再由UIApplication对象调用其sendAction:to:fromSender:forEvent:方法来将消息分发到指定的target上，而如果我们没有指定target，则会将事件分发到响应链上第一个想处理消息的对象上。而如果子类想监控或修改这种行为的话，则可以重写这个方法。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 CALayer/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 手势/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 Touch/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

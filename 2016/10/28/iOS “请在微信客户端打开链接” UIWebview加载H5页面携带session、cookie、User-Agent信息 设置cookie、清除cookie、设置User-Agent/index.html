@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS," />
+  
+
+  <meta name="description" content="公司新开的一个项目。。内容基本上是加载H5页面显示。。当时觉得挺简单的。。后来发现自己掉坑里了。。一些心理历程就不说了。。说这个项目主要用到的知识点吧。。也是自己踩得坑。 首先说说。。这个项目上的内容是公司微信公众号的内容。所以加载的H5的页面也是公众号的页面。。只是为了有个APP的壳吧。。 然后呢。在一些页面是需要登录信息的，如果没有登录则会跳到申请微信登录授权的界面。这个界面是公众号申请的。这">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent">
+<meta property="og:url" content="http://angie520.cn/2016/10/28/iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="公司新开的一个项目。。内容基本上是加载H5页面显示。。当时觉得挺简单的。。后来发现自己掉坑里了。。一些心理历程就不说了。。说这个项目主要用到的知识点吧。。也是自己踩得坑。 首先说说。。这个项目上的内容是公司微信公众号的内容。所以加载的H5的页面也是公众号的页面。。只是为了有个APP的壳吧。。 然后呢。在一些页面是需要登录信息的，如果没有登录则会跳到申请微信登录授权的界面。这个界面是公众号申请的。这">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:06:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent">
+<meta name="twitter:description" content="公司新开的一个项目。。内容基本上是加载H5页面显示。。当时觉得挺简单的。。后来发现自己掉坑里了。。一些心理历程就不说了。。说这个项目主要用到的知识点吧。。也是自己踩得坑。 首先说说。。这个项目上的内容是公司微信公众号的内容。所以加载的H5的页面也是公众号的页面。。只是为了有个APP的壳吧。。 然后呢。在一些页面是需要登录信息的，如果没有登录则会跳到申请微信登录授权的界面。这个界面是公众号申请的。这">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.10.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2016/10/28/iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>公司新开的一个项目。。内容基本上是加载H5页面显示。。当时觉得挺简单的。。后来发现自己掉坑里了。。一些心理历程就不说了。。说这个项目主要用到的知识点吧。。也是自己踩得坑。</p>
+<p>首先说说。。这个项目上的内容是公司微信公众号的内容。所以加载的H5的页面也是公众号的页面。。只是为了有个APP的壳吧。。</p>
+<p>然后呢。在一些页面是需要登录信息的，如果没有登录则会跳到申请微信登录授权的界面。这个界面是公众号申请的。这就是坑的所在。。因为APP打开这些页面会提示“请在微信客户端打开链接”。</p>
+<p>由于是H5页面跳转的。但是小弟我不懂前端的知识。不明白为什么会跳转。合作的同事让我自己去找原因。。我真的觉得郁闷到家了。不过学到这方面的知识吧。虽然问题的解决方案不是我自己找的。。汗。还是他告诉我信息才知道。。他告诉我。前端那边判断用户有没有成立需不需要跳转是有打开web页面的时候。携带的cookie信息来判断的。。我们这里需要的是一个sessionid与cookie的信息和另一个时间的cookie联合判断。具体判断规则我就不明白了。。就说说iOS这边做的处理吧。</p>
+<p>既然需要设置cookie。。那么我就找设置cookie的代码咯：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#pragma mark 设置cookie-------cookie名称、cookie值、cookie域名</div><div class="line">+(void)setCookieWithName:(NSString *)name value:(NSString *)value domain:(NSString *)domain&#123;</div><div class="line">     NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary]; // 创建cookie属性字典</div><div class="line">     [cookieProperties setObject:name forKey:NSHTTPCookieName]; // 手动设置cookie的属性....值的名称</div><div class="line">     [cookieProperties setObject:value forKey:NSHTTPCookieValue];//cookie的值</div><div class="line">     [cookieProperties setValue:[NSDate dateWithTimeIntervalSinceNow:60*60*24*7] forKey:NSHTTPCookieExpires];//cookie过期时间</div><div class="line">     [cookieProperties setObject:domain forKey:NSHTTPCookieDomain];//cookie域名</div><div class="line">     [cookieProperties setObject:@&quot;/&quot; forKey:NSHTTPCookiePath];//路径分隔符</div><div class="line">     //    [cookieProperties setObject:@&quot;cnrainbird.com&quot; forKey:NSHTTPCookieOriginURL];//cookie的url..这里不需要</div><div class="line">     //    [cookieProperties setObject:@&quot;0&quot; forKey:NSHTTPCookieVersion];//cookie的版本。。这里也不需要</div><div class="line">     NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];//设置cookie</div><div class="line">     [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>因为登录注册是原生的，所以这边需要在所有的接口的请求头加入sessionid的信息。。用来作为在web页面的账号凭据。</p>
+<p>所以在接口都加了请求头。。按理说。应该没问题了。。但是还是显示“请在微信客户端打开链接”。我就奇怪了。。确实不懂这些道道。。虚心的问同事。前端是怎么判断的。。结果他说我不会告诉你的。自己找原因。不会H5是不行。。我这暴脾气。当场就。。。乖乖回去找资料了。。</p>
+<p>后来发现是不是域名错了呢。又去问问他域名的规则。。他看了下说。。域名是不能带“<a href="http://”的。。好吧。。这座坑过了。。结果还是不行。" target="_blank" rel="external">http://”的。。好吧。。这座坑过了。。结果还是不行。</a></p>
+<p>没办法，只能继续埋头苦干。。。同事估计觉得我弄得有点久了。过来缅怀一下。发现可能是User-Agent 不一样的缘故。。接口请求的User-Agent 和webview的User-Agent 要一致。。好嘛。。胜利的曙光貌似在眼前闪耀。</p>
+<p>在接口请求头信息加上User-Agent 的信息。再设置webview的User-Agent 。接口请求头设置相关信息就不贴了。应该挺好搜的。下面是webview设置User-Agent 的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//webView设置UA</div><div class="line">+(void)setUserAgent:(UIWebView *)webView&#123;</div><div class="line">     </div><div class="line">     NSString *userAgent=@&quot;User-Agent message&quot;;</div><div class="line"> </div><div class="line">     [[NSUserDefaults standardUserDefaults] registerDefaults:@&#123;@&quot;UserAgent&quot; : userAgent, @&quot;User-Agent&quot; : userAgent&#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>开始我是每次打开都给设置了一次User-Agent。。不过这个和cookie一样。都不需要重复设置。。只要在适当的时候设置一次就行了。</p>
+<p>然后满心欢喜的测试了一下。。还是不行。。啧啧啧。。当时真的是想砸电脑了。。</p>
+<p>重复检查。同事说的。User-Agent、cookie、authTime信息是不是有，是不是和接口请求一致的。。没问题啊。。怎么都没问题啊。。</p>
+<p>最后同事又来看了一次。。说2个cookie的域名是不一样的。。差点抽刀子了。。不早说。。不过看到成功的界面。。让我放他一条生路。。此致结束。。下面是一些辅助查看的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//清除全部cookie信息</div><div class="line">    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:url];  </div><div class="line">    for (int i = 0; i &lt; [cookies count]; i++) &#123;  </div><div class="line">        NSHTTPCookie *cookie = (NSHTTPCookie *)[cookies objectAtIndex:i];  </div><div class="line">        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];                </div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//删除特定名称的cookie</div><div class="line">    NSArray * cookArray = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:@&quot;cookie的url&quot;]];</div><div class="line">    for (NSHTTPCookie*cookie in cookArray) &#123;</div><div class="line">        //需要删除的cookie名称</div><div class="line">        if ([cookie.name isEqualToString:@&quot;cookiename&quot;]) &#123;</div><div class="line">        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//加载webview的时候调用的代理方法</div><div class="line">- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType&#123;</div><div class="line">    //查看所有的cookie信息。。</div><div class="line">    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];</div><div class="line">    for (NSHTTPCookie *cookie in [cookieJar cookies]) &#123;</div><div class="line">        NSLog(@&quot;cookie信息-----------%@&quot;, cookie);</div><div class="line">    &#125;</div><div class="line">    //打印出请求头。可以看到User-Agent信息</div><div class="line">    NSLog(@&quot;请求头信息-----%@&quot;,request.allHTTPHeaderFields);</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>好了。。结束一个坑。其实不算坑吧，只是不懂前端的知识，如果同事好沟通的话。问题很简单。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/05/27/iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/11/02/iOS 最新搭建GIT服务器仓库/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2016/10/28/iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

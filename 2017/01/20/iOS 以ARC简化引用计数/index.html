@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 以ARC简化引用计数 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+  
+
+  <meta name="description" content="1.这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。2.有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。3.ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。4">
+<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 以ARC简化引用计数">
+<meta property="og:url" content="http://angie520.cn/2017/01/20/iOS 以ARC简化引用计数/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。2.有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。3.ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。4">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC32.png">
+<meta property="og:updated_time" content="2017-11-02T07:07:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 以ARC简化引用计数">
+<meta name="twitter:description" content="1.这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。2.有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。3.ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。4">
+<meta name="twitter:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC32.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。"><span class="toc-text">1.这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。"><span class="toc-text">2.有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。"><span class="toc-text">3.ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-由方法返回的对象，其内存管理语义总是通过方法名来体现。ARC将此确定为开发者必须遵守的规则。"><span class="toc-text">4.由方法返回的对象，其内存管理语义总是通过方法名来体现。ARC将此确定为开发者必须遵守的规则。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-ARC只负责管理OC对象的内存。尤其要注意CoreFoundation对象不归ARC管理，开发者必须适时调用CFRetain、CFRelease。"><span class="toc-text">5.ARC只负责管理OC对象的内存。尤其要注意CoreFoundation对象不归ARC管理，开发者必须适时调用CFRetain、CFRelease。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 以ARC简化引用计数" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 以ARC简化引用计数</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/01/20/iOS 以ARC简化引用计数/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC32.png" alt=""></p>
+<h3 id="1-这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。"><a href="#1-这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。" class="headerlink" title="1.这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。"></a>1.这里说的谁创建谁负责释放，是在自定义方法有这几个词语开头的情况，一般情况我们不会创建这个类型的方法。而是由系统创建。</h3><h3 id="2-有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。"><a href="#2-有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。" class="headerlink" title="2.有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。"></a>2.有ARC之后，程序员就无须担心内存管理问题了。使用ARC编程，可省去类中的许多“样板代码”。</h3><h3 id="3-ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。"><a href="#3-ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。" class="headerlink" title="3.ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。"></a>3.ARC管理对象生命期的办法基本上就是：在合适的地方插入“保留”及“释放”操作。在ARC环境下，变量的内存管理语义可以通过修饰符指明，而原来则需要手工执行“保留”、“释放”操作。</h3><h3 id="4-由方法返回的对象，其内存管理语义总是通过方法名来体现。ARC将此确定为开发者必须遵守的规则。"><a href="#4-由方法返回的对象，其内存管理语义总是通过方法名来体现。ARC将此确定为开发者必须遵守的规则。" class="headerlink" title="4.由方法返回的对象，其内存管理语义总是通过方法名来体现。ARC将此确定为开发者必须遵守的规则。"></a>4.由方法返回的对象，其内存管理语义总是通过方法名来体现。ARC将此确定为开发者必须遵守的规则。</h3><h3 id="5-ARC只负责管理OC对象的内存。尤其要注意CoreFoundation对象不归ARC管理，开发者必须适时调用CFRetain、CFRelease。"><a href="#5-ARC只负责管理OC对象的内存。尤其要注意CoreFoundation对象不归ARC管理，开发者必须适时调用CFRetain、CFRelease。" class="headerlink" title="5.ARC只负责管理OC对象的内存。尤其要注意CoreFoundation对象不归ARC管理，开发者必须适时调用CFRetain、CFRelease。"></a>5.ARC只负责管理OC对象的内存。尤其要注意CoreFoundation对象不归ARC管理，开发者必须适时调用CFRetain、CFRelease。</h3>
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/20/iOS 理解引用计数/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/01/20/iOS 在dealloc方法中只释放引用并解除监听/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/01/20/iOS 以ARC简化引用计数/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

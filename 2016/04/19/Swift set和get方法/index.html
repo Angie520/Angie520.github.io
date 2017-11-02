@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Swift set和get方法 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Swift," />
+  
+
+  <meta name="description" content="注意：在Swift不建议重写set和get方法。。定义一个对象类1234567891011121314151617181920212223242526272829303132333435class Person: NSObject &amp;#123;//在企业开发中，不建议这样写---重写get和set方法var _name:String?var name:String?&amp;#123;get&amp;#123;/">
+<meta name="keywords" content="Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift set和get方法">
+<meta property="og:url" content="http://angie520.cn/2016/04/19/Swift set和get方法/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="注意：在Swift不建议重写set和get方法。。定义一个对象类1234567891011121314151617181920212223242526272829303132333435class Person: NSObject &amp;#123;//在企业开发中，不建议这样写---重写get和set方法var _name:String?var name:String?&amp;#123;get&amp;#123;/">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:06:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift set和get方法">
+<meta name="twitter:description" content="注意：在Swift不建议重写set和get方法。。定义一个对象类1234567891011121314151617181920212223242526272829303132333435class Person: NSObject &amp;#123;//在企业开发中，不建议这样写---重写get和set方法var _name:String?var name:String?&amp;#123;get&amp;#123;/">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#注意：在Swift不建议重写set和get方法。。"><span class="toc-text">注意：在Swift不建议重写set和get方法。。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Swift set和get方法" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Swift set和get方法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.04.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Swift/">Swift</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2016/04/19/Swift set和get方法/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="注意：在Swift不建议重写set和get方法。。"><a href="#注意：在Swift不建议重写set和get方法。。" class="headerlink" title="注意：在Swift不建议重写set和get方法。。"></a>注意：在Swift不建议重写set和get方法。。</h1><p>定义一个对象类<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//在企业开发中，不建议这样写---重写get和set方法</span></div><div class="line"><span class="keyword">var</span> _name:<span class="type">String</span>?</div><div class="line"><span class="keyword">var</span> name:<span class="type">String</span>?&#123;</div><div class="line"><span class="keyword">get</span>&#123;</div><div class="line"><span class="comment">//get方法</span></div><div class="line"><span class="keyword">return</span> _name</div><div class="line">&#125;</div><div class="line"><span class="keyword">set</span>&#123;</div><div class="line"><span class="comment">//set方法</span></div><div class="line"><span class="comment">//只要外界通过.name给对象的name赋值，那么值就会保存在newValue</span></div><div class="line">_name = newValue</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//实际开发中</span></div><div class="line"><span class="keyword">var</span> gender:<span class="type">String</span>?&#123;</div><div class="line"><span class="comment">//设置完值之后调用</span></div><div class="line"><span class="keyword">didSet</span>&#123;</div><div class="line"><span class="comment">//。一般我们重写set方法就是为了赋值后更新UI。。而Swift通常在这个方法里边写更新UI的代码</span></div><div class="line"><span class="comment">//因为这个方法会在赋值后调用</span></div><div class="line"><span class="built_in">print</span>(gender)</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//如果只重写了get方法，那么这个属性我们称之为 计算型 属性</span></div><div class="line"><span class="comment">//也就是对应OC中的只读属性</span></div><div class="line"><span class="comment">//注意点：计算型属性是不占用内存空间的</span></div><div class="line"><span class="comment">//只读属性可以不写？</span></div><div class="line"><span class="keyword">var</span> age: <span class="type">Int</span>?&#123;</div><div class="line"><span class="keyword">get</span>&#123;</div><div class="line"><span class="keyword">return</span> <span class="number">30</span></div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>##在viewController调用相关的方法<br><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line"><span class="keyword">super</span>.viewDidLoad()</div><div class="line"><span class="comment">// Do any additional setup after loading the view, typically from a nib.</span></div><div class="line"><span class="comment">//在Swift中，如果想使用某一个类，是不用import头文件的</span></div><div class="line"><span class="comment">//因为Swift中新增了一个OC以前没有的概念“命名空间”</span></div><div class="line"><span class="comment">//只要是在一个命名空间中的所有资源都是共享的</span></div><div class="line"><span class="comment">//默认情况下，项目名称就是命名空间</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">//因为命名空间的话，会有很多坑：</span></div><div class="line"><span class="comment">//如果是Swift项目想要使用第三方框架，那么建议使用cocoapods来集成框架</span></div><div class="line"><span class="comment">//因为如果是通过cocoapods集成的框架，在另一个项目中，那么命名空间就不一样</span></div><div class="line"><span class="comment">//这样可以有效的避免三方框架中的类名和我们自己的冲突</span></div><div class="line"><span class="keyword">let</span> p = <span class="type">Person</span>()</div><div class="line">p.name = <span class="string">"小明"</span></div><div class="line"><span class="built_in">print</span>(p.name)</div><div class="line"></div><div class="line">p.gender = <span class="string">"man"</span></div><div class="line"></div><div class="line"><span class="built_in">print</span>(p.age)</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/04/19/Swift 构造方法/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/04/19/Swift UITableView的简单使用/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2016/04/19/Swift set和get方法/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

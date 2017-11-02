@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 UITabBarController | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.UITabBarController是以Tab(标签)的形式，在多个页面间切换展示的容器控制器。 2.tabbar跳转：1self.tabBarController.selectedIndex = 1; 3.当tabbar个数超过5个。则最后是一个更多的按钮。 4.自定义tabbar样式：1234567891011121314/// tabbar的背景图片---应该在tabBarControl">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 UITabBarController">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 UITabBarController/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.UITabBarController是以Tab(标签)的形式，在多个页面间切换展示的容器控制器。 2.tabbar跳转：1self.tabBarController.selectedIndex = 1; 3.当tabbar个数超过5个。则最后是一个更多的按钮。 4.自定义tabbar样式：1234567891011121314/// tabbar的背景图片---应该在tabBarControl">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:54:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 UITabBarController">
+<meta name="twitter:description" content="1.UITabBarController是以Tab(标签)的形式，在多个页面间切换展示的容器控制器。 2.tabbar跳转：1self.tabBarController.selectedIndex = 1; 3.当tabbar个数超过5个。则最后是一个更多的按钮。 4.自定义tabbar样式：1234567891011121314/// tabbar的背景图片---应该在tabBarControl">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 UITabBarController" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 UITabBarController</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 UITabBarController/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.UITabBarController是以Tab(标签)的形式，在多个页面间切换展示的容器控制器。</p>
+<p>2.tabbar跳转：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.tabBarController.selectedIndex = 1;</div></pre></td></tr></table></figure></p>
+<p>3.当tabbar个数超过5个。则最后是一个更多的按钮。</p>
+<p>4.自定义tabbar样式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/// tabbar的背景图片---应该在tabBarController设置，就是self.tabBar.backgroundImage</div><div class="line">self.tabBarController.tabBar.backgroundImage = [UIImage imageNamed:@&quot;xx&quot;];</div><div class="line">/// tabbar背景颜色---如果设了背景图片的话。这个就失效了。</div><div class="line">self.tabBarController.tabBar.barTintColor = [UIColor cyanColor];</div><div class="line">/// tabbar 是否是半透明的</div><div class="line">self.tabBarController.tabBar.translucent = YES;</div><div class="line">/// 上方分割线颜色-和navigationBar一样。是通过阴影图片设置</div><div class="line">self.tabBarController.tabBar.shadowImage = [UIImage imageNamed:@&quot;line&quot;];</div><div class="line">/// 设置选中颜色</div><div class="line">self.tabBarController.tabBar.tintColor = [UIColor redColor];</div><div class="line">/// 设置选中图片</div><div class="line">self.tabBarController.tabBar.selectionIndicatorImage = [UIImage imageNamed:@&quot;select&quot;];</div><div class="line">/// tabbar的宽度。只有iPad才能设置</div><div class="line">self.tabBarController.tabBar.itemWidth = 200;</div></pre></td></tr></table></figure></p>
+<p>5.更复杂的自定义，每个ViewController持有属于自己的UITabBarItem。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/// 设置底部数量提示--这样要注意tabbar上的控制器是本身的viewController还是NavigationVC。设置的控制器tabbarItem是不一样的。</div><div class="line">self.navigationController.tabBarItem.badgeValue = @&quot;10&quot;;</div><div class="line"></div><div class="line">/// 设置标题和图片</div><div class="line">/// 设置tabbar的未选中图片--这里取消系统渲染。不然都会是系统的蓝色</div><div class="line">UIImage *normalImage = [[UIImage imageNamed:@&quot;normal&quot;] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];</div><div class="line">/// 设置tabbar的选中图片--这里取消系统渲染。不然都会是系统的蓝色</div><div class="line">UIImage *selectImage = [[UIImage imageNamed:@&quot;select&quot;] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];</div><div class="line">/// 设置tabbarItem的样式--- 这里要注意是navVC还是ViewController。正常是在tabbarController设置。这里是方便演示</div><div class="line">self.navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@&quot;首页&quot; image:normalImage selectedImage:selectImage];</div></pre></td></tr></table></figure></p>
+<p>6.自定义事件的tabbar。默认是切换viewController。没有设置Action的地方。所以自定义的事件通过delegate来设置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/// 在tabbar控制器中使用。还要设置self.delegate = self;</div><div class="line">/// 是否可以跳转选中.例如在其中一个控制器打开相机</div><div class="line">- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController &#123;</div><div class="line">if ([viewController isKindOfClass:[ViewController class]]) &#123;</div><div class="line">UIImagePickerController *picker = [[UIImagePickerController alloc] init];</div><div class="line">picker.sourceType = UIImagePickerControllerSourceTypeCamera;</div><div class="line">picker.allowsEditing = NO;</div><div class="line">[self presentViewController:picker animated:YES completion:nil];</div><div class="line">return NO;</div><div class="line">&#125;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">/// 选择处理的代理</div><div class="line">- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController &#123;</div><div class="line">NSLog(@&quot;XUANZE--%@&quot;,viewController);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>7.push后需要隐藏tabbar:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.hidesBottomBarWhenPushed = YES;</div></pre></td></tr></table></figure></p>
+<p>8.代码设置tabbar控制器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">在AppDelegate中设置。其实这里可以通过runtime来创建。代码更优美写，这里为了直观就没写了。</div><div class="line"></div><div class="line">self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];</div><div class="line">self.window.backgroundColor = [UIColor whiteColor];</div><div class="line">[self.window makeKeyAndVisible];</div><div class="line">WBTabBarViewController *tabBarController = [[WBTabBarViewController alloc] init];</div><div class="line">// 首页模块</div><div class="line">WBHomePageController *homepageVC = [[WBHomePageController alloc] init];</div><div class="line">homepageVC.hidesBottomBarWhenPushed = NO;</div><div class="line">WBNavigationController *homepageNavigationController = [[WBNavigationController alloc] initWithRootViewController:homepageVC];</div><div class="line">// 分类模块</div><div class="line">WBSortHomeController *sortVC = [[WBSortHomeController alloc] init];</div><div class="line">sortVC.hidesBottomBarWhenPushed = NO;</div><div class="line">WBNavigationController *sortNavigationController = [[WBNavigationController alloc] initWithRootViewController:sortVC];</div><div class="line">// 发现模块</div><div class="line">WBCommonViewController *findVC = [[WBCommonViewController alloc] init];</div><div class="line">findVC.hidesBottomBarWhenPushed = NO;</div><div class="line">WBNavigationController *findNavigationController = [[WBNavigationController alloc] initWithRootViewController:findVC];</div><div class="line">// 购物车模块</div><div class="line">WBShoppingCartController *cartVC = [[WBShoppingCartController alloc] init];</div><div class="line">cartVC.hidesBottomBarWhenPushed = NO;</div><div class="line">WBNavigationController *cartNavigationController = [[WBNavigationController alloc] initWithRootViewController:cartVC];</div><div class="line">// 会员模块</div><div class="line">WBMineViewController *memberVC = [[WBMineViewController alloc] init];</div><div class="line">memberVC.hidesBottomBarWhenPushed = NO;</div><div class="line">WBNavigationController *memberNavigationController = [[WBNavigationController alloc] initWithRootViewController:memberVC];</div><div class="line">// 设置图标与名称</div><div class="line">[tabBarController setViewControllers:@[homepageNavigationController, sortNavigationController, findNavigationController, cartNavigationController, memberNavigationController]];</div><div class="line">self.window.rootViewController = tabBarController;</div><div class="line">[self customizeTabBarForController:tabBarController];</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 UINavigationController/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 控件/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 UITabBarController/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

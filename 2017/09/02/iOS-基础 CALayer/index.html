@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 CALayer | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.CALayer是图层，负责屏幕上的显示和动画效果，是UIView背后的TA，是view的内部实现细节，CALayer不处理事件，view是对CALayer的一种封装。 2.CALayer可以做显示(阴影、圆角、边框、遮盖、变化、etc)1234567891011121314151617181920/// 简单显示CALayer *layer = [[CALayer alloc] init];l">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 CALayer">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 CALayer/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.CALayer是图层，负责屏幕上的显示和动画效果，是UIView背后的TA，是view的内部实现细节，CALayer不处理事件，view是对CALayer的一种封装。 2.CALayer可以做显示(阴影、圆角、边框、遮盖、变化、etc)1234567891011121314151617181920/// 简单显示CALayer *layer = [[CALayer alloc] init];l">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:54:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 CALayer">
+<meta name="twitter:description" content="1.CALayer是图层，负责屏幕上的显示和动画效果，是UIView背后的TA，是view的内部实现细节，CALayer不处理事件，view是对CALayer的一种封装。 2.CALayer可以做显示(阴影、圆角、边框、遮盖、变化、etc)1234567891011121314151617181920/// 简单显示CALayer *layer = [[CALayer alloc] init];l">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 CALayer" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 CALayer</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 CALayer/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.CALayer是图层，负责屏幕上的显示和动画效果，是UIView背后的TA，是view的内部实现细节，CALayer不处理事件，view是对CALayer的一种封装。</p>
+<p>2.CALayer可以做显示(阴影、圆角、边框、遮盖、变化、etc)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/// 简单显示</div><div class="line">CALayer *layer = [[CALayer alloc] init];</div><div class="line">layer.backgroundColor = [UIColor cyanColor].CGColor;</div><div class="line">layer.frame = CGRectMake(100, 200, 100, 100);</div><div class="line">[self.view.layer addSublayer:layer];</div><div class="line">/// 设置边框</div><div class="line">layer.borderColor = [UIColor redColor].CGColor;</div><div class="line">layer.borderWidth = 1.f;</div><div class="line">/// 设置圆角</div><div class="line">layer.cornerRadius = 4.f;</div><div class="line">/// 如果有子layer，则要加剪切属性。不然子layer也超过显示</div><div class="line">layer.masksToBounds = YES;</div><div class="line">/// 默认anchorPoint是在0.5、0.5.如果设置为0，0则会右下移。anchorPoint是位置不变，但layer的相对位置改变了。</div><div class="line">layer.anchorPoint = CGPointMake(0, 0);</div><div class="line">/// 这个也可以修改位置。但不同的是position是通过坐标值，anchorPoint是比例。</div><div class="line">layer.position = CGPointMake(100, 200);</div><div class="line">/// 设置图片</div><div class="line">layer.contents = (id)[UIImage imageNamed:@&quot;a.jpg&quot;].CGImage;</div><div class="line">/// 设置旋转。anchorPoint为中心点</div><div class="line">layer.transform = CATransform3DMakeRotation(M_PI/6, 0, 0, 1);</div></pre></td></tr></table></figure></p>
+<p>3.CALayer.transform和UIView.transform</p>
+<ul>
+<li><p>CALayer.transform属性是是个CATransform3D类型的数据,默认值为CATransform3DIdentity</p>
+</li>
+<li><p>CGAffineTransform 是用于2D层面的, 操作的是UIView或者其他 2D Core Graphics 元素。</p>
+</li>
+<li><p>CATransform3D 是 Core Animation的结构体,是用来做更复杂的关于 CALayer 的3D操作。</p>
+</li>
+<li><p>CATransform3D定义了一个三维变换（4x4的矩阵），用于图层的偏移、旋转，缩放，歪斜和透视等效果。</p>
+</li>
+<li><p>需要了解相关的3D变换方法：CATransform3DMakeTranslation，CATransform3DMakeScale，CATransform3DMakeRotation，以及CATransform3DTranslate，CATransform3DScale，CATransform3DRotate。</p>
+</li>
+<li><p>CATransform3D.m34表示透视效果，但需要和CATransform3DRotate配合使用才有效果。也就是前提是z方向上有变化（即沿x轴或者y轴旋转之后）。</p>
+</li>
+</ul>
+<p>4.layer的mask遮盖属性是没有颜色变化的，只有透明度属性。所以遮盖的图片主要将需要展示的透明度设1，不需要展示的设为0，即可展示特殊的view界面(如聊天内容需要不规则的圆角)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/// 创建需要被遮盖视图</div><div class="line">UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 200, 400)];</div><div class="line">imageView.image  = [UIImage imageNamed:@&quot;a.jpg&quot;];</div><div class="line">[self.view addSubview:imageView];</div><div class="line">/// 创建遮盖的视图</div><div class="line">UIImageView *maskView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;mask&quot;]];</div><div class="line">maskView.frame = imageView.frame;</div><div class="line">/// 进行遮盖</div><div class="line">imageView.layer.mask = maskView.layer;</div></pre></td></tr></table></figure></p>
+<p>5.CAGradientLayer是渐变的layer。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/// 渐变的layer--默认颜色等分--默认是从上往下</div><div class="line">CAGradientLayer *layer = [[CAGradientLayer alloc] init];</div><div class="line">layer.frame = CGRectMake(100, 200, 200, 400);</div><div class="line">/// 渐变的颜色---至少2个颜色。才能渐变--layer的颜色都是CGColor</div><div class="line">layer.colors = @[(id)[UIColor cyanColor].CGColor,(id)[UIColor greenColor].CGColor, (id)[UIColor yellowColor].CGColor];</div><div class="line">/// 设置渐变起始点---是按比例算</div><div class="line">layer.startPoint = CGPointMake(0, 0);</div><div class="line">/// 设置渐变结束点</div><div class="line">layer.endPoint = CGPointMake(1, 0);</div><div class="line">/// 设置每个颜色的起始点-默认是等分。--按比例</div><div class="line">layer.locations = @[@0.25,@0.25,@0.5];</div><div class="line">[self.view.layer addSublayer:layer];</div></pre></td></tr></table></figure></p>
+<p>6.使用layer实现水中倒影，而且倒影带模糊渐变效果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/// 实现倒影的效果</div><div class="line">UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 100, 200, 400)];</div><div class="line">imageView.image  = [UIImage imageNamed:@&quot;a.jpg&quot;];</div><div class="line">[self.view addSubview:imageView];</div><div class="line">/// 倒影的imageview</div><div class="line">UIImageView *mirrorView = [[UIImageView alloc] init];</div><div class="line">mirrorView.image = imageView.image;</div><div class="line">/// 倒置</div><div class="line">mirrorView.transform = CGAffineTransformMakeScale(1, -1);</div><div class="line">mirrorView.bounds = imageView.bounds;</div><div class="line">mirrorView.center = CGPointMake(imageView.center.x, imageView.center.y + imageView.bounds.size.height);</div><div class="line">[self.view addSubview:mirrorView];</div><div class="line">/// 实现模糊渐变</div><div class="line">CAGradientLayer *layer = [[CAGradientLayer alloc] init];</div><div class="line">layer.frame = CGRectMake(0, 0, imageView.frame.size.width, imageView.frame.size.height);</div><div class="line">layer.colors = @[(id)[UIColor clearColor].CGColor,(id)[UIColor colorWithWhite:0 alpha:0.4].CGColor];</div><div class="line">layer.startPoint = CGPointMake(0, 0.7);</div><div class="line">layer.endPoint = CGPointMake(0, 1);</div><div class="line">[mirrorView.layer addSublayer:layer];</div></pre></td></tr></table></figure></p>
+<p>7.简单的绘制图形通过CAShapeLayer:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/// 绘制形状的layer-绘制图形啥的</div><div class="line">CAShapeLayer *layer = [[CAShapeLayer alloc] init];</div><div class="line">/// 绘制线的颜色</div><div class="line">layer.strokeColor = [UIColor redColor].CGColor;</div><div class="line">/// 范围内填充颜色</div><div class="line">layer.fillColor = [UIColor yellowColor].CGColor;</div><div class="line">/// 绘制路线</div><div class="line">CGMutablePathRef path = CGPathCreateMutable();</div><div class="line">/// 绘制起点</div><div class="line">CGPathMoveToPoint(path, nil, 50, 200);</div><div class="line">/// 绘制经过的几个点</div><div class="line">CGPathAddCurveToPoint(path, nil, 100, 100, 250, 300, 300, 200);</div><div class="line">CGPathAddCurveToPoint(path, nil, 222, 111, 250, 300, 100, 100);</div><div class="line">layer.path = path;</div><div class="line">/// 需要释放---!!!</div><div class="line">CGPathRelease(path);</div><div class="line">[self.view.layer addSublayer:layer];</div></pre></td></tr></table></figure></p>
+<p>8.贝塞尔曲线，定义起始点和终点，曲线是通过控制点来操作绘制成的一天曲线:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/// 创建绘制layer</div><div class="line">CAShapeLayer *layer = [[CAShapeLayer alloc] init];</div><div class="line">layer.strokeColor = [UIColor redColor].CGColor;</div><div class="line">layer.fillColor = [UIColor yellowColor].CGColor;</div><div class="line">CGPoint starPoint = CGPointMake(50, 200);</div><div class="line">CGPoint endPoint = CGPointMake(300, 200);</div><div class="line">CGPoint controlPoint1 = CGPointMake(100, 100);</div><div class="line">CGPoint controlPoint2 = CGPointMake(250, 300);</div><div class="line"></div><div class="line">/// 创建贝塞尔曲线对象</div><div class="line">UIBezierPath *path = [[UIBezierPath alloc] init];</div><div class="line">[path moveToPoint:starPoint];</div><div class="line">/// 设置起始点、中心点还有2个控制点</div><div class="line">[path addCurveToPoint:endPoint controlPoint1:controlPoint1 controlPoint2:controlPoint2];</div><div class="line">layer.path = path.CGPath;</div><div class="line">[self.view.layer addSublayer:layer];</div><div class="line"></div><div class="line">/// 用贝塞尔曲线花矩形</div><div class="line">UIBezierPath *path2 = [UIBezierPath bezierPathWithRect:CGRectMake(100, 100, 200, 200)];</div><div class="line">layer.path = path2.CGPath;</div><div class="line">[self.view.layer addSublayer:layer];</div></pre></td></tr></table></figure></p>
+<p>9.通过贝塞尔曲线。对图片显示进行切割。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">/// 对一个图形的切割</div><div class="line">UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(50, 100, 300, 300)];</div><div class="line">bgView.backgroundColor = [UIColor clearColor];</div><div class="line">[self.view addSubview:bgView];</div><div class="line">/// 被切割的图片</div><div class="line">UIImageView *imageView = [[UIImageView alloc] initWithFrame:bgView.bounds];</div><div class="line">imageView.image = [UIImage imageNamed:@&quot;a.jpg&quot;];</div><div class="line">[bgView addSubview:imageView];</div><div class="line">/// 创建贝塞尔曲线</div><div class="line">UIBezierPath *maskPath = [UIBezierPath bezierPath];</div><div class="line">[maskPath moveToPoint:CGPointMake(0, 0)];</div><div class="line">/// 设置贝塞尔曲线的属性。起始点、终点和控制点等</div><div class="line">CGFloat curveHeight = 40;</div><div class="line">CGFloat curveBeginHeight = imageView.frame.size.height - curveHeight;</div><div class="line">[maskPath addLineToPoint:CGPointMake(0, curveBeginHeight)];</div><div class="line">CGPoint curveEndPoint = CGPointMake(imageView.frame.size.width, imageView.frame.size.height - curveHeight);</div><div class="line">CGPoint controlPoint = CGPointMake(imageView.frame.size.width / 2, imageView.frame.size.height + 20);</div><div class="line">[maskPath addQuadCurveToPoint:curveEndPoint controlPoint:controlPoint];</div><div class="line">[maskPath addLineToPoint:CGPointMake(imageView.frame.size.width, 0)];</div><div class="line">[maskPath closePath];</div><div class="line">/// 创建切割的layer</div><div class="line">CAShapeLayer *layer = [[CAShapeLayer alloc] init];</div><div class="line">layer.path = maskPath.CGPath;</div><div class="line">layer.frame = imageView.bounds;</div><div class="line">bgView.layer.mask = layer;</div></pre></td></tr></table></figure></p>
+<p>10.绘制一条线后，执行基础动画。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">/// 动画的使用</div><div class="line">/// 绘制一条线做动画基础</div><div class="line">CAShapeLayer *layer = [[CAShapeLayer alloc] init];</div><div class="line">layer.frame = CGRectMake(100, 100, 100, 100);</div><div class="line">UIBezierPath *path = [UIBezierPath bezierPathWithRect:layer.bounds];</div><div class="line">layer.path = path.CGPath;</div><div class="line">layer.fillColor = [UIColor clearColor].CGColor;</div><div class="line">layer.lineWidth = 2.f;</div><div class="line">layer.strokeColor = [UIColor orangeColor].CGColor;</div><div class="line">/// 设置绘制初始值</div><div class="line">layer.strokeEnd = 0;</div><div class="line">[self.view.layer addSublayer:layer];</div><div class="line">/// 创建基础动画--是对strokeEnd属性进行动画</div><div class="line">CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@&quot;strokeEnd&quot;];</div><div class="line">/// 动画完成的时间-单位是秒</div><div class="line">animation.duration = 3.f;</div><div class="line">/// 速度控制函数(CAMediaTimingFunction)</div><div class="line">/// 1.kCAMediaTimingFunctionLinear（线性）：匀速，给你一个相对静态的感觉</div><div class="line">/// 2.kCAMediaTimingFunctionEaseIn（渐进）：动画缓慢进入，然后加速离开</div><div class="line">/// 3.kCAMediaTimingFunctionEaseOut（渐出）：动画全速进入，然后减速的到达目的地</div><div class="line">/// 4.kCAMediaTimingFunctionEaseInEaseOut（渐进渐出）：动画缓慢的进入，中间加速，然后减速的到达目的地。这个是默认的动画行为。</div><div class="line">animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</div><div class="line">/// 动画起始值</div><div class="line">animation.fromValue = [NSNumber numberWithFloat:0.f];</div><div class="line">/// 动画终点值</div><div class="line">animation.toValue = [NSNumber numberWithFloat:1.f];</div><div class="line">/// 动画的显示样式(开始和结束时)，所以要想fillMode有效，最好设置removedOnCompletion=NO。</div><div class="line">/// kCAFillModeRemoved这个是默认值,也就是说当动画开始前和动画结束后,动画对layer都没有影响,动画结束后,layer会恢复到之前的状态</div><div class="line">/// kCAFillModeForwards当动画结束后,layer会一直保持着动画最后的状态</div><div class="line">/// kCAFillModeBackwards在动画开始前,你只要将动画加入了一个layer,layer便立即进入动画的初始状态并等待动画开始</div><div class="line">/// kCAFillModeBoth这个其实就是上面两个的合成.动画加入后开始之前,layer便处于动画初始状态,动画结束后layer保持动画最后的状态</div><div class="line">animation.fillMode = kCAFillModeForwards;</div><div class="line">/// 动画结束是否移除动画</div><div class="line">animation.removedOnCompletion = NO;</div><div class="line">/// 动画重复次数</div><div class="line">animation.repeatCount = MAXFLOAT;</div><div class="line">/// 在layer层加入动画就会执行</div><div class="line">[layer addAnimation:animation forKey:@&quot;stroleEndAnimation&quot;];</div></pre></td></tr></table></figure></p>
+<p>11.绘制文字的layer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">/// 专门用来展示文字的layer</div><div class="line">CATextLayer *layer = [[CATextLayer alloc] init];</div><div class="line">layer.contentsScale = [UIScreen mainScreen].scale;</div><div class="line">layer.foregroundColor = [UIColor cyanColor].CGColor;</div><div class="line">layer.backgroundColor = [UIColor blackColor].CGColor;</div><div class="line">layer.wrapped = YES;</div><div class="line">/// 对齐方式</div><div class="line">layer.alignmentMode = kCAAlignmentLeft;</div><div class="line">/// 将UIFont转出CGFontRef--要记得释放CGFontRef</div><div class="line">UIFont *font = [UIFont systemFontOfSize:12.f];</div><div class="line">CGFontRef fontRef = CGFontCreateWithFontName((__bridge CFStringRef)font.fontName);</div><div class="line">layer.font = fontRef;</div><div class="line">layer.fontSize = font.pointSize;</div><div class="line">CGFontRelease(fontRef);/// 注意要释放的</div><div class="line"></div><div class="line">layer.frame = CGRectMake(100, 100, 200, 200);</div><div class="line">[self.view.layer addSublayer:layer];</div><div class="line">/// 设置文字内容</div><div class="line">NSString *text = @&quot;返回解卡萨离放假蒂萨防寒服觉得是看喇叭分解分解为&quot;;</div><div class="line">layer.string = text;</div></pre></td></tr></table></figure></p>
+<p>12.NSMutableAttributedString富文本定义。可以定义特殊的文本样式，比如同一行文字。需要不同位置的颜色不一样、字体不一样。是否加下划线和中划线等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/// 获取删除线样式的字符串</div><div class="line">+ (NSMutableAttributedString *)getStrikethroughStyleString:(NSString *)str Color:(UIColor *)color&#123;</div><div class="line">/// 设置中划线和颜色</div><div class="line">NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:str];</div><div class="line">[attributeString setAttributes:@&#123;NSStrikethroughStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle], NSBaselineOffsetAttributeName : @(NSUnderlineStyleSingle)&#125; range:NSMakeRange(0,str.length)];</div><div class="line">if (color != nil) &#123;</div><div class="line">[attributeString addAttribute:NSStrikethroughColorAttributeName value:color range:NSMakeRange(0, str.length)];</div><div class="line">&#125;</div><div class="line">return attributeString;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 UIApplication/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 Touch/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 CALayer/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

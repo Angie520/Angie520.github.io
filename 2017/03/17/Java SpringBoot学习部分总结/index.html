@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Java SpringBoot学习部分总结 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Java," />
+  
+
+  <meta name="description" content="Spring Boot JPA 总结1、需要添加相应的依赖包;2、需要在application.properties文件添加配置信息；3、需要创建一个实体类,比如Cat;4、需要创建一个接口继承CrudRepository;5、需要创建一个Service;6、需要创建一个Controller;7、代码测试； @Repository、@Service 和 @Controller。在目前的 Sprin">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java SpringBoot学习部分总结">
+<meta property="og:url" content="http://angie520.cn/2017/03/17/Java SpringBoot学习部分总结/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="Spring Boot JPA 总结1、需要添加相应的依赖包;2、需要在application.properties文件添加配置信息；3、需要创建一个实体类,比如Cat;4、需要创建一个接口继承CrudRepository;5、需要创建一个Service;6、需要创建一个Controller;7、代码测试； @Repository、@Service 和 @Controller。在目前的 Sprin">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:06:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java SpringBoot学习部分总结">
+<meta name="twitter:description" content="Spring Boot JPA 总结1、需要添加相应的依赖包;2、需要在application.properties文件添加配置信息；3、需要创建一个实体类,比如Cat;4、需要创建一个接口继承CrudRepository;5、需要创建一个Service;6、需要创建一个Controller;7、代码测试； @Repository、@Service 和 @Controller。在目前的 Sprin">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Boot-JPA-总结"><span class="toc-text">Spring Boot JPA 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#热部署总结"><span class="toc-text">热部署总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastJson总结"><span class="toc-text">fastJson总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Boot-集成Mybatis"><span class="toc-text">Spring Boot 集成Mybatis:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-Options配置返回的主键信息；"><span class="toc-text">使用@Options配置返回的主键信息；</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring-Boot-动态数据源-多数据源自动切换"><span class="toc-text">Spring Boot 动态数据源(多数据源自动切换)</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Java SpringBoot学习部分总结" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Java SpringBoot学习部分总结</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.03.17</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/03/17/Java SpringBoot学习部分总结/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="Spring-Boot-JPA-总结"><a href="#Spring-Boot-JPA-总结" class="headerlink" title="Spring Boot JPA 总结"></a>Spring Boot JPA 总结</h3><p>1、需要添加相应的依赖包;<br>2、需要在application.properties文件添加配置信息；<br>3、需要创建一个实体类,比如Cat;<br>4、需要创建一个接口继承CrudRepository;<br>5、需要创建一个Service;<br>6、需要创建一个Controller;<br>7、代码测试；</p>
+<p>@Repository、@Service 和 @Controller。在目前的 Spring 版本中，这 3 个注释和 @Component 是等效的，但是从注释类的命名上，很容易看出这 3 个注释分别和持久层、业务层和控制层（Web 层）相对应。虽然目前这 3 个注释和 @Component 相比没有什么新意，但 Spring 将在以后的版本中为它们添加特殊的功能。所以，如果 Web 应用程序采用了经典的三层分层结构的话，最好在持久层、业务层和控制层分别采用@Repository、@Service 和 @Controller 对分层中的类进行注释，而用 @Component 对那些比较中立的类进行注释</p>
+<h3 id="热部署总结"><a href="#热部署总结" class="headerlink" title="热部署总结"></a>热部署总结</h3><p>1、当我们修改了方法的返回值，是能够进行热部署的；<br>2、当我们重新创建了一个方法，是能够进行热部署的；<br>3、当我们重新创建了一个Class,是能够进行热部署的；</p>
+<h3 id="fastJson总结"><a href="#fastJson总结" class="headerlink" title="fastJson总结"></a>fastJson总结</h3><p>我们要使用第三方的json解析框架的话：<br>1、我们需要在pom.xml中引入相应的依赖；<br>2、需要在App.java中继承WebMvcConfigurerAdapter重写方法：configureMessageConverters 添加我们自己定义的json解析框架;<br>2.1 @Bean注入第三方的json解析框架：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> HttpMessageConverters <span class="title">fastJsonHttpMessageConverters</span><span class="params">()</span> </span>&#123;</div><div class="line"><span class="comment">// 1、需要先定义一个 convert 转换消息的对象;</span></div><div class="line">FastJsonHttpMessageConverter fastConverter = <span class="keyword">new</span> FastJsonHttpMessageConverter();</div><div class="line"></div><div class="line"><span class="comment">//2、添加fastJson 的配置信息，比如：是否要格式化返回的json数据;</span></div><div class="line">FastJsonConfig fastJsonConfig = <span class="keyword">new</span> FastJsonConfig();</div><div class="line">fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);</div><div class="line"></div><div class="line"><span class="comment">//3、在convert中添加配置信息.</span></div><div class="line">fastConverter.setFastJsonConfig(fastJsonConfig);</div><div class="line"></div><div class="line"></div><div class="line">HttpMessageConverter&lt;?&gt; converter = fastConverter;</div><div class="line"><span class="keyword">return</span> <span class="keyword">new</span> HttpMessageConverters(converter);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Spring-Boot-集成Mybatis"><a href="#Spring-Boot-集成Mybatis" class="headerlink" title="Spring Boot 集成Mybatis:"></a>Spring Boot 集成Mybatis:</h3><p>1、新建一个新的Maven Project;<br>2、需要在pom.xml文件添加相应的依赖，<br>比如：mysql驱动；<br>PageHelper分页插件，需要版本号；<br>3、编写启动类，大部分和之前的代码是一样的，需要的注意的是：<br>需要添加一个注解@MapperScan –指定MyBatis持久类的位置；<br>4、编写一个测试的实体类Demo;<br>5、编写一个DemoMapper,使用@Select和@Save进行数据库操作；</p>
+<h3 id="使用-Options配置返回的主键信息；"><a href="#使用-Options配置返回的主键信息；" class="headerlink" title="使用@Options配置返回的主键信息；"></a>使用@Options配置返回的主键信息；</h3><p>6、编写DemoService;<br>7、编写DemoController;<br>8、添加分页配置信息，需要添加一个MyBatisConfiguration;<br>9、使用PageHelper.startPage(pageNum,pageSize)进行分页；</p>
+<h3 id="Spring-Boot-动态数据源-多数据源自动切换"><a href="#Spring-Boot-动态数据源-多数据源自动切换" class="headerlink" title="Spring Boot 动态数据源(多数据源自动切换)"></a>Spring Boot 动态数据源(多数据源自动切换)</h3><p>某系统除了需要从自己的主要数据库上读取和管理数据外，还有一部分业务涉及到其他多个数据库，要求可以在任何方法上可以灵活指定具体要操作的数据库。<br>为了在开发中以最简单的方法使用，本文基于注解和AOP的方法实现，在spring boot框架的项目中，添加本文实现的代码类后，只需要配置好数据源就可以直接通过注解使用，简单方便。<br>一配置二使用 </p>
+<ol>
+<li>启动类注册动态数据源 </li>
+<li>配置文件中配置多个数据源 </li>
+<li>在需要的方法上使用注解指定数据源</li>
+</ol>
+<p>源码地址：<a href="https://github.com/Angie520/DynamicDataSource" target="_blank" rel="external">https://github.com/Angie520/DynamicDataSource</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/03/17/Java maven的pom报plugins错误的解决方法./">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/03/17/Java SpringBoot配置数据源和JPA/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/03/17/Java SpringBoot学习部分总结/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

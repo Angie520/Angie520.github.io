@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 手势 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.点击手势的使用123456/// 创建点击手势UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];/// view上添加手势[_testView addGestureRecognizer:tapGesture];//添加多">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 手势">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 手势/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.点击手势的使用123456/// 创建点击手势UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];/// view上添加手势[_testView addGestureRecognizer:tapGesture];//添加多">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:54:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 手势">
+<meta name="twitter:description" content="1.点击手势的使用123456/// 创建点击手势UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];/// view上添加手势[_testView addGestureRecognizer:tapGesture];//添加多">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 手势" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 手势</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 手势/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.点击手势的使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/// 创建点击手势</div><div class="line">UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];</div><div class="line">/// view上添加手势</div><div class="line">[_testView addGestureRecognizer:tapGesture];</div><div class="line">//添加多action</div><div class="line">[tapGesture addTarget:self action:@selector(tap2:)];</div></pre></td></tr></table></figure></p>
+<p>2.拖拽手势的使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/// 创建手势</div><div class="line">UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];</div><div class="line">/// 添加手势</div><div class="line">[_testView addGestureRecognizer:panGesture];</div><div class="line"></div><div class="line">- (void)pan:(UIPanGestureRecognizer *)gesture&#123;</div><div class="line">/// 这个拖拽手势可以移动view</div><div class="line">/// 手势相对于view的位置</div><div class="line">CGPoint translatePoint = [gesture translationInView:self.view];</div><div class="line">/// 移动view</div><div class="line">_testView.center = CGPointMake(_testView.center.x + translatePoint.x, _testView.center.y + translatePoint.y);</div><div class="line">/// 清除手势相对view的偏移位置</div><div class="line">[gesture setTranslation:CGPointZero inView:self.view];</div><div class="line">/// 手势的状态</div><div class="line">if (gesture.state == UIGestureRecognizerStatePossible)&#123;</div><div class="line">NSLog(@&quot;possible&quot;);</div><div class="line">&#125;</div><div class="line">else if (gesture.state == UIGestureRecognizerStateBegan)&#123;</div><div class="line">NSLog(@&quot;began&quot;);</div><div class="line">&#125;</div><div class="line">else if (gesture.state == UIGestureRecognizerStateChanged)&#123;</div><div class="line">NSLog(@&quot;changed&quot;);</div><div class="line">&#125;</div><div class="line">else if (gesture.state == UIGestureRecognizerStateEnded)&#123;</div><div class="line">NSLog(@&quot;ended&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.边缘手势<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// 添加边缘手势</div><div class="line">UIScreenEdgePanGestureRecognizer *ges = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(showAd:)];</div><div class="line">// 指定左边缘滑动</div><div class="line">ges.edges = UIRectEdgeLeft;</div><div class="line">[self.view addGestureRecognizer:ges];</div><div class="line">// 如果ges的手势与collectionView手势都识别的话,指定以下代码,代表是识别传入的手势</div><div class="line">[self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:ges];</div></pre></td></tr></table></figure></p>
+<p>4.捏合手势<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/// 创建手势</div><div class="line">UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinch:)];</div><div class="line">/// 给view添加手势</div><div class="line">[_testView addGestureRecognizer:pinchGesture];</div><div class="line"></div><div class="line">/// 捏合手势事件处理</div><div class="line">- (void)pinch:(UIPinchGestureRecognizer *)gesture&#123;</div><div class="line">/// 捏合中修改view的大小</div><div class="line">if (gesture.state == UIGestureRecognizerStateChanged)&#123;</div><div class="line">_testView.transform = CGAffineTransformMakeScale(gesture.scale, gesture.scale);</div><div class="line">&#125;else if (gesture.state == UIGestureRecognizerStateEnded)&#123;</div><div class="line">/// 结束时，恢复原样</div><div class="line">_testView.transform = CGAffineTransformIdentity;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>5.快速滑动手势(轻扫)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/// 创建手势</div><div class="line">UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];</div><div class="line">/// 设置手势的方向。这里是设置下和上</div><div class="line">swipeGesture.direction = UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionUp;</div><div class="line">/// 添加手势</div><div class="line">[_testView addGestureRecognizer:swipeGesture];</div><div class="line"></div><div class="line">/// 快速滑动手势事件</div><div class="line">- (void)swipe:(UISwipeGestureRecognizer *)gesture&#123;</div><div class="line">/// 这里如果监听了多个方向的滑动，则无法判别是哪个方向的，可以通过添加多个不同方向的手势来处理</div><div class="line">NSLog(@&quot;滑动了&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>6.长按手势<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/// 创建长按手势</div><div class="line">UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];</div><div class="line">/// 长按时间</div><div class="line">longPressGesture.minimumPressDuration = 2;</div><div class="line">/// 添加手势</div><div class="line">[_testView addGestureRecognizer:longPressGesture];</div><div class="line"></div><div class="line">/// 手势事件</div><div class="line">- (void)longPress:(UILongPressGestureRecognizer *)gesture&#123;</div><div class="line">if (gesture.state == UIGestureRecognizerStateBegan)&#123;</div><div class="line">NSLog(@&quot;开始长按了&quot;);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>7.当手势发生冲突时。可以定义手势的优先级来解决。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/// 手势_pan</div><div class="line">_pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];</div><div class="line">[_view addGestureRecognizer:_pan];</div><div class="line">/// 手势_swipe</div><div class="line">_swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];</div><div class="line">[_view addGestureRecognizer:_swipe];</div><div class="line">/// 让手势_pan的优先级低于手势_swipe。是当手势_swipe确认失败了才会响应_pan</div><div class="line">[_pan requireGestureRecognizerToFail:_swipe];</div></pre></td></tr></table></figure></p>
+<p>8.手势也有代理，当设置手势代理后，可以实现是否执行手势(例如限制部分区域不可点击)、可以解决手势冲突问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/// 是否执行手势事件</div><div class="line">- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer&#123;</div><div class="line">if (gestureRecognizer == _tap)&#123;</div><div class="line">CGPoint location = [gestureRecognizer locationInView:_superView];</div><div class="line">if (CGRectContainsPoint(_subView.frame, location))&#123;</div><div class="line">return NO;</div><div class="line">&#125;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/// 解决手势冲突</div><div class="line">- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer&#123;</div><div class="line">if (gestureRecognizer == _pan &amp;&amp; otherGestureRecognizer == _swipe)&#123;</div><div class="line">return YES;</div><div class="line">&#125;</div><div class="line">return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>9.常见的需要放大和缩小的手势事件处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/// 旋转</div><div class="line">- (void)rotate:(UIRotationGestureRecognizer *)gesture&#123;</div><div class="line">if (gesture.state == UIGestureRecognizerStateChanged)&#123;</div><div class="line">_view.transform = CGAffineTransformRotate(_view.transform, gesture.rotation);</div><div class="line">[gesture setRotation:0];</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">/// 放大缩小</div><div class="line">- (void)pinch:(UIPinchGestureRecognizer *)gesture&#123;</div><div class="line">if (gesture.state == UIGestureRecognizerStateChanged)&#123;</div><div class="line">_view.transform = CGAffineTransformScale(_view.transform, gesture.scale, gesture.scale);</div><div class="line">gesture.scale = 1;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 Touch/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 Quartz 2D绘制/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 手势/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

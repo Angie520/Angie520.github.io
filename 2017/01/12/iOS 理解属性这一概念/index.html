@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 理解属性这一概念 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+  
+
+  <meta name="description" content="1.“属性”(property)是OC种的一项特性，用于封装对象中的数据。NSString _firstName;在Java等其他语言比较多这样的定义。这样写法在OC中的问题是：对象布局在编译期就已经固定了。只要碰到name变量的代码，编译器就把其替换成“偏移量”，这个偏移量是“硬编码”，表示该变量距离存放对象的内存区域的起始地址有多远。这样做目前来看没问题。但是如果在这前面增加一个实例变量。NS">
+<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 理解属性这一概念">
+<meta property="og:url" content="http://angie520.cn/2017/01/12/iOS 理解属性这一概念/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.“属性”(property)是OC种的一项特性，用于封装对象中的数据。NSString _firstName;在Java等其他语言比较多这样的定义。这样写法在OC中的问题是：对象布局在编译期就已经固定了。只要碰到name变量的代码，编译器就把其替换成“偏移量”，这个偏移量是“硬编码”，表示该变量距离存放对象的内存区域的起始地址有多远。这样做目前来看没问题。但是如果在这前面增加一个实例变量。NS">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC4.png">
+<meta property="og:updated_time" content="2017-11-02T07:07:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 理解属性这一概念">
+<meta name="twitter:description" content="1.“属性”(property)是OC种的一项特性，用于封装对象中的数据。NSString _firstName;在Java等其他语言比较多这样的定义。这样写法在OC中的问题是：对象布局在编译期就已经固定了。只要碰到name变量的代码，编译器就把其替换成“偏移量”，这个偏移量是“硬编码”，表示该变量距离存放对象的内存区域的起始地址有多远。这样做目前来看没问题。但是如果在这前面增加一个实例变量。NS">
+<meta name="twitter:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC4.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-“属性”-property-是OC种的一项特性，用于封装对象中的数据。"><span class="toc-text">1.“属性”(property)是OC种的一项特性，用于封装对象中的数据。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-属性性质"><span class="toc-text">2.属性性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-iOS开发中几乎所有属性都声明为nonatomic，这是因为iOS中使用同步锁开销很大，这会带来性能问题，但是这不能保证“线程安全”，所以在特定的时候要学会修改为atomic，但是大部分时候还是用nonatomic。"><span class="toc-text">3.iOS开发中几乎所有属性都声明为nonatomic，这是因为iOS中使用同步锁开销很大，这会带来性能问题，但是这不能保证“线程安全”，所以在特定的时候要学会修改为atomic，但是大部分时候还是用nonatomic。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4。通过“特质”来指定存储数据所需的正确语义。"><span class="toc-text">4。通过“特质”来指定存储数据所需的正确语义。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-设置属性所对应的实力变量时，一定要遵循该属性所声明的语义。"><span class="toc-text">5.设置属性所对应的实力变量时，一定要遵循该属性所声明的语义。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-可以用-property语法来定义对象中所封装的数据。"><span class="toc-text">6.可以用@property语法来定义对象中所封装的数据。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 理解属性这一概念" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 理解属性这一概念</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.12</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/01/12/iOS 理解属性这一概念/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="1-“属性”-property-是OC种的一项特性，用于封装对象中的数据。"><a href="#1-“属性”-property-是OC种的一项特性，用于封装对象中的数据。" class="headerlink" title="1.“属性”(property)是OC种的一项特性，用于封装对象中的数据。"></a>1.“属性”(property)是OC种的一项特性，用于封装对象中的数据。</h3><p>NSString <em>_firstName;<br>在Java等其他语言比较多这样的定义。这样写法在OC中的问题是：对象布局在编译期就已经固定了。只要碰到name变量的代码，编译器就把其替换成“偏移量”，这个偏移量是“硬编码”，表示该变量距离存放对象的内存区域的起始地址有多远。这样做目前来看没问题。但是如果在这前面增加一个实例变量。<br>NSString </em>dateOfBirth;<br>NSString *_firstName;</p>
+<p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC4.png" alt=""></p>
+<p>如果代码使用了编译期计算出来的偏移量，那么在修改类定义之后必须重新编译，否则就会出错。。</p>
+<p>而OC的处理方式是定义property。然后通过getter、setter方法来存取属性。<br>如：@property NSString *_firstName;<br>这时候通过点语法就会调用getter、setter方法来使用属性变量。</p>
+<h3 id="2-属性性质"><a href="#2-属性性质" class="headerlink" title="2.属性性质"></a>2.属性性质</h3><p>原子性：<br>在默认情况下，由编译器所合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备nonatomic特质，则不使用同步锁。尽管没有名为“atomic”的特质，仍然可以在属性特质中说明这一点。若是自己定义存取方式。则要遵守与其符合的原子性。</p>
+<p>读/写权限：<br><em>具备readwrite特质的属性拥有“获取方法”与“设置方法”。若该属性由@synthesize实现，则编译器会自动生成这2个方法。
+</em>具备readonly特质的属性仅拥有获取方法，只有当属性有@synthesize实现时，编译器才会为其合成获取方法。可以用此特质把某个属性对外公开为只读属性。</p>
+<p>内存管理语义<br><em>assign:”设置方法”只会执行针对”纯量类型”(例如CGFloat、NSInteger等)的简单赋值操作。
+</em>strong:此特质表明该属性定义了一种”拥有关系”。为这种属性设置新值时，设置方法会先保留新值，并释放旧值，然后再将新值设置上去。<br><em>weak:此特质表明该属性定义了一种”非拥有关系”。为这种属性设置新值时，设置方法即不保留新值，也不释放旧值。次特质和assign类似，然而在属性所指的对象遭到摧毁时，属性值也会清空。
+</em>unsafe_unretained:此特质的语义和assign相同，但是它适用于”对象类型”，该特质表达一种”非拥有关系”，当目标对象遭到摧毁时，属性值不会自动清空(“不安全”，unsafe)，这一点与weak有区别。<br><em>copy:此特质所表达的所属关系与strong类似。然而设置方法不保留新值，而是将其”拷贝”。当属性类型为NSString </em>时，经常用此特质来保护其封装性，因为传递给设置方法的新值有可能指向一个NSMutablestring类的实例。这个类是NSString的子类，表示一种可以修改其值的字符串，此时如果不拷贝的话，字符串有可能在对象不知情的情况下遭人更改。这时候拷贝一份不改变的字符串就不会出现这个问题。</p>
+<p>方法名<br><em>getter=<name> 指定获取方法的方法名:<br>eg:@property (nonatomic , getter=isOn) Bool on;
+</name></em>setter=<name> 指定设置方法的方法名</name></p>
+<h3 id="3-iOS开发中几乎所有属性都声明为nonatomic，这是因为iOS中使用同步锁开销很大，这会带来性能问题，但是这不能保证“线程安全”，所以在特定的时候要学会修改为atomic，但是大部分时候还是用nonatomic。"><a href="#3-iOS开发中几乎所有属性都声明为nonatomic，这是因为iOS中使用同步锁开销很大，这会带来性能问题，但是这不能保证“线程安全”，所以在特定的时候要学会修改为atomic，但是大部分时候还是用nonatomic。" class="headerlink" title="3.iOS开发中几乎所有属性都声明为nonatomic，这是因为iOS中使用同步锁开销很大，这会带来性能问题，但是这不能保证“线程安全”，所以在特定的时候要学会修改为atomic，但是大部分时候还是用nonatomic。"></a>3.iOS开发中几乎所有属性都声明为nonatomic，这是因为iOS中使用同步锁开销很大，这会带来性能问题，但是这不能保证“线程安全”，所以在特定的时候要学会修改为atomic，但是大部分时候还是用nonatomic。</h3><h3 id="4。通过“特质”来指定存储数据所需的正确语义。"><a href="#4。通过“特质”来指定存储数据所需的正确语义。" class="headerlink" title="4。通过“特质”来指定存储数据所需的正确语义。"></a>4。通过“特质”来指定存储数据所需的正确语义。</h3><h3 id="5-设置属性所对应的实力变量时，一定要遵循该属性所声明的语义。"><a href="#5-设置属性所对应的实力变量时，一定要遵循该属性所声明的语义。" class="headerlink" title="5.设置属性所对应的实力变量时，一定要遵循该属性所声明的语义。"></a>5.设置属性所对应的实力变量时，一定要遵循该属性所声明的语义。</h3><h3 id="6-可以用-property语法来定义对象中所封装的数据。"><a href="#6-可以用-property语法来定义对象中所封装的数据。" class="headerlink" title="6.可以用@property语法来定义对象中所封装的数据。"></a>6.可以用@property语法来定义对象中所封装的数据。</h3>
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/12/iOS 多用类型常量，少用#define预处理指令/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/01/12/iOS 在对象内部尽量直接访问实例变量/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/01/12/iOS 理解属性这一概念/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

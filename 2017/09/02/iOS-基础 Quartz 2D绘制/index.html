@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 Quartz 2D绘制 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.绘制文字和图形，我们可以用之前的layer进行绘制。也可以Quartz 2D进行绘制。这里引用以下大神博客：http://blog.csdn.net/rhljiayou/article/details/9919713 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 Quartz 2D绘制">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 Quartz 2D绘制/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.绘制文字和图形，我们可以用之前的layer进行绘制。也可以Quartz 2D进行绘制。这里引用以下大神博客：http://blog.csdn.net/rhljiayou/article/details/9919713 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:55:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 Quartz 2D绘制">
+<meta name="twitter:description" content="1.绘制文字和图形，我们可以用之前的layer进行绘制。也可以Quartz 2D进行绘制。这里引用以下大神博客：http://blog.csdn.net/rhljiayou/article/details/9919713 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 Quartz 2D绘制" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 Quartz 2D绘制</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 Quartz 2D绘制/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.绘制文字和图形，我们可以用之前的layer进行绘制。也可以Quartz 2D进行绘制。这里引用以下大神博客：<a href="http://blog.csdn.net/rhljiayou/article/details/9919713" target="_blank" rel="external">http://blog.csdn.net/rhljiayou/article/details/9919713</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div></pre></td><td class="code"><pre><div class="line">// 覆盖drawRect方法，你可以在此自定义绘画和动画</div><div class="line">- (void)drawRect:(CGRect)rect</div><div class="line">&#123;</div><div class="line">//An opaque type that represents a Quartz 2D drawing environment.</div><div class="line">//一个不透明类型的Quartz 2D绘画环境,相当于一个画布,你可以在上面任意绘画</div><div class="line">CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line"></div><div class="line">/*写文字*/</div><div class="line">CGContextSetRGBFillColor (context,  1, 0, 0, 1.0);//设置填充颜色</div><div class="line">UIFont  *font = [UIFont boldSystemFontOfSize:15.0];//设置</div><div class="line">[@&quot;画圆：&quot; drawInRect:CGRectMake(10, 20, 80, 20) withFont:font];</div><div class="line">[@&quot;画线及孤线：&quot; drawInRect:CGRectMake(10, 80, 100, 20) withFont:font];</div><div class="line">[@&quot;画矩形：&quot; drawInRect:CGRectMake(10, 120, 80, 20) withFont:font];</div><div class="line">[@&quot;画扇形和椭圆：&quot; drawInRect:CGRectMake(10, 160, 110, 20) withFont:font];</div><div class="line">[@&quot;画三角形：&quot; drawInRect:CGRectMake(10, 220, 80, 20) withFont:font];</div><div class="line">[@&quot;画圆角矩形：&quot; drawInRect:CGRectMake(10, 260, 100, 20) withFont:font];</div><div class="line">[@&quot;画贝塞尔曲线：&quot; drawInRect:CGRectMake(10, 300, 100, 20) withFont:font];</div><div class="line">[@&quot;图片：&quot; drawInRect:CGRectMake(10, 340, 80, 20) withFont:font];</div><div class="line"></div><div class="line">/*画圆*/</div><div class="line">//边框圆</div><div class="line">CGContextSetRGBStrokeColor(context,1,1,1,1.0);//画笔线的颜色</div><div class="line">CGContextSetLineWidth(context, 1.0);//线的宽度</div><div class="line">//void CGContextAddArc(CGContextRef c,CGFloat x, CGFloat y,CGFloat radius,CGFloat startAngle,CGFloat endAngle, int clockwise)1弧度＝180°/π （≈57.3°） 度＝弧度×180°/π 360°＝360×π/180 ＝2π 弧度</div><div class="line">// x,y为圆点坐标，radius半径，startAngle为开始的弧度，endAngle为 结束的弧度，clockwise 0为顺时针，1为逆时针。</div><div class="line">CGContextAddArc(context, 100, 20, 15, 0, 2*M_PI, 0); //添加一个圆</div><div class="line">CGContextDrawPath(context, kCGPathStroke); //绘制路径</div><div class="line"></div><div class="line">//填充圆，无边框</div><div class="line">CGContextAddArc(context, 150, 30, 30, 0, 2*M_PI, 0); //添加一个圆</div><div class="line">CGContextDrawPath(context, kCGPathFill);//绘制填充</div><div class="line"></div><div class="line">//画大圆并填充颜</div><div class="line">UIColor*aColor = [UIColor colorWithRed:1 green:0.0 blue:0 alpha:1];</div><div class="line">CGContextSetFillColorWithColor(context, aColor.CGColor);//填充颜色</div><div class="line">CGContextSetLineWidth(context, 3.0);//线的宽度</div><div class="line">CGContextAddArc(context, 250, 40, 40, 0, 2*M_PI, 0); //添加一个圆</div><div class="line">//kCGPathFill填充非零绕数规则,kCGPathEOFill表示用奇偶规则,kCGPathStroke路径,kCGPathFillStroke路径填充,kCGPathEOFillStroke表示描线，不是填充</div><div class="line">CGContextDrawPath(context, kCGPathFillStroke); //绘制路径加填充</div><div class="line"></div><div class="line">/*画线及孤线*/</div><div class="line">//画线</div><div class="line">CGPoint aPoints[2];//坐标点</div><div class="line">aPoints[0] =CGPointMake(100, 80);//坐标1</div><div class="line">aPoints[1] =CGPointMake(130, 80);//坐标2</div><div class="line">//CGContextAddLines(CGContextRef c, const CGPoint points[],size_t count)</div><div class="line">//points[]坐标数组，和count大小</div><div class="line">CGContextAddLines(context, aPoints, 2);//添加线</div><div class="line">CGContextDrawPath(context, kCGPathStroke); //根据坐标绘制路径</div><div class="line"></div><div class="line">//画笑脸弧线</div><div class="line">//左</div><div class="line">CGContextSetRGBStrokeColor(context, 0, 0, 1, 1);//改变画笔颜色</div><div class="line">CGContextMoveToPoint(context, 140, 80);//开始坐标p1</div><div class="line">//CGContextAddArcToPoint(CGContextRef c, CGFloat x1, CGFloat y1,CGFloat x2, CGFloat y2, CGFloat radius)</div><div class="line">//x1,y1跟p1形成一条线的坐标p2，x2,y2结束坐标跟p3形成一条线的p3,radius半径,注意, 需要算好半径的长度,</div><div class="line">CGContextAddArcToPoint(context, 148, 68, 156, 80, 10);</div><div class="line">CGContextStrokePath(context);//绘画路径</div><div class="line"></div><div class="line">//右</div><div class="line">CGContextMoveToPoint(context, 160, 80);//开始坐标p1</div><div class="line">//CGContextAddArcToPoint(CGContextRef c, CGFloat x1, CGFloat y1,CGFloat x2, CGFloat y2, CGFloat radius)</div><div class="line">//x1,y1跟p1形成一条线的坐标p2，x2,y2结束坐标跟p3形成一条线的p3,radius半径,注意, 需要算好半径的长度,</div><div class="line">CGContextAddArcToPoint(context, 168, 68, 176, 80, 10);</div><div class="line">CGContextStrokePath(context);//绘画路径</div><div class="line"></div><div class="line">//右</div><div class="line">CGContextMoveToPoint(context, 150, 90);//开始坐标p1</div><div class="line">//CGContextAddArcToPoint(CGContextRef c, CGFloat x1, CGFloat y1,CGFloat x2, CGFloat y2, CGFloat radius)</div><div class="line">//x1,y1跟p1形成一条线的坐标p2，x2,y2结束坐标跟p3形成一条线的p3,radius半径,注意, 需要算好半径的长度,</div><div class="line">CGContextAddArcToPoint(context, 158, 102, 166, 90, 10);</div><div class="line">CGContextStrokePath(context);//绘画路径</div><div class="line">//注，如果还是没弄明白怎么回事，请参考：http://donbe.blog.163.com/blog/static/138048021201052093633776/</div><div class="line"></div><div class="line">/*画矩形*/</div><div class="line">CGContextStrokeRect(context,CGRectMake(100, 120, 10, 10));//画方框</div><div class="line">CGContextFillRect(context,CGRectMake(120, 120, 10, 10));//填充框</div><div class="line">//矩形，并填弃颜色</div><div class="line">CGContextSetLineWidth(context, 2.0);//线的宽度</div><div class="line">aColor = [UIColor blueColor];//blue蓝色</div><div class="line">CGContextSetFillColorWithColor(context, aColor.CGColor);//填充颜色</div><div class="line">aColor = [UIColor yellowColor];</div><div class="line">CGContextSetStrokeColorWithColor(context, aColor.CGColor);//线框颜色</div><div class="line">CGContextAddRect(context,CGRectMake(140, 120, 60, 30));//画方框</div><div class="line">CGContextDrawPath(context, kCGPathFillStroke);//绘画路径</div><div class="line"></div><div class="line">//矩形，并填弃渐变颜色</div><div class="line">//关于颜色参考http://blog.sina.com.cn/s/blog_6ec3c9ce01015v3c.html</div><div class="line">//http://blog.csdn.net/reylen/article/details/8622932</div><div class="line">//第一种填充方式，第一种方式必须导入类库quartcore并#import &lt;QuartzCore/QuartzCore.h&gt;，这个就不属于在context上画，而是将层插入到view层上面。那么这里就设计到Quartz Core 图层编程了。</div><div class="line">CAGradientLayer *gradient1 = [CAGradientLayer layer];</div><div class="line">gradient1.frame = CGRectMake(240, 120, 60, 30);</div><div class="line">gradient1.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor,</div><div class="line">(id)[UIColor grayColor].CGColor,</div><div class="line">(id)[UIColor blackColor].CGColor,</div><div class="line">(id)[UIColor yellowColor].CGColor,</div><div class="line">(id)[UIColor blueColor].CGColor,</div><div class="line">(id)[UIColor redColor].CGColor,</div><div class="line">(id)[UIColor greenColor].CGColor,</div><div class="line">(id)[UIColor orangeColor].CGColor,</div><div class="line">(id)[UIColor brownColor].CGColor,nil];</div><div class="line">[self.layer insertSublayer:gradient1 atIndex:0];</div><div class="line">//第二种填充方式</div><div class="line">CGColorSpaceRef rgb = CGColorSpaceCreateDeviceRGB();</div><div class="line">CGFloat colors[] =</div><div class="line">&#123;</div><div class="line">1,1,1, 1.00,</div><div class="line">1,1,0, 1.00,</div><div class="line">1,0,0, 1.00,</div><div class="line">1,0,1, 1.00,</div><div class="line">0,1,1, 1.00,</div><div class="line">0,1,0, 1.00,</div><div class="line">0,0,1, 1.00,</div><div class="line">0,0,0, 1.00,</div><div class="line">&#125;;</div><div class="line">CGGradientRef gradient = CGGradientCreateWithColorComponents</div><div class="line">(rgb, colors, NULL, sizeof(colors)/(sizeof(colors[0])*4));//形成梯形，渐变的效果</div><div class="line">CGColorSpaceRelease(rgb);</div><div class="line">//画线形成一个矩形</div><div class="line">//CGContextSaveGState与CGContextRestoreGState的作用</div><div class="line">/*</div><div class="line">CGContextSaveGState函数的作用是将当前图形状态推入堆栈。之后，您对图形状态所做的修改会影响随后的描画操作，但不影响存储在堆栈中的拷贝。在修改完成后，您可以通过CGContextRestoreGState函数把堆栈顶部的状态弹出，返回到之前的图形状态。这种推入和弹出的方式是回到之前图形状态的快速方法，避免逐个撤消所有的状态修改；这也是将某些状态（比如裁剪路径）恢复到原有设置的唯一方式。</div><div class="line">*/</div><div class="line">CGContextSaveGState(context);</div><div class="line">CGContextMoveToPoint(context, 220, 90);</div><div class="line">CGContextAddLineToPoint(context, 240, 90);</div><div class="line">CGContextAddLineToPoint(context, 240, 110);</div><div class="line">CGContextAddLineToPoint(context, 220, 110);</div><div class="line">CGContextClip(context);//context裁剪路径,后续操作的路径</div><div class="line">//CGContextDrawLinearGradient(CGContextRef context,CGGradientRef gradient, CGPoint startPoint, CGPoint endPoint,CGGradientDrawingOptions options)</div><div class="line">//gradient渐变颜色,startPoint开始渐变的起始位置,endPoint结束坐标,options开始坐标之前or开始之后开始渐变</div><div class="line">CGContextDrawLinearGradient(context, gradient,CGPointMake</div><div class="line">(220,90) ,CGPointMake(240,110),</div><div class="line">kCGGradientDrawsAfterEndLocation);</div><div class="line">CGContextRestoreGState(context);// 恢复到之前的context</div><div class="line"></div><div class="line">//再写一个看看效果</div><div class="line">CGContextSaveGState(context);</div><div class="line">CGContextMoveToPoint(context, 260, 90);</div><div class="line">CGContextAddLineToPoint(context, 280, 90);</div><div class="line">CGContextAddLineToPoint(context, 280, 100);</div><div class="line">CGContextAddLineToPoint(context, 260, 100);</div><div class="line">CGContextClip(context);//裁剪路径</div><div class="line">//说白了，开始坐标和结束坐标是控制渐变的方向和形状</div><div class="line">CGContextDrawLinearGradient(context, gradient,CGPointMake</div><div class="line">(260, 90) ,CGPointMake(260, 100),</div><div class="line">kCGGradientDrawsAfterEndLocation);</div><div class="line">CGContextRestoreGState(context);// 恢复到之前的context</div><div class="line"></div><div class="line">//下面再看一个颜色渐变的圆</div><div class="line">CGContextDrawRadialGradient(context, gradient, CGPointMake(300, 100), 0.0, CGPointMake(300, 100), 10, kCGGradientDrawsBeforeStartLocation);</div><div class="line"></div><div class="line">/*画扇形和椭圆*/</div><div class="line">//画扇形，也就画圆，只不过是设置角度的大小，形成一个扇形</div><div class="line">aColor = [UIColor colorWithRed:0 green:1 blue:1 alpha:1];</div><div class="line">CGContextSetFillColorWithColor(context, aColor.CGColor);//填充颜色</div><div class="line">//以10为半径围绕圆心画指定角度扇形</div><div class="line">CGContextMoveToPoint(context, 160, 180);</div><div class="line">CGContextAddArc(context, 160, 180, 30,  -60 * M_PI / 180, -120 * M_PI / 180, 1);</div><div class="line">CGContextClosePath(context);</div><div class="line">CGContextDrawPath(context, kCGPathFillStroke); //绘制路径</div><div class="line"></div><div class="line">//画椭圆</div><div class="line">CGContextAddEllipseInRect(context, CGRectMake(160, 180, 20, 8)); //椭圆</div><div class="line">CGContextDrawPath(context, kCGPathFillStroke);</div><div class="line"></div><div class="line">/*画三角形*/</div><div class="line">//只要三个点就行跟画一条线方式一样，把三点连接起来</div><div class="line">CGPoint sPoints[3];//坐标点</div><div class="line">sPoints[0] =CGPointMake(100, 220);//坐标1</div><div class="line">sPoints[1] =CGPointMake(130, 220);//坐标2</div><div class="line">sPoints[2] =CGPointMake(130, 160);//坐标3</div><div class="line">CGContextAddLines(context, sPoints, 3);//添加线</div><div class="line">CGContextClosePath(context);//封起来</div><div class="line">CGContextDrawPath(context, kCGPathFillStroke); //根据坐标绘制路径</div><div class="line"></div><div class="line">/*画圆角矩形*/</div><div class="line">float fw = 180;</div><div class="line">float fh = 280;</div><div class="line"></div><div class="line">CGContextMoveToPoint(context, fw, fh-20);  // 开始坐标右边开始</div><div class="line">CGContextAddArcToPoint(context, fw, fh, fw-20, fh, 10);  // 右下角角度</div><div class="line">CGContextAddArcToPoint(context, 120, fh, 120, fh-20, 10); // 左下角角度</div><div class="line">CGContextAddArcToPoint(context, 120, 250, fw-20, 250, 10); // 左上角</div><div class="line">CGContextAddArcToPoint(context, fw, 250, fw, fh-20, 10); // 右上角</div><div class="line">CGContextClosePath(context);</div><div class="line">CGContextDrawPath(context, kCGPathFillStroke); //根据坐标绘制路径</div><div class="line"></div><div class="line">/*画贝塞尔曲线*/</div><div class="line">//二次曲线</div><div class="line">CGContextMoveToPoint(context, 120, 300);//设置Path的起点</div><div class="line">CGContextAddQuadCurveToPoint(context,190, 310, 120, 390);//设置贝塞尔曲线的控制点坐标和终点坐标</div><div class="line">CGContextStrokePath(context);</div><div class="line">//三次曲线函数</div><div class="line">CGContextMoveToPoint(context, 200, 300);//设置Path的起点</div><div class="line">CGContextAddCurveToPoint(context,250, 280, 250, 400, 280, 300);//设置贝塞尔曲线的控制点坐标和控制点坐标终点坐标</div><div class="line">CGContextStrokePath(context);</div><div class="line"></div><div class="line"></div><div class="line">/*图片*/</div><div class="line">UIImage *image = [UIImage imageNamed:@&quot;apple.jpg&quot;];</div><div class="line">[image drawInRect:CGRectMake(60, 340, 20, 20)];//在坐标中画出图片</div><div class="line">//    [image drawAtPoint:CGPointMake(100, 340)];//保持图片大小在point点开始画图片，可以把注释去掉看看</div><div class="line">CGContextDrawImage(context, CGRectMake(100, 340, 20, 20), image.CGImage);//使用这个使图片上下颠倒了，参考http://blog.csdn.net/koupoo/article/details/8670024</div><div class="line"></div><div class="line">//    CGContextDrawTiledImage(context, CGRectMake(0, 0, 20, 20), image.CGImage);//平铺图</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.iOS的绘图操作是在UIView类的drawRect方法中完成的，所以如果我们要想在一个UIView中绘图，需要写一个扩展UIView 的类，并重写drawRect方法，在这里进行绘图操作，程序会自动调用此方法进行绘图。</p>
+<p>3.关于自定义绘制View的背景颜色的说明。默认情况下，自定义绘制View的背景颜色是黑色的，需要自己创建View之后设置View的背景颜色。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/// 可以直接设置</div><div class="line">UIView *customView = [[NERectangleView alloc] initWithFrame:rect];</div><div class="line">customView.backgroundColor = [UIColor lightGrayColor];</div><div class="line"></div><div class="line">/// 实际上也可以在drawRect方法中设置背景色如下：</div><div class="line">- (void)drawRect:(CGRect)rect&#123;</div><div class="line">// 获取上下文</div><div class="line">CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">// 设置View的背景色</div><div class="line">CGContextSetFillColorWithColor(context, [UIColor purpleColor].CGColor);</div><div class="line">CGContextFillRect(context, rect);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>4.Quartz2D经常用来绘制表格、各种分析图。下面两个开源库可以直接用于绘制各种iOS图表：</p>
+<ol>
+<li><a href="https://github.com/kevinzhow/PNChart" target="_blank" rel="external">https://github.com/kevinzhow/PNChart</a></li>
+<li><a href="https://github.com/danielgindi/Charts" target="_blank" rel="external">https://github.com/danielgindi/Charts</a></li>
+</ol>
+<p>5.在开源库YYKit (<a href="https://github.com/ibireme/YYKit" target="_blank" rel="external">https://github.com/ibireme/YYKit</a>) 的 <code>YYKit/YYKit/Base/UIKit/UIImage+YYAdd.m</code> (<a href="https://github.com/ibireme/YYKit/blob/master/YYKit/Base/UIKit/UIImage%2BYYAdd.m)里，有大量利用Quartz" target="_blank" rel="external">https://github.com/ibireme/YYKit/blob/master/YYKit/Base/UIKit/UIImage%2BYYAdd.m)里，有大量利用Quartz</a> 2D API进行绘制的例子; 大家可以参考，也可以直接利用YYKit已经封装好的方法.</p>
+<p>此外，除了使用Quartz 2D API来一步步绘制控件外，通常也会使用CAShapeLayer结合CGPath来实现类似的效果。</p>
+<p>6.函数<code>CGContextEOFillPath</code>采用<code>even-odd fill rule</code>(奇偶填充规则)来填充路径；关于奇偶填充规则的更多介绍，参见:</p>
+<ol>
+<li><a href="http://www.enfocus.com/manuals/ReferenceGuide/PP/13/zhCN/zh-cn/common/ppr/concept/c_aa1141812.html" target="_blank" rel="external">http://www.enfocus.com/manuals/ReferenceGuide/PP/13/zhCN/zh-cn/common/ppr/concept/c_aa1141812.html</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule" target="_blank" rel="external">https://en.wikipedia.org/wiki/Even%E2%80%93odd_rule</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/fill-rule" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/SVG/Attribute/fill-rule</a></li>
+</ol>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 手势/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 动画/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 Quartz 2D绘制/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

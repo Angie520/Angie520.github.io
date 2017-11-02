@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 UINavigationController | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.系统会默认给有不透明的导航栏添加64的间距。1234567891011/// iOS7之后由于navigationBar.translucent默认是YES，坐标零点默认在（0，0）点  当不透明的时候，零点坐标在（0，64）；当设为NO时，self.view零点坐标在（0，64）。---也是去掉导航栏毛玻璃效果。self.navigationController.navigationBar.">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 UINavigationController">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 UINavigationController/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.系统会默认给有不透明的导航栏添加64的间距。1234567891011/// iOS7之后由于navigationBar.translucent默认是YES，坐标零点默认在（0，0）点  当不透明的时候，零点坐标在（0，64）；当设为NO时，self.view零点坐标在（0，64）。---也是去掉导航栏毛玻璃效果。self.navigationController.navigationBar.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:53:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 UINavigationController">
+<meta name="twitter:description" content="1.系统会默认给有不透明的导航栏添加64的间距。1234567891011/// iOS7之后由于navigationBar.translucent默认是YES，坐标零点默认在（0，0）点  当不透明的时候，零点坐标在（0，64）；当设为NO时，self.view零点坐标在（0，64）。---也是去掉导航栏毛玻璃效果。self.navigationController.navigationBar.">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 UINavigationController" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 UINavigationController</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 UINavigationController/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.系统会默认给有不透明的导航栏添加64的间距。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/// iOS7之后由于navigationBar.translucent默认是YES，坐标零点默认在（0，0）点  当不透明的时候，零点坐标在（0，64）；当设为NO时，self.view零点坐标在（0，64）。---也是去掉导航栏毛玻璃效果。</div><div class="line">self.navigationController.navigationBar.translucent = YES;</div><div class="line"></div><div class="line">/// self.automaticallyAdjustsScrollViewInsets默认为YES，即scrollView默认是考虑到导航栏间距的，会自动添加64的导航栏间距，这是scrollView内容上的间距</div><div class="line">self.automaticallyAdjustsScrollViewInsets = YES;</div><div class="line"></div><div class="line">/// 在iOS7之后self.edgesForExtendedLayout 默认值UIRectEdgeAll，此时self.view的坐标零点被扩充到在屏幕左上角，即self.view的从状态栏开始算起，当想从导航栏下方算起时，可如下设置。</div><div class="line">self.edgesForExtendedLayout = UIRectEdgeNone;</div><div class="line"></div><div class="line">/// 延伸视图包含不包含不透明的Bar,是用来指定导航栏是透明的还是不透明，iOS7中默认是YES。但是当我们设置一张不透明的图片作为导航栏背景时,该属性就会变成NO,这样不透明以后我们可以人为设置成YES达到延伸至导航栏的效果</div><div class="line">self.extendedLayoutIncludesOpaqueBars = YES;</div></pre></td></tr></table></figure></p>
+<p>2.UINavigationController中的控制器和UINavigationBar都是以栈的形式存放的。</p>
+<p>3.设置导航栏标题可用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.navigationItem.title = @&quot;导航栏&quot;;</div></pre></td></tr></table></figure></p>
+<p>4.设置导航栏背景图<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/// forBarMetrics有点类似于按钮的for state状态，即什么状态下显示</div><div class="line">/// UIBarMetricsDefault-竖屏横屏都有，横屏导航条变宽，则自动repeat图片</div><div class="line">/// UIBarMetricsCompact-竖屏没有，横屏有，相当于之前老iOS版本里地UIBarMetricsLandscapePhone</div><div class="line">/// UIBarMetricsCompactPrompt和UIBarMetricsDefaultPrompt暂时不知道用处，官方解释是Applicable only in bars with the prompt property, such as UINavigationBar and UISearchBar，</div><div class="line">[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@&quot;1.jpg&quot;] forBarMetrics:UIBarMetricsDefault];</div></pre></td></tr></table></figure></p>
+<p>5.设置导航栏颜色<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self.navigationController.navigationBar setBarTintColor:[UIColor cyanColor]];</div></pre></td></tr></table></figure></p>
+<p>6.导航栏阴影颜色。即导航栏下方一条线。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/// 当想去掉线时可以设置剪切属性，将阴影剪切就没有线了。</div><div class="line">self.navigationController.navigationBar.clipsToBounds = YES;</div><div class="line"></div><div class="line">/// 当想改阴影(导航栏下方线)时，可以用这个属性。</div><div class="line">self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@&quot;1.jpg&quot;];</div><div class="line">/// 当系统默认的导航栏时候会不成功，是因为我们还需要改导航栏的背景才能成功，即使用以下代码修改背景图：</div><div class="line">[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@&quot;1.jpg&quot;] forBarMetrics:UIBarMetricsDefault];</div></pre></td></tr></table></figure></p>
+<p>7.个性的UINavigationBar标题的文字效果，通过TitleTextAttributes属性来设置，TextAttributes是一个很强大的文字信息设置，可以修改一段文本中不同文字的不同样式(颜色、大小、字体等)，还能加删除线、下划线等。</p>
+<p>8.设置返回按钮图片，但文字不改变。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/// 单纯的换返回按钮的图片，正常是重新写一个按钮做返回比较多。</div><div class="line">[self.navigationController.navigationBar setBackIndicatorImage:[UIImage imageNamed:@&quot;1.jpg&quot;]];</div></pre></td></tr></table></figure></p>
+<p>9.设置状态栏样式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">/// 全局改变状态样式，不太灵活，在iOS 9后去除。如果状态栏背景为浅色，应选用黑色字样式(UIStatusBarStyleDefault，默认值)；如果背景为深色，则选用白色字样式(UIStatusBarStyleLightContent)。</div><div class="line">[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];</div><div class="line"></div><div class="line">/// 目前推荐使用的方法是：</div><div class="line">1.先到info.plist文件中设置属性：</div><div class="line">View controller-based status bar appearance = YES;</div><div class="line"></div><div class="line">2.UINavigationController中重写preferredStatusBarStyle方法</div><div class="line"></div><div class="line">- (UIStatusBarStyle)preferredStatusBarStyle &#123;</div><div class="line">return UIStatusBarStyleLightContent;</div><div class="line">&#125;</div><div class="line"></div><div class="line">改得有点麻烦。而且这样不是很灵活，为什么要这么做呢。</div></pre></td></tr></table></figure></p>
+<p>10.UIViewController持有属于自己的UINavigationItem(UINavigationItem继承NSObject不是UIView，是一个model，系统根据这个Model来展示)，UINavigationBar通过UIViewController知道应该展示哪个UINavigationItem信息，就能展示不同UIViewController的标题栏了。</p>
+<p>11.与UINavigationItem类似,UIBarButtonItem基类是NSObject不是UIView。</p>
+<p>12.自定义返回按钮会将系统左滑返回的功能屏蔽掉，其他情况如navigationBarHidden、navigationItem.hidesBackButton、leftBarButtonItems/leftBarButtonItem也会让左滑失效，需要左滑则在控制器添加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.navigationController.interactivePopGestureRecognizer.delegate = (id)self;</div></pre></td></tr></table></figure></p>
+<p>13.自定义导航栏按钮默认会有间距，想要去除或者拉宽间距，则需要添加另一个UIBarButtonSystemItemFixedSpace类型的导航栏item。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];</div><div class="line">spaceItem.width = -16;</div><div class="line">UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@&quot;xx&quot;] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];</div><div class="line">self.navigationItem.leftBarButtonItems = @[spaceItem,backItem];</div></pre></td></tr></table></figure></p>
+<p>14.通过事件动态隐藏和显示导航栏，可以用下面的属性来控制:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/// 滑动导航栏隐藏</div><div class="line">self.navigationController.hidesBarsOnSwipe = YES;</div><div class="line">/// 点击导航栏隐藏</div><div class="line">self.navigationController.hidesBarsOnTap = YES;</div><div class="line">/// 键盘出现，导航栏隐藏</div><div class="line">self.navigationController.hidesBarsWhenKeyboardAppears = YES;</div></pre></td></tr></table></figure></p>
+<p>15.当需要统计页面出现次数和统计时间时，可以使用navigationController的代理:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated</div><div class="line"></div><div class="line">- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 NSArray/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 UITabBarController/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 UINavigationController/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

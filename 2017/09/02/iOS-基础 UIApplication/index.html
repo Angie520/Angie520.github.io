@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 UIApplication | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.UIApplication实现了UIApplicationDelegate。 2.通过launchOptions可以知道启动的方式。12345678910111213141516171819- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOp">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 UIApplication">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 UIApplication/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.UIApplication实现了UIApplicationDelegate。 2.通过launchOptions可以知道启动的方式。12345678910111213141516171819- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOp">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:54:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 UIApplication">
+<meta name="twitter:description" content="1.UIApplication实现了UIApplicationDelegate。 2.通过launchOptions可以知道启动的方式。12345678910111213141516171819- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOp">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 UIApplication" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 UIApplication</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 UIApplication/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.UIApplication实现了UIApplicationDelegate。</p>
+<p>2.通过launchOptions可以知道启动的方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions&#123;</div><div class="line">NSURL *url = [launchOptionsobjectForKey:UIApplicationLaunchOptionsURLKey];</div><div class="line">if(url) &#123;</div><div class="line">/// 如果是通过URL启动</div><div class="line">&#125;</div><div class="line">NSString *bundleId = [launchOptionsobjectForKey:UIApplicationLaunchOptionsSourceApplicationKey];</div><div class="line">if(bundleId) &#123;</div><div class="line">/// 其他APP启动。对应启动的源应用程序的bundle ID</div><div class="line">&#125;</div><div class="line">UILocalNotification * localNotify = [launchOptionsobjectForKey:UIApplicationLaunchOptionsLocalNotificationKey];</div><div class="line">if(localNotify) &#123;</div><div class="line">/// 如果是通过通知启动</div><div class="line">&#125;</div><div class="line">NSDictionary * userInfo = [launchOptionsobjectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];</div><div class="line">if(userInfo)  &#123;</div><div class="line">/// 对应的是启动应用程序的的远程通知信息</div><div class="line">&#125;</div><div class="line">/// 等等。。。</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.openURL来打开APP。可以通过配置URL Schemes来使用。</p>
+<ol>
+<li>UIApplicationMain主要负责了：从给定的类名初始化应用程序对象、从给定的应用程序委托类，初始化一个应用程序委托、启动主事件循环，并开始接收事件。</li>
+</ol>
+<p>5.canOpenUrl在iOS9开始的限制</p>
+<ul>
+<li>对于用户隐私的考虑，从iOS9开始无法直接使用canOpenUrl判断用户是否安装了某个app，需要对这些app的url scheme加入白名单，在info.plist里的LSApplicationQueriesSchemes项增加白名单。此外，白名单有50个数量上限。<br>参考《WWDC 2015 Session 703: “Privacy and Your App”》(<a href="https://developer.apple.com/videos/play/wwdc2015/703/" target="_blank" rel="external">https://developer.apple.com/videos/play/wwdc2015/703/</a>)</li>
+</ul>
+<p>6.后台任务，如播放器、后台下载这些应用需要进行注册才能后台运行任务。而APP只需短时间的后台处理的话。可用下面代码来执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/// 在进入后台的代理执行</div><div class="line">- (void)applicationDidEnterBackground:(UIApplication *)application &#123;</div><div class="line">UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithName:@&quot;myTask&quot; expirationHandler:nil];</div><div class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</div><div class="line">NSLog(@&quot;进入后台处理事情。。&quot;);</div><div class="line">[application endBackgroundTask:bgTask];</div><div class="line">&#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>7.三个发送通知的方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[NSNotificationCenter defaultCenter] postNotificationName:UIApplicationDidEnterBackgroundNotification object:[UIApplication sharedApplication]];</div><div class="line">/// postNotificationName是通知名称、object发送方、userInfo额外信息</div><div class="line">[[NSNotificationCenter defaultCenter] postNotificationName:&lt;#(nonnull NSNotificationName)#&gt; object:&lt;#(nullable id)#&gt; userInfo:&lt;#(nullable NSDictionary *)#&gt;]</div><div class="line">[[NSNotificationCenter defaultCenter] postNotification:&lt;#(nonnull NSNotification *)#&gt;]</div></pre></td></tr></table></figure></p>
+<p>8.监听通知<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/// 监听进入后台的通知</div><div class="line">[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];</div></pre></td></tr></table></figure></p>
+<p>9.使用通知NSNotification和计时器NSTimer记得要移除。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)dealloc &#123;</div><div class="line">[[NSNotificationCenter defaultCenter] removeObserver:self];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>10.KVO是在对象上添加观察者，所以值改变的时候会有KVO触发。NSNotification是在通知上添加观察者。</p>
+<p>11.NSNotificationCenter还有另一种基于block的添加通知的api：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (id &lt;NSObject&gt;)addObserverForName:(nullable NSString *)name object:(nullable id)obj queue:(nullable NSOperationQueue *)queue usingBlock:(void (^)(NSNotification *note))block;</div></pre></td></tr></table></figure></p>
+<p>12.如果deployment target从9.0开始，就不需要再关心removeObserver了。但是如果你的app支持的iOS最低版本是iOS9之前，就需要在addObserver之后，在合适的地方去做removeObserver，否则当你的controller dealloc之后，又有通知触发的话，就会crash。一般来讲，在viewDidLoad里对通知addObserver，那么就在viewDidUnload里调用removeObserver:name:object；在init里addObserver，就在dealloc里removeObserver。当然，你只在dealloc里直接调用<br>[[NSNotificationCenter defaultCenter] removeObserver:self]可以将所有通知移除。</p>
+<p>//KeyWindow获取rootVC时的注意点(有时会变成获取UIApplicationRotationFollowingController实例）<br>//<a href="http://www.qingpingshan.com/rjbc/ios/181557.html" target="_blank" rel="external">http://www.qingpingshan.com/rjbc/ios/181557.html</a><br>//建议使用这种方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AppDelegate *appdelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;</div><div class="line">UIViewController *rootViewController1 = appdelegate.window.rootViewController;</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/02/iOS-基础 NSString/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 CALayer/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 UIApplication/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

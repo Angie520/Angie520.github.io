@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 多线程 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="作者：伯恩的遗产http://www.jianshu.com/p/0b0d9b1f1f19 谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。1.三种多线程技术的对比  NSThread:NSThread 比其他两个轻量级，使用简单.缺点：需要自己管理线程的生命周期、线程同步、加锁、睡眠以及唤醒等。线程同步对数据的加锁会有一定的系统开销  NSOperation：不需要关">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 多线程">
+<meta property="og:url" content="http://angie520.cn/2017/09/03/iOS-基础 多线程/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="作者：伯恩的遗产http://www.jianshu.com/p/0b0d9b1f1f19 谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。1.三种多线程技术的对比  NSThread:NSThread 比其他两个轻量级，使用简单.缺点：需要自己管理线程的生命周期、线程同步、加锁、睡眠以及唤醒等。线程同步对数据的加锁会有一定的系统开销  NSOperation：不需要关">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:55:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 多线程">
+<meta name="twitter:description" content="作者：伯恩的遗产http://www.jianshu.com/p/0b0d9b1f1f19 谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。1.三种多线程技术的对比  NSThread:NSThread 比其他两个轻量级，使用简单.缺点：需要自己管理线程的生命周期、线程同步、加锁、睡眠以及唤醒等。线程同步对数据的加锁会有一定的系统开销  NSOperation：不需要关">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#作者：伯恩的遗产"><span class="toc-text">作者：伯恩的遗产</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。"><span class="toc-text">谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 多线程" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 多线程</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/03/iOS-基础 多线程/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h4 id="作者：伯恩的遗产"><a href="#作者：伯恩的遗产" class="headerlink" title="作者：伯恩的遗产"></a>作者：伯恩的遗产</h4><p><a href="http://www.jianshu.com/p/0b0d9b1f1f19" target="_blank" rel="external">http://www.jianshu.com/p/0b0d9b1f1f19</a></p>
+<h4 id="谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。"><a href="#谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。" class="headerlink" title="谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。"></a>谢谢大神的分享，这个笔记是学习大神的一些记录。更全更专业可以去看大神的简书。</h4><p>1.三种多线程技术的对比</p>
+<ul>
+<li><p>NSThread:NSThread 比其他两个轻量级，使用简单.缺点：需要自己管理线程的生命周期、线程同步、加锁、睡眠以及唤醒等。线程同步对数据的加锁会有一定的系统开销</p>
+</li>
+<li><p>NSOperation：不需要关心线程管理，数据同步的事情，可以把精力放在自己需要执行的操作上.NSOperation是面向对象的.</p>
+</li>
+<li><p>GCD：Grand Central Dispatch是由苹果开发的一个多核编程的解决方案。iOS4.0+才能使用，是替代NSThread， NSOperation的高效和强大的技术.GCD是基于C语言的。</p>
+</li>
+</ul>
+<p>2.NSThread的使用。</p>
+<ul>
+<li><p>创建和启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/// 创建线程类</div><div class="line">NSThread *thread = [[NSThread alloc] initWithTarget:self selector:@selector(run:) object:nil];</div><div class="line">/// 启动线程</div><div class="line">[thread start];</div><div class="line"></div><div class="line">/// 创建并自动启动</div><div class="line">[NSThread detachNewThreadSelector:@selector(run:) toTarget:self withObject:nil];</div><div class="line"></div><div class="line">/// 使用 NSObject 的方法创建并自动启动</div><div class="line">[self performSelectorInBackground:@selector(run:) withObject:nil];</div></pre></td></tr></table></figure>
+</li>
+<li><p>其他方法和属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">/// 取消线程</div><div class="line">- (void)cancel;</div><div class="line"></div><div class="line">/// 启动线程</div><div class="line">- (void)start;</div><div class="line"></div><div class="line">/// 判断某个线程的状态的属性</div><div class="line">@property (readonly, getter=isExecuting) BOOL executing;</div><div class="line">@property (readonly, getter=isFinished) BOOL finished;</div><div class="line">@property (readonly, getter=isCancelled) BOOL cancelled;</div><div class="line"></div><div class="line">/// 设置和获取线程名字</div><div class="line">-(void)setName:(NSString *)n;</div><div class="line">-(NSString *)name;</div><div class="line"></div><div class="line">/// 获取当前线程信息</div><div class="line">+ (NSThread *)currentThread;</div><div class="line"></div><div class="line">/// 获取主线程信息</div><div class="line">+ (NSThread *)mainThread;</div><div class="line"></div><div class="line">/// 使当前线程暂停一段时间，或者暂停到某个时刻</div><div class="line">+ (void)sleepForTimeInterval:(NSTimeInterval)time;</div><div class="line">+ (void)sleepUntilDate:(NSDate *)date;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>GCD是苹果为多核的并行运算提出的解决方案，所以会自动合理地利用更多的CPU内核（比如双核、四核），最重要的是它会自动管理线程的生命周期（创建线程、调度任务、销毁线程），完全不需要我们管理，我们只需要告诉干什么就行。同时它使用的也是 c语言，不过由于使用了 Block（Swift里叫做闭包），使得使用起来更加方便，而且灵活。所以基本上大家都使用 GCD 这套方案。</li>
+</ol>
+<p>4.在 GCD 中，加入了两个非常重要的概念： 任务 和 队列。</p>
+<ul>
+<li>任务：即操作，你想要干什么，说白了就是一段代码，在 GCD 中就是一个 Block，所以添加任务十分方便。任务有两种执行方式： <strong>同步执行</strong> 和 <strong>异步执行</strong>，他们之间的区别是 是否会创建新的线程。</li>
+</ul>
+<p>同步（sync） 和 异步（async） 的主要区别在于会不会阻塞当前线程，直到 Block 中的任务执行完毕！<br>如果是 同步（sync） 操作，它会阻塞当前线程并等待 Block 中的任务执行完毕，然后当前线程才会继续往下运行。<br>如果是 异步（async）操作，当前线程会直接往下执行，它不会阻塞当前线程。</p>
+<ul>
+<li>用于存放任务。一共有两种队列， <strong>串行队列</strong> 和 <strong>并行队列</strong>。</li>
+</ul>
+<p>放到串行队列的任务，GCD 会 FIFO（先进先出） 地取出来一个，执行一个，然后取下一个，这样一个一个的执行。</p>
+<p>放到并行队列的任务，GCD 也会 FIFO的取出来，但不同的是，它取出来一个就会放到别的线程，然后再取出来一个又放到另一个的线程。这样由于取的动作很快，忽略不计，看起来，所有的任务都是一起执行的。不过需要注意，GCD 会根据系统资源控制并行的数量，所以如果任务很多，它并不会让所有任务同时执行。</p>
+<p>串行队列&amp;同步执行：当前线程，一个一个执行。</p>
+<p>串行队列&amp;异步执行：其他线程，一个一个执行。</p>
+<p>并行队列&amp;同步执行：当前线程，一个一个执行。</p>
+<p>并行队列&amp;异步执行：开很多线程，一起执行。</p>
+<p>5.使用GCD。</p>
+<ul>
+<li><p>创建队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/// 创建串行队列</div><div class="line">dispatch_queue_t queue = dispatch_queue_create(&quot;tk.bourne.testQueue&quot;, NULL);</div><div class="line">dispatch_queue_t queue = dispatch_queue_create(&quot;tk.bourne.testQueue&quot;, DISPATCH_QUEUE_SERIAL);</div><div class="line">/// 创建并行队列</div><div class="line">dispatch_queue_t queue = dispatch_queue_create(&quot;tk.bourne.testQueue&quot;, DISPATCH_QUEUE_CONCURRENT);</div><div class="line">/// 全局并行队列：只要是并行任务一般都加入到这个队列。这是系统提供的一个并发队列。</div><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/// 同步任务，会阻塞当前线程 (SYNC)</div><div class="line">dispatch_sync(queue, ^&#123;</div><div class="line">//code here</div><div class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</div><div class="line">&#125;);</div><div class="line">/// 异步任务：不会阻塞当前线程 (ASYNC)</div><div class="line">dispatch_async(queue, ^&#123;</div><div class="line">//code here</div><div class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>主线程是串行队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/// 执行这段代码只会打印&quot;之前-----&quot;</div><div class="line">/// 在同步执行主线程的时候就叫主线程阻塞了。所以不要同步执行主线程。</div><div class="line">NSLog(&quot;之前 - %@&quot;, NSThread.currentThread())</div><div class="line">dispatch_sync(dispatch_get_main_queue(), &#123; () -&gt; Void in</div><div class="line">NSLog(&quot;sync - %@&quot;, NSThread.currentThread())</div><div class="line">&#125;)</div><div class="line">NSLog(&quot;之后 - %@&quot;, NSThread.currentThread())</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>*不要在有其他异步任务的串行队列中，还使用该串行队列去执行同步任务，因为这会造成死锁。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">let queue = dispatch_queue_create(&quot;myQueue&quot;, DISPATCH_QUEUE_SERIAL)</div><div class="line">/// 会执行</div><div class="line">NSLog(&quot;之前 - %@&quot;, NSThread.currentThread())</div><div class="line"></div><div class="line">dispatch_async(queue, &#123; () -&gt; Void in</div><div class="line">/// 会执行</div><div class="line">NSLog(&quot;sync之前 - %@&quot;, NSThread.currentThread())</div><div class="line">dispatch_sync(queue, &#123; () -&gt; Void in</div><div class="line">/// 不会执行，发生死锁问题</div><div class="line">NSLog(&quot;sync - %@&quot;, NSThread.currentThread())</div><div class="line">&#125;)</div><div class="line">/// 不会执行，发生死锁问题</div><div class="line">NSLog(&quot;sync之后 - %@&quot;, NSThread.currentThread())</div><div class="line">&#125;)</div><div class="line">/// 会执行</div><div class="line">NSLog(&quot;之后 - %@&quot;, NSThread.currentThread())</div></pre></td></tr></table></figure></p>
+<ul>
+<li>队列组：队列组可以将很多队列添加到一个组里，这样做的好处是，当这个组里所有的任务都执行完了，队列组会通过一个方法通知我们。下面是使用方法，这是一个很实用的功能。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">//1.创建队列组</div><div class="line">dispatch_group_t group = dispatch_group_create();</div><div class="line">//2.创建队列</div><div class="line">dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line"></div><div class="line">//3.多次使用队列组的方法执行任务, 只有异步方法</div><div class="line">//3.1.执行3次循环</div><div class="line">dispatch_group_async(group, queue, ^&#123;</div><div class="line">for (NSInteger i = 0; i &lt; 3; i++) &#123;</div><div class="line">NSLog(@&quot;group-01 - %@&quot;, [NSThread currentThread]);</div><div class="line">&#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">//3.2.主队列执行8次循环</div><div class="line">dispatch_group_async(group, dispatch_get_main_queue(), ^&#123;</div><div class="line">for (NSInteger i = 0; i &lt; 8; i++) &#123;</div><div class="line">NSLog(@&quot;group-02 - %@&quot;, [NSThread currentThread]);</div><div class="line">&#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">//3.3.执行5次循环</div><div class="line">dispatch_group_async(group, queue, ^&#123;</div><div class="line">for (NSInteger i = 0; i &lt; 5; i++) &#123;</div><div class="line">NSLog(@&quot;group-03 - %@&quot;, [NSThread currentThread]);</div><div class="line">&#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">//4.都完成后会自动通知</div><div class="line">dispatch_group_notify(group, dispatch_get_main_queue(), ^&#123;</div><div class="line">NSLog(@&quot;完成 - %@&quot;, [NSThread currentThread]);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">/// 5.当没有加载延迟时，完成的通知会等待下面一组完成后才会调用，但加载1秒延迟后就不会再调用完成的通知</div><div class="line">dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">//5.执行5次循环</div><div class="line">dispatch_group_async(group, queue, ^&#123;</div><div class="line">for (NSInteger i = 0; i &lt; 5; i++) &#123;</div><div class="line">NSLog(@&quot;group-04 - %@&quot;, [NSThread currentThread]);</div><div class="line">&#125;</div><div class="line">&#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>NSOperation和NSOperationQueue:NSOperation 是苹果公司对 GCD 的封装，完全面向对象，所以使用起来更好理解。 大家可以看到 NSOperation 和 NSOperationQueue 分别对应 GCD 的 任务 和 队列 。</li>
+</ol>
+<ul>
+<li>将要执行的任务封装到一个 NSOperation 对象中。</li>
+<li>将此任务添加到一个 NSOperationQueue 对象中。</li>
+<li>NSOperation 只是一个抽象类，所以不能封装任务。但它有 2 个子类用于封装任务。分别是：NSInvocationOperation 和 NSBlockOperation 。创建一个 Operation 后，需要调用 start 方法来启动任务，它会 默认在当前队列同步执行。当然你也可以在中途取消一个任务，只需要调用其 cancel 方法即可。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/// 1.创建NSInvocationOperation对象</div><div class="line">NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(run) object:nil];</div><div class="line">///2.开始执行</div><div class="line">[operation start];</div><div class="line"></div><div class="line">/// 1.创建NSBlockOperation对象</div><div class="line">NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^&#123;</div><div class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</div><div class="line">&#125;];</div><div class="line">/// 2.开始任务</div><div class="line">[operation start];</div></pre></td></tr></table></figure>
+<ul>
+<li>之前说过这样的任务，默认会在当前线程执行。但是 NSBlockOperation 还有一个方法：addExecutionBlock: ，通过这个方法可以给 Operation 添加多个执行 Block。这样 Operation 中的任务 会并发执行，它会 在主线程和其它的多个线程 执行这些任务。而且addExecutionBlock 方法必须在 start() 方法之前执行，否则就会报错。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/// 1.创建NSBlockOperation对象</div><div class="line">NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^&#123;</div><div class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</div><div class="line">&#125;];</div><div class="line">/// 添加多个Block--会再主线程和其他的多个线程执行，不一定是在哪个线程执行。</div><div class="line">for (NSInteger i = 0; i &lt; 5; i++) &#123;</div><div class="line">[operation addExecutionBlock:^&#123;</div><div class="line">NSLog(@&quot;第%ld次：%@&quot;, i, [NSThread currentThread]);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line">//2.开始任务</div><div class="line">[operation start];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>6.通过调用一个 NSOperation 对象的 start() 方法来启动这个任务，但是这样做他们默认是 同步执行 的。就算是 addExecutionBlock 方法，也会在 当前线程和其他线程 中执行，也就是说还是会占用当前线程。这是就要用到队列 NSOperationQueue 了。而且，按类型来说的话一共有两种类型：主队列、其他队列。只要添加到队列，会自动调用任务的 start() 方法。</p>
+<ul>
+<li><p>主队列-主线程队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/// 创建主线程队列</div><div class="line">NSOperationQueue *queue = [NSOperationQueue mainQueue];</div></pre></td></tr></table></figure>
+</li>
+<li><p>其他队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/// 1.创建一个其他队列</div><div class="line">NSOperationQueue *queue = [[NSOperationQueue alloc] init];</div><div class="line"></div><div class="line">/// 2.创建NSBlockOperation对象</div><div class="line">NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^&#123;</div><div class="line">NSLog(@&quot;%@&quot;, [NSThread currentThread]);</div><div class="line">&#125;];</div><div class="line"></div><div class="line">/// 3.添加多个Block</div><div class="line">for (NSInteger i = 0; i &lt; 5; i++) &#123;</div><div class="line">[operation addExecutionBlock:^&#123;</div><div class="line">NSLog(@&quot;第%ld次：%@&quot;, i, [NSThread currentThread]);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line">/// 4.队列添加任务-会自动执行。</div><div class="line">[queue addOperation:operation];</div></pre></td></tr></table></figure>
+</li>
+<li><p>队列的最大并发数。NSOperationQueue有一个maxConcurrentOperationCount参数是指定队列的最大并发数，用来设置最多可以让多少个任务同时执行。当你把它设置为 1 的时候，就是串行执行了，默认是并行执行的。这是和GCD很大的不同。GCD有串行、并行队列，NSOperationQueue没有这个区分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/// 1.创建一个其他队列</div><div class="line">NSOperationQueue *queue = [[NSOperationQueue alloc] init];</div><div class="line">/// 设置队列的最大并发数</div><div class="line">queue.maxConcurrentOperationCount = 1;</div></pre></td></tr></table></figure>
+</li>
+<li><p>NSOperationQueue也有一个添加任务的block:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[queue addOperationWithBlock:^&#123;</div><div class="line">NSLog(@&quot;%@&quot;,[NSThread currentThread]);</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>*NSOperation 有一个非常实用的功能，那就是添加依赖。比如有 3 个任务：A: 从服务器上下载一张图片，B：给这张图片加个水印，C：把图片返回给服务器。这里是需要一定的顺序才能执行的。这时就可以用到依赖了:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">//1.任务一：下载图片</div><div class="line">NSBlockOperation *operation1 = [NSBlockOperation blockOperationWithBlock:^&#123;</div><div class="line">NSLog(@&quot;下载图片 - %@&quot;, [NSThread currentThread]);</div><div class="line">[NSThread sleepForTimeInterval:1.0];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//2.任务二：打水印</div><div class="line">NSBlockOperation *operation2 = [NSBlockOperation blockOperationWithBlock:^&#123;</div><div class="line">NSLog(@&quot;打水印   - %@&quot;, [NSThread currentThread]);</div><div class="line">[NSThread sleepForTimeInterval:1.0];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//3.任务三：上传图片</div><div class="line">NSBlockOperation *operation3 = [NSBlockOperation blockOperationWithBlock:^&#123;</div><div class="line">NSLog(@&quot;上传图片 - %@&quot;, [NSThread currentThread]);</div><div class="line">[NSThread sleepForTimeInterval:1.0];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//4.设置依赖</div><div class="line">[operation2 addDependency:operation1];      //任务二依赖任务一</div><div class="line">[operation3 addDependency:operation2];      //任务三依赖任务二</div><div class="line"></div><div class="line">//5.创建队列并加入任务</div><div class="line">NSOperationQueue *queue = [[NSOperationQueue alloc] init];</div><div class="line">[queue addOperations:@[operation3, operation2, operation1] waitUntilFinished:NO];</div><div class="line"></div><div class="line">/// 注意点：</div><div class="line">/// 1.不能添加相互依赖，会死锁，比如 A依赖B，B依赖A。</div><div class="line">/// 2.可以使用 removeDependency 来解除依赖关系。</div><div class="line">/// 3.可以在不同的队列之间依赖，反正就是这个依赖是添加到任务身上的，和队列没关系。</div></pre></td></tr></table></figure></p>
+<ul>
+<li>其他的方法<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">/// NSOperation</div><div class="line">BOOL executing; //判断任务是否正在执行</div><div class="line">BOOL finished; //判断任务是否完成</div><div class="line">void (^completionBlock)(void); //用来设置完成后需要执行的操作</div><div class="line">- (void)cancel; //取消任务</div><div class="line">- (void)waitUntilFinished; //阻塞当前线程直到此任务执行完毕</div><div class="line"></div><div class="line">/// NSOperationQueue</div><div class="line">NSUInteger operationCount; //获取队列的任务数</div><div class="line">- (void)cancelAllOperations; //取消队列中所有的任务</div><div class="line">- (void)waitUntilAllOperationsAreFinished; //阻塞当前线程直到此队列中的所有任务执行完毕</div><div class="line">[queue setSuspended:YES]; // 暂停queue</div><div class="line">[queue setSuspended:NO]; // 继续queue</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/09/03/iOS-基础 文件存储/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/03/iOS-基础 UIView/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/03/iOS-基础 多线程/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 通过委托与数据源协议进行对象间通信 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+  
+
+  <meta name="description" content="1。使用委托协议更有利于解耦。 2.为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。3.委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。4.将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。5.当某对象需要从另外">
+<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 通过委托与数据源协议进行对象间通信">
+<meta property="og:url" content="http://angie520.cn/2017/01/18/iOS 通过委托与数据源协议进行对象间通信/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1。使用委托协议更有利于解耦。 2.为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。3.委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。4.将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。5.当某对象需要从另外">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC27.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC28.png">
+<meta property="og:updated_time" content="2017-11-02T07:07:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 通过委托与数据源协议进行对象间通信">
+<meta name="twitter:description" content="1。使用委托协议更有利于解耦。 2.为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。3.委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。4.将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。5.当某对象需要从另外">
+<meta name="twitter:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC27.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1。使用委托协议更有利于解耦。"><span class="toc-text">1。使用委托协议更有利于解耦。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。"><span class="toc-text">2.为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。"><span class="toc-text">3.委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。"><span class="toc-text">4.将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-当某对象需要从另外一个对象中获取数据时，可使用委托模式。这种情境下，该模式亦称为“数据源协议”。"><span class="toc-text">5.当某对象需要从另外一个对象中获取数据时，可使用委托模式。这种情境下，该模式亦称为“数据源协议”。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-若有必要，可实现含有位段的结构体，将委托对象是否能相应相关协议方法这一信息缓存至其中。"><span class="toc-text">6.若有必要，可实现含有位段的结构体，将委托对象是否能相应相关协议方法这一信息缓存至其中。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 通过委托与数据源协议进行对象间通信" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 通过委托与数据源协议进行对象间通信</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/01/18/iOS 通过委托与数据源协议进行对象间通信/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC27.png" alt=""></p>
+<h3 id="1。使用委托协议更有利于解耦。"><a href="#1。使用委托协议更有利于解耦。" class="headerlink" title="1。使用委托协议更有利于解耦。"></a>1。使用委托协议更有利于解耦。</h3><p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC28.png" alt=""></p>
+<h3 id="2-为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。"><a href="#2-为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。" class="headerlink" title="2.为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。"></a>2.为了防止代理方法没有实现，直接执行导致的错误，需要在执行之前判断是否实现了代理方法，但是某个代理方法使用比较多，每次都判断的话会降低信息，那么可以通过保存相关属性判断来执行。有助于提高性能。</h3><h3 id="3-委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。"><a href="#3-委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。" class="headerlink" title="3.委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。"></a>3.委托模式为对象提供了一套接口，使其可由此将相关事件告知给其他对象。</h3><h3 id="4-将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。"><a href="#4-将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。" class="headerlink" title="4.将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。"></a>4.将委托对象应该支持的接口定义成协议，在协议中把可能需要处理的事件定义成方法。</h3><h3 id="5-当某对象需要从另外一个对象中获取数据时，可使用委托模式。这种情境下，该模式亦称为“数据源协议”。"><a href="#5-当某对象需要从另外一个对象中获取数据时，可使用委托模式。这种情境下，该模式亦称为“数据源协议”。" class="headerlink" title="5.当某对象需要从另外一个对象中获取数据时，可使用委托模式。这种情境下，该模式亦称为“数据源协议”。"></a>5.当某对象需要从另外一个对象中获取数据时，可使用委托模式。这种情境下，该模式亦称为“数据源协议”。</h3><h3 id="6-若有必要，可实现含有位段的结构体，将委托对象是否能相应相关协议方法这一信息缓存至其中。"><a href="#6-若有必要，可实现含有位段的结构体，将委托对象是否能相应相关协议方法这一信息缓存至其中。" class="headerlink" title="6.若有必要，可实现含有位段的结构体，将委托对象是否能相应相关协议方法这一信息缓存至其中。"></a>6.若有必要，可实现含有位段的结构体，将委托对象是否能相应相关协议方法这一信息缓存至其中。</h3>
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/16/iOS 理解NSCopying协议/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/01/18/iOS 将类的实现代码分散到便于管理的数个分类之中/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/01/18/iOS 通过委托与数据源协议进行对象间通信/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

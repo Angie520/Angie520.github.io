@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 多用块枚举，少用for循环 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+  
+
+  <meta name="description" content="1.如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。 2.快速遍历 目前当中所有遍历方式中最快的一种，语法也是最简单，效率最高。但是在遍历字典需要同时获取键、值，那么会多出来一步。而且与传统的for循环不同，这种遍历方式无法轻松获得下标值，通常需">
+<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 多用块枚举，少用for循环">
+<meta property="og:url" content="http://angie520.cn/2017/01/27/iOS 多用块枚举，少用for循环/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。 2.快速遍历 目前当中所有遍历方式中最快的一种，语法也是最简单，效率最高。但是在遍历字典需要同时获取键、值，那么会多出来一步。而且与传统的for循环不同，这种遍历方式无法轻松获得下标值，通常需">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC39.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC40.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC41.png">
+<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC42.png">
+<meta property="og:updated_time" content="2017-11-02T07:07:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 多用块枚举，少用for循环">
+<meta name="twitter:description" content="1.如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。 2.快速遍历 目前当中所有遍历方式中最快的一种，语法也是最简单，效率最高。但是在遍历字典需要同时获取键、值，那么会多出来一步。而且与传统的for循环不同，这种遍历方式无法轻松获得下标值，通常需">
+<meta name="twitter:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC39.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。"><span class="toc-text">1.如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-快速遍历"><span class="toc-text">2.快速遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3。基于块的遍历（推荐的方式）"><span class="toc-text">3。基于块的遍历（推荐的方式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-遍历的方式有4种。最基本的方法是for循环，其次是NSEnumerator遍历方法及快速遍历法，最新、最先进的方式则是“块枚举法”。"><span class="toc-text">3.遍历的方式有4种。最基本的方法是for循环，其次是NSEnumerator遍历方法及快速遍历法，最新、最先进的方式则是“块枚举法”。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-“块枚举法”本身就能通过GCD来并发执行遍历操作，无须另外编写代码，而采用其他遍历方式则无法轻易实现这一点。"><span class="toc-text">4.“块枚举法”本身就能通过GCD来并发执行遍历操作，无须另外编写代码，而采用其他遍历方式则无法轻易实现这一点。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-若提前知道待遍历的collection含有何种对象，则应修改块签名，指出对象的具体类型。"><span class="toc-text">5.若提前知道待遍历的collection含有何种对象，则应修改块签名，指出对象的具体类型。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 多用块枚举，少用for循环" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 多用块枚举，少用for循环</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/01/27/iOS 多用块枚举，少用for循环/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="1-如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。"><a href="#1-如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。" class="headerlink" title="1.如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。"></a>1.如果是数组的话还好。因为是有序的。如果是字典或者set类型的话，因为这2种类型是无序的，如果是使用for循环的话，会额外创建一个有序的数组保存后再遍历，就影响性能有额外的开销。所以最好是用块枚举来遍历。</h3><p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC39.png" alt=""></p>
+<h3 id="2-快速遍历"><a href="#2-快速遍历" class="headerlink" title="2.快速遍历"></a>2.快速遍历</h3><p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC40.png" alt=""></p>
+<p>目前当中所有遍历方式中最快的一种，语法也是最简单，效率最高。但是在遍历字典需要同时获取键、值，那么会多出来一步。而且与传统的for循环不同，这种遍历方式无法轻松获得下标值，通常需要用到下标，所以更倾向于块的遍历。</p>
+<h3 id="3。基于块的遍历（推荐的方式）"><a href="#3。基于块的遍历（推荐的方式）" class="headerlink" title="3。基于块的遍历（推荐的方式）"></a>3。基于块的遍历（推荐的方式）</h3><p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC41.png" alt=""></p>
+<p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC42.png" alt=""></p>
+<h3 id="3-遍历的方式有4种。最基本的方法是for循环，其次是NSEnumerator遍历方法及快速遍历法，最新、最先进的方式则是“块枚举法”。"><a href="#3-遍历的方式有4种。最基本的方法是for循环，其次是NSEnumerator遍历方法及快速遍历法，最新、最先进的方式则是“块枚举法”。" class="headerlink" title="3.遍历的方式有4种。最基本的方法是for循环，其次是NSEnumerator遍历方法及快速遍历法，最新、最先进的方式则是“块枚举法”。"></a>3.遍历的方式有4种。最基本的方法是for循环，其次是NSEnumerator遍历方法及快速遍历法，最新、最先进的方式则是“块枚举法”。</h3><h3 id="4-“块枚举法”本身就能通过GCD来并发执行遍历操作，无须另外编写代码，而采用其他遍历方式则无法轻易实现这一点。"><a href="#4-“块枚举法”本身就能通过GCD来并发执行遍历操作，无须另外编写代码，而采用其他遍历方式则无法轻易实现这一点。" class="headerlink" title="4.“块枚举法”本身就能通过GCD来并发执行遍历操作，无须另外编写代码，而采用其他遍历方式则无法轻易实现这一点。"></a>4.“块枚举法”本身就能通过GCD来并发执行遍历操作，无须另外编写代码，而采用其他遍历方式则无法轻易实现这一点。</h3><h3 id="5-若提前知道待遍历的collection含有何种对象，则应修改块签名，指出对象的具体类型。"><a href="#5-若提前知道待遍历的collection含有何种对象，则应修改块签名，指出对象的具体类型。" class="headerlink" title="5.若提前知道待遍历的collection含有何种对象，则应修改块签名，指出对象的具体类型。"></a>5.若提前知道待遍历的collection含有何种对象，则应修改块签名，指出对象的具体类型。</h3>
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/24/iOS 熟悉系统框架/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/01/27/iOS 对自定义其内存管理语义的collection使用无缝桥接/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/01/27/iOS 多用块枚举，少用for循环/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

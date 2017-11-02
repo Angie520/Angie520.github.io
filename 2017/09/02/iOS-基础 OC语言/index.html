@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS-基础 OC语言 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS-基础," />
+  
+
+  <meta name="description" content="1.CGFloat 是OC中推荐使用的一种表示有小数的一个数值类型，在5s之前(32位机器),CGFloat-&amp;gt;float(单精度)，在5s之后(64位机器),CGFloat-&amp;gt;double(双精度) 2.NSInteger 一样在32位下是32位整数，即是”int”,在64位下是64位整数，即是”long”。所以在64位下，应该使用”%ld”。不是OC对象，只是简单的封装。NSNum">
+<meta name="keywords" content="iOS-基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-基础 OC语言">
+<meta property="og:url" content="http://angie520.cn/2017/09/02/iOS-基础 OC语言/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="1.CGFloat 是OC中推荐使用的一种表示有小数的一个数值类型，在5s之前(32位机器),CGFloat-&amp;gt;float(单精度)，在5s之后(64位机器),CGFloat-&amp;gt;double(双精度) 2.NSInteger 一样在32位下是32位整数，即是”int”,在64位下是64位整数，即是”long”。所以在64位下，应该使用”%ld”。不是OC对象，只是简单的封装。NSNum">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:07:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS-基础 OC语言">
+<meta name="twitter:description" content="1.CGFloat 是OC中推荐使用的一种表示有小数的一个数值类型，在5s之前(32位机器),CGFloat-&amp;gt;float(单精度)，在5s之后(64位机器),CGFloat-&amp;gt;double(双精度) 2.NSInteger 一样在32位下是32位整数，即是”int”,在64位下是64位整数，即是”long”。所以在64位下，应该使用”%ld”。不是OC对象，只是简单的封装。NSNum">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#再找资料看看"><span class="toc-text">再找资料看看</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS-基础 OC语言" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS-基础 OC语言</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS-基础/">iOS-基础</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2017/09/02/iOS-基础 OC语言/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>1.CGFloat 是OC中推荐使用的一种表示有小数的一个数值类型，在5s之前(32位机器),CGFloat-&gt;float(单精度)，在5s之后(64位机器),CGFloat-&gt;double(双精度)</p>
+<p>2.NSInteger 一样在32位下是32位整数，即是”int”,在64位下是64位整数，即是”long”。所以在64位下，应该使用”%ld”。不是OC对象，只是简单的封装。NSNumber才是OC封装的对象类型，@93，即将93转NSNumber，才能放在数组。</p>
+<h5 id="再找资料看看"><a href="#再找资料看看" class="headerlink" title="再找资料看看"></a>再找资料看看</h5><p>3.为什么NSString和对象要用<em>，NSInteger和CGFloat不用？。<br>OC中用对象都是用指针来传值，所以用</em>，而数值都是保存在堆的常量，不会改变，所以是直接赋值。NSIntrger不是OC对象，只是简单的封装。如果是NSNumber就要*。</p>
+<p>4.自定义的累需要写类名开头的类初始化方法</p>
+<p>5.#import <uikit uikit.h=""><br>导入的是UIKit这个framework的UIKit.h文件</uikit></p>
+<p>6.不是所有带NS的都是OC对象。NSInteger、NSRange这些只是对int等的简单封装。而并不是一个对象，NSRange转出OC对象是NSValue。</p>
+<p>7.id是一种通用的对象类型，她可以用类存储属于任何类的对象，可以理解为万能指针</p>
+<p>8.id为什么不用*，因为在id的定义中，已经包装好了＊号，id指针只能指向os的对象</p>
+<p>9.NSObject 和id都可以指向任何对象<br>NSObject对象会惊醒编译时检查（需要强制类型转换）</p>
+<p>10.id不需要强制类型转换，id可以直接使用</p>
+<p>11.编译器看到id以后，认为是动态类型，不在检查类型。</p>
+<p>12.对象如果也想像数组、字典那样通过.copy来创建的话，只要遵循<nscopying,nsmutablecopying>协议后，实现-(id)copyWithZone:(NSZone <em>)zone、- (id)mutableCopyWithZone:(NSZone </em>)zone;方法。告诉copy的话是要新对象copy还是原对象copy(深浅copy)。</nscopying,nsmutablecopying></p>
+<p>13.id对象调用属性会报错，因为不知道id有没有这个属性，一般都是强转，但是id调用所有的方法都不会报错，所以也可以通过方法来调用属性信息。</p>
+<p>14.对象判断是否相等时，重写isEqual外还需要实现hash.因为OC中判断都是先判断hash值是否相等，如果相等的话才会判断isEqual，如果不重写hash的话，可能一直都进不到isEqual，从而得出不相等的结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (NSUInteger) hash &#123;</div><div class="line">///----</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>14.分类Category不止可以添加方法，还能添加属性。但是添加属性时，要自己写get和set方法。</p>
+<p>15.分类Category的作用是给已有的类添加方法、属性、分离实现、隐藏基类接口。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/04/17/Java Eclipse使用Maven创建Web时错误/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/09/02/iOS-基础 NSDictionary/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2017/09/02/iOS-基础 OC语言/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

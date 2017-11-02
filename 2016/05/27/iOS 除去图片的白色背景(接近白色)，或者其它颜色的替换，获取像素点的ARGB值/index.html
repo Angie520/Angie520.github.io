@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值 | Angie&#39;s Blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="iOS," />
+  
+
+  <meta name="description" content="iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换。方法如下： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值">
+<meta property="og:url" content="http://angie520.cn/2016/05/27/iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值/index.html">
+<meta property="og:site_name" content="Angie&#39;s Blog">
+<meta property="og:description" content="iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换。方法如下： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-02T07:07:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值">
+<meta name="twitter:description" content="iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换。方法如下： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-除去图片的白色背景-接近白色-，或者其它颜色的替换。"><span class="toc-text">iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换。</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.05.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Angie</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://angie520.github.io/2016/05/27/iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h3 id="iOS-除去图片的白色背景-接近白色-，或者其它颜色的替换。"><a href="#iOS-除去图片的白色背景-接近白色-，或者其它颜色的替换。" class="headerlink" title="iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换。"></a>iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换。</h3><p>方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line">//去除图片的白色背景</div><div class="line"></div><div class="line">+ (UIImage*) imageToTransparent:(UIImage*) image</div><div class="line"></div><div class="line">&#123;</div><div class="line"></div><div class="line">    // 分配内存</div><div class="line"></div><div class="line">    const int imageWidth = image.size.width;</div><div class="line"></div><div class="line">    const int imageHeight = image.size.height;</div><div class="line"></div><div class="line">    size_t bytesPerRow = imageWidth * 4;</div><div class="line"></div><div class="line">    uint32_t* rgbImageBuf = (uint32_t*)malloc(bytesPerRow * imageHeight);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    // 创建context</div><div class="line"></div><div class="line">    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();</div><div class="line"></div><div class="line">    CGContextRef context = CGBitmapContextCreate(rgbImageBuf, imageWidth, imageHeight, 8, bytesPerRow, colorSpace,</div><div class="line"></div><div class="line">    kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);</div><div class="line"></div><div class="line">    CGContextDrawImage(context, CGRectMake(0, 0, imageWidth, imageHeight), image.CGImage);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    // 遍历像素</div><div class="line"></div><div class="line">    int pixelNum = imageWidth * imageHeight;</div><div class="line"></div><div class="line">    uint32_t* pCurPtr = rgbImageBuf;</div><div class="line"></div><div class="line">    for (int i = 0; i &lt; pixelNum; i++, pCurPtr++)</div><div class="line"></div><div class="line">        &#123;</div><div class="line"></div><div class="line">//        //去除白色...将0xFFFFFF00换成其它颜色也可以替换其他颜色。</div><div class="line"></div><div class="line">//        if ((*pCurPtr &amp; 0xFFFFFF00) &gt;= 0xffffff00) &#123;</div><div class="line"></div><div class="line">//            </div><div class="line"></div><div class="line">//            uint8_t* ptr = (uint8_t*)pCurPtr;</div><div class="line"></div><div class="line">//            ptr[0] = 0;</div><div class="line"></div><div class="line">//        &#125;</div><div class="line"></div><div class="line">    //接近白色</div><div class="line"></div><div class="line">    //将像素点转成子节数组来表示---第一个表示透明度即ARGB这种表示方式。ptr[0]:透明度,ptr[1]:R,ptr[2]:G,ptr[3]:B</div><div class="line"></div><div class="line">    //分别取出RGB值后。进行判断需不需要设成透明。</div><div class="line"></div><div class="line">    uint8_t* ptr = (uint8_t*)pCurPtr;</div><div class="line"></div><div class="line">    if (ptr[1] &gt; 240 &amp;&amp; ptr[2] &gt; 240 &amp;&amp; ptr[3] &gt; 240) &#123;</div><div class="line"></div><div class="line">        //当RGB值都大于240则比较接近白色的都将透明度设为0.-----即接近白色的都设置为透明。某些白色背景具有杂质就会去不干净，用这个方法可以去干净</div><div class="line"></div><div class="line">        ptr[0] = 0;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    // 将内存转成image</div><div class="line"></div><div class="line">    CGDataProviderRef dataProvider =CGDataProviderCreateWithData(NULL, rgbImageBuf, bytesPerRow * imageHeight, nil);</div><div class="line"></div><div class="line"></div><div class="line">    CGImageRef imageRef = CGImageCreate(imageWidth, imageHeight,8, 32, bytesPerRow, colorSpace,</div><div class="line"></div><div class="line">    kCGImageAlphaLast |kCGBitmapByteOrder32Little, dataProvider,</div><div class="line">    </div><div class="line">    NULL, true,kCGRenderingIntentDefault);</div><div class="line"></div><div class="line">    CGDataProviderRelease(dataProvider);</div><div class="line"></div><div class="line">    UIImage* resultUIImage = [UIImage imageWithCGImage:imageRef];</div><div class="line"></div><div class="line">    // 释放</div><div class="line"></div><div class="line">    CGImageRelease(imageRef);</div><div class="line"></div><div class="line">    CGContextRelease(context);</div><div class="line"></div><div class="line">    CGColorSpaceRelease(colorSpace);</div><div class="line"></div><div class="line">    return resultUIImage;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/05/27/iOS 最新cocoapods安装流程，安装过程中遇到的问题及解决方法/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/10/28/iOS “请在微信客户端打开链接” UIWebview加载H5页面携带session、cookie、User-Agent信息 设置cookie、清除cookie、设置User-Agent/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'Angie';
+    
+    var disqus_url = 'http://angie520.cn/2016/05/27/iOS 除去图片的白色背景(接近白色)，或者其它颜色的替换，获取像素点的ARGB值/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//Angie.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+    
+
+    
+	
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
