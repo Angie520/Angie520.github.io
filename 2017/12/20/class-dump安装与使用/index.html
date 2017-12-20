@@ -7,29 +7,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>iOS 用枚举表示状态、选项、状态码 | Angie&#39;s Blog</title>
+  <title>OC class-dump安装与使用 | Angie&#39;s Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+    <meta name="keywords" content="OC," />
   
 
-  <meta name="description" content="1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。 2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。 3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。 4">
-<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+  <meta name="description" content="介绍class-dump，是可以把Objective-C运行时的声明的信息导出来的工具。其实就是可以导出.h文件。用class-dump可以把未经加密的app的头文件导出来。 安装class-dump的下载地址：http://stevenygard.com/download/class-dump-3.5.tar.gz 点击下载后解压后会有class-dump和源码文件。将class-dump(文件">
+<meta name="keywords" content="OC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS 用枚举表示状态、选项、状态码">
-<meta property="og:url" content="http://angie520.cn/2017/01/12/iOS 用枚举表示状态、选项、状态码/index.html">
+<meta property="og:title" content="OC class-dump安装与使用">
+<meta property="og:url" content="http://angie520.cn/2017/12/20/class-dump安装与使用/index.html">
 <meta property="og:site_name" content="Angie&#39;s Blog">
-<meta property="og:description" content="1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。 2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。 3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。 4">
+<meta property="og:description" content="介绍class-dump，是可以把Objective-C运行时的声明的信息导出来的工具。其实就是可以导出.h文件。用class-dump可以把未经加密的app的头文件导出来。 安装class-dump的下载地址：http://stevenygard.com/download/class-dump-3.5.tar.gz 点击下载后解压后会有class-dump和源码文件。将class-dump(文件">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC2.png">
-<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC3.png">
-<meta property="og:updated_time" content="2017-11-02T07:07:48.000Z">
+<meta property="og:updated_time" content="2017-12-20T07:32:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 用枚举表示状态、选项、状态码">
-<meta name="twitter:description" content="1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。 2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。 3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。 4">
-<meta name="twitter:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC2.png">
+<meta name="twitter:title" content="OC class-dump安装与使用">
+<meta name="twitter:description" content="介绍class-dump，是可以把Objective-C运行时的声明的信息导出来的工具。其实就是可以导出.h文件。用class-dump可以把未经加密的app的头文件导出来。 安装class-dump的下载地址：http://stevenygard.com/download/class-dump-3.5.tar.gz 点击下载后解压后会有class-dump和源码文件。将class-dump(文件">
 
   
 
@@ -164,17 +161,22 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-iOS 用枚举表示状态、选项、状态码" class="article article-type-post" itemprop="blogPost">
+   <article id="post-class-dump安装与使用" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">iOS 用枚举表示状态、选项、状态码</h1>
+    <h1 class="post-title">OC class-dump安装与使用</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2017.01.12</span>
+        <span>2017.12.20</span>
       </span>
 
       
@@ -187,7 +189,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+    <a class="article-category-link" href="/categories/OC/">OC</a>
   </span>
 
 
@@ -195,7 +197,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://angie520.github.io/2017/01/12/iOS 用枚举表示状态、选项、状态码/#disqus_thread"></a>
+          <a href="https://angie520.github.io/2017/12/20/class-dump安装与使用/#disqus_thread"></a>
         </span>
       
 
@@ -214,12 +216,18 @@
 
   <div class="article-content">
     
-      <p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC2.png" alt=""></p>
-<p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC3.png" alt=""></p>
-<p>1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。</p>
-<p>2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。</p>
-<p>3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。</p>
-<p>4.在处理枚举类型的switch语句中不要实现default分支。这样的话，加入新枚举之后，编译器就会指示开发者：switch语句并处理所有枚举。</p>
+      <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>class-dump，是可以把Objective-C运行时的声明的信息导出来的工具。其实就是可以导出.h文件。用class-dump可以把未经加密的app的头文件导出来。</p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>class-dump的下载地址：<a href="http://stevenygard.com/download/class-dump-3.5.tar.gz" target="_blank" rel="external">http://stevenygard.com/download/class-dump-3.5.tar.gz</a></p>
+<p>点击下载后解压后会有class-dump和源码文件。将<strong>class-dump(文件夹内的class-dump文件)</strong> 复制到/usr/bin/class-dump。如果是OS X 10.11，因为没有/usr/bin文件夹的写权限，所以将class-dump复制到/usr/local/bin/class-dump即可。</p>
+<p>同时打开Terminal，执行命令赋予其执行权限：</p>
+<p>sudo chmod 777 /usr/bin/class-dump</p>
+<p>sudo chmod 777 /usr/local/bin/class-dump</p>
+<p>然后在终端输入:class-dump   如果安装成功可以看到相关的版本信息。</p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>命令如下：class-dump -H /Applications/test.app -o /Users/apple/Desktop/heads</p>
+<p>class-dump -H (需要查看的framework或App、ipa文件) -o (导出的文件目录)</p>
+<p>然后就能再导出的文件目录看到相关的头文件了。</p>
+<p>参考文章：</p>
+<p><a href="https://www.cnblogs.com/chars/p/5312644.html" target="_blank" rel="external">https://www.cnblogs.com/chars/p/5312644.html</a><br><a href="http://blog.csdn.net/msyqmsyq/article/details/51363659" target="_blank" rel="external">http://blog.csdn.net/msyqmsyq/article/details/51363659</a></p>
 
     
   </div>
@@ -228,10 +236,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2017/01/12/iOS 多用字面量语法，少用与之等价的方法/">
+    <a class="show pull-left" href="/2017/12/19/项目中.a静态文件编译报错/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2017/01/12/iOS 多用类型常量，少用#define预处理指令/">
+    <a class="show pull-right" href="/2017/12/20/iOS对源代码的混淆/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -334,7 +342,7 @@
   <script>
     var disqus_shortname = 'Angie';
     
-    var disqus_url = 'http://angie520.cn/2017/01/12/iOS 用枚举表示状态、选项、状态码/';
+    var disqus_url = 'http://angie520.cn/2017/12/20/class-dump安装与使用/';
     
     (function(){
       var dsq = document.createElement('script');

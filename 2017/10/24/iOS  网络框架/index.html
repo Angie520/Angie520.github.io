@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Angie&#39;s Blog">
 <meta property="og:description" content="主要分3层进行网络管理，包括请求会话、取消会话等。1.底层APIProxy:一个单例类，保证所有的请求都由这个单例类发起，从而管理所有会话。  配置请求头、请求参数处理。(公司的post请求需要参数转成json字符串放入请求头。)。内部发起请求还是使用AFN。 简单处理返回状态信息，从而能返回成功、失败还是其他需要额外处理的信息(登录失效)。通过block返回。 负责保存会话在自身的一个属性字典。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-11-03T06:36:06.000Z">
+<meta property="og:updated_time" content="2017-11-03T07:01:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS  网络框架">
 <meta name="twitter:description" content="主要分3层进行网络管理，包括请求会话、取消会话等。1.底层APIProxy:一个单例类，保证所有的请求都由这个单例类发起，从而管理所有会话。  配置请求头、请求参数处理。(公司的post请求需要参数转成json字符串放入请求头。)。内部发起请求还是使用AFN。 简单处理返回状态信息，从而能返回成功、失败还是其他需要额外处理的信息(登录失效)。通过block返回。 负责保存会话在自身的一个属性字典。">
@@ -241,6 +241,7 @@
 <li>在控制器dealloc的情况下能取消会话，试App更安全，不会发生无法预料的问题。</li>
 <li>使用代理返回信息给控制器，出现问题能更快更好的定位问题，也能有更好的性能。</li>
 <li>项目网络分层可以很好的管理和扩展。</li>
+<li>减轻控制器的负担。控制器只需要负责告诉manager要请求数据了和需要什么类型的数据就可以了。</li>
 </ol>
 <p>缺点：</p>
 <ol>
@@ -257,7 +258,7 @@
     <a class="show pull-left" href="/2017/10/17/iOS-基础 iPhone X/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2017/12/19/项目中.a静态文件编译报错/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

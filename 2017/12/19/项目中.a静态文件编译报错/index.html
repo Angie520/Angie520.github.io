@@ -7,29 +7,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>iOS 用枚举表示状态、选项、状态码 | Angie&#39;s Blog</title>
+  <title>OC 项目中.a静态文件编译报错 | Angie&#39;s Blog</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="iOS EffectiveObjective-C 2.0," />
+    <meta name="keywords" content="OC," />
   
 
-  <meta name="description" content="1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。 2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。 3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。 4">
-<meta name="keywords" content="iOS EffectiveObjective-C 2.0">
+  <meta name="description" content=".a静态库编译报链接错误，则很大原因是路径错了。查看路径是不是错了，是不是写成绝对路径了。 还有是其他的原因，比如是.a静态库不支持框架。 通过在终端输入 lipo -info xxx.a 来查看支持的架构。 1lipo -info /Users/Angie/Library/Developer/Xcode/DerivedData/wbiaoMall-avvrjoeasthgdfhbcmxjkicv">
+<meta name="keywords" content="OC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS 用枚举表示状态、选项、状态码">
-<meta property="og:url" content="http://angie520.cn/2017/01/12/iOS 用枚举表示状态、选项、状态码/index.html">
+<meta property="og:title" content="OC 项目中.a静态文件编译报错">
+<meta property="og:url" content="http://angie520.cn/2017/12/19/项目中.a静态文件编译报错/index.html">
 <meta property="og:site_name" content="Angie&#39;s Blog">
-<meta property="og:description" content="1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。 2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。 3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。 4">
+<meta property="og:description" content=".a静态库编译报链接错误，则很大原因是路径错了。查看路径是不是错了，是不是写成绝对路径了。 还有是其他的原因，比如是.a静态库不支持框架。 通过在终端输入 lipo -info xxx.a 来查看支持的架构。 1lipo -info /Users/Angie/Library/Developer/Xcode/DerivedData/wbiaoMall-avvrjoeasthgdfhbcmxjkicv">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC2.png">
-<meta property="og:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC3.png">
-<meta property="og:updated_time" content="2017-11-02T07:07:48.000Z">
+<meta property="og:updated_time" content="2017-12-20T07:32:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 用枚举表示状态、选项、状态码">
-<meta name="twitter:description" content="1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。 2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。 3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。 4">
-<meta name="twitter:image" content="http://angie520.cn/img/iOS/EffectiveObjective-C/EffectiveOC2.png">
+<meta name="twitter:title" content="OC 项目中.a静态文件编译报错">
+<meta name="twitter:description" content=".a静态库编译报链接错误，则很大原因是路径错了。查看路径是不是错了，是不是写成绝对路径了。 还有是其他的原因，比如是.a静态库不支持框架。 通过在终端输入 lipo -info xxx.a 来查看支持的架构。 1lipo -info /Users/Angie/Library/Developer/Xcode/DerivedData/wbiaoMall-avvrjoeasthgdfhbcmxjkicv">
 
   
 
@@ -167,14 +164,14 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-iOS 用枚举表示状态、选项、状态码" class="article article-type-post" itemprop="blogPost">
+   <article id="post-项目中.a静态文件编译报错" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">iOS 用枚举表示状态、选项、状态码</h1>
+    <h1 class="post-title">OC 项目中.a静态文件编译报错</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2017.01.12</span>
+        <span>2017.12.19</span>
       </span>
 
       
@@ -187,7 +184,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/iOS-EffectiveObjective-C-2-0/">iOS EffectiveObjective-C 2.0</a>
+    <a class="article-category-link" href="/categories/OC/">OC</a>
   </span>
 
 
@@ -195,7 +192,7 @@
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://angie520.github.io/2017/01/12/iOS 用枚举表示状态、选项、状态码/#disqus_thread"></a>
+          <a href="https://angie520.github.io/2017/12/19/项目中.a静态文件编译报错/#disqus_thread"></a>
         </span>
       
 
@@ -214,12 +211,18 @@
 
   <div class="article-content">
     
-      <p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC2.png" alt=""></p>
-<p><img src="/img/iOS/EffectiveObjective-C/EffectiveOC3.png" alt=""></p>
-<p>1.应该用枚举来表示状态机的状态、传递给方法的选项以及状态码等值，给这些值起个易懂的名字。</p>
-<p>2.如果把传递给某个方法的选项表示为枚举类型，而多个选项又可同时使用，那么就将各选项值定义为2的幂，以便通过按位或操作将组合起来。</p>
-<p>3.用NS_ENUM与NS_OPTIONS宏来定义枚举类型，并指明其底层数据类型。这样做可以确保枚举是用开发者所选的底层数据类型实现出来的，而不会采用编译器所选的类型。</p>
-<p>4.在处理枚举类型的switch语句中不要实现default分支。这样的话，加入新枚举之后，编译器就会指示开发者：switch语句并处理所有枚举。</p>
+      <p>.a静态库编译报链接错误，则很大原因是路径错了。查看路径是不是错了，是不是写成绝对路径了。</p>
+<p>还有是其他的原因，比如是.a静态库不支持框架。</p>
+<p>通过在终端输入 lipo -info xxx.a 来查看支持的架构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lipo -info /Users/Angie/Library/Developer/Xcode/DerivedData/wbiaoMall-avvrjoeasthgdfhbcmxjkicvntkf/Build/Products/Release-iphoneos/AliyunOSSiOS/libAliyunOSSiOS.a</div></pre></td></tr></table></figure>
+<p>结果是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Architectures in the fat file: /Users/Angie/Library/Developer/Xcode/DerivedData/wbiaoMall-avvrjoeasthgdfhbcmxjkicvntkf/Build/Products/Release-iphoneos/AliyunOSSiOS/libAliyunOSSiOS.a are: armv7 arm64</div></pre></td></tr></table></figure></p>
+<p>说明这个.a静态库支持的是armv7 arm64，2个架构，如果不是这2个架构的就会编译失败。</p>
+<p>armv7 :iPhone 4s</p>
+<p>armv7s :iPhone 5</p>
+<p>i386 :32位Mac os</p>
+<p>x86_64 :64位Mac os</p>
+<p>arm64 :iPhone 5s及其以上机型。</p>
+<p>debug 模式下可能只会编译所属机型需要的架构，在project -&gt; build Settings -&gt; Build Active Architecture Onlu 可以设置是不是要只生成当前机型的静态库。debug无所谓，但release一定要设为NO，要生成所以支持的机型静态库。虽然会导致编译速度慢。</p>
 
     
   </div>
@@ -228,10 +231,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2017/01/12/iOS 多用字面量语法，少用与之等价的方法/">
+    <a class="show pull-left" href="/2017/10/24/iOS  网络框架/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2017/01/12/iOS 多用类型常量，少用#define预处理指令/">
+    <a class="show pull-right" href="/2017/12/20/class-dump安装与使用/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -334,7 +337,7 @@
   <script>
     var disqus_shortname = 'Angie';
     
-    var disqus_url = 'http://angie520.cn/2017/01/12/iOS 用枚举表示状态、选项、状态码/';
+    var disqus_url = 'http://angie520.cn/2017/12/19/项目中.a静态文件编译报错/';
     
     (function(){
       var dsq = document.createElement('script');
